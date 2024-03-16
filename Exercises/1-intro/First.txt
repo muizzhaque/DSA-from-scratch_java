@@ -12,11 +12,11 @@ public class First {
     }
 }
 
-// public class Demo {
-//   public static void main(String[] args) {
-//       System.out.println(args[0]);
-//     }
-// }
+public class Demo {
+    public static void main(String[] args) {
+       System.out.println(args[0]);
+     }
+ }
   // @Test
   // void addition() {
   //     assertEquals(2, 1 + 1);
