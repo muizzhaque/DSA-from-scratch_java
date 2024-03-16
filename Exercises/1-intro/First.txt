@@ -23,3 +23,151 @@ public class Demo {
   // }
 }
 -----------------------------------------------------------------
+public class Primitive {
+    public static void main(String[] args) {
+        int rollno = 64;
+        char letter = 'r';
+        float marks = 98.67f;
+        double largeDecimalNumber = 4567654.4567;
+        long largeInteger = 3456776864384L;
+        boolean check = false;
+    // wrapper class
+        Integer rno = 64;
+        rno.byteValue();
+
+        float c = 30.6f;
+        c++;
+//        c = (int)(c) + 1;
+        System.out.println(c);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Sum {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        float num1 = input.nextFloat();
+        float num2 = input.nextFloat();
+        float sum = num1 + num2;
+        System.out.println("sum = " + sum);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class TypeCasting {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        // float num = input.nextFloat();
+        // System.out.println(num);
+
+        // type casting
+        // int numb = (int) 67.64f;
+        // System.out.println(numb);
+
+        // automatic type promotion in expressions
+        // int a = 257;
+        // byte b = (byte) a;
+        // System.out.println(b);
+        // since we know the max value abyte can have is 256 and when we print this the value is 1 coz
+        // remainder of max value to 256, 257 % 256 = 1
+
+        // byte a = 40;
+        // byte b = 50;
+        // byte c = 100;
+        // int d = (a * b) / c;
+        // System.out.println(d);
+        // here when we multiply a and b we get 2000 but byte can have only 256, java here is promoting byte to integer since it is a intermediate step
+
+        // int number = 'A';
+        // System.out.println(number);
+
+        byte b = 42;
+        char c = 'a';
+        short s = 1024;
+        int i = 50000;
+        float f = 5.67f;
+        double d = 0.1234;
+        double result = (f * b) + (i / c) - (d * s);
+        // float + int - double = double
+        System.out.println((f * b) + " " + (i / c) + " " + (d * s));
+        System.out.println(result);
+    }
+}
+-----------------------------------------------------------------
+public class Basics {
+    public static void main(String[] args) {
+        // int a = 10;
+        // if (a == 10) {
+        //     System.out.println("Hello World");
+        // }
+        // int count = 1;
+        // while(count != 5) {
+        //     System.out.println(count);
+        //     count++;
+        // }
+
+        // for loop
+        for(int count = 1; count != 5; count++) {
+            System.out.println(count);
+        }
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Inputs {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        // System.out.print("Please enter some input: ");
+        // int rollno = input.nextInt();
+        // System.out.println("Your roll number is " + rollno);
+        int num = 234_000_000;
+        System.out.println(num);
+        // String name = input.nextLine();
+        // System.out.println(name);
+        float marks = input.nextFloat();
+        System.out.println(marks);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Prime {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Please enter a number: ");
+        int n = in.nextInt();
+        if(n <= 1) {
+            System.out.println("Neither prime nor composite");
+            return;
+        }
+        int c = 2;
+        while (c * c <= n) {
+            if (n % c == 0) {
+                System.out.println("Not Prime");
+                return;
+            }
+            c = c + 1;
+            // c++;
+        }
+        if (c * c > n) {
+            System.out.println("Prime");
+        }
+        
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Temperature {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Please enter temp in C: ");
+        float tempC = in.nextFloat();
+        float tempF = (tempC * 9/5) + 32;
+        System.out.println(tempF);
+    }
+}
+-----------------------------------------------------------------

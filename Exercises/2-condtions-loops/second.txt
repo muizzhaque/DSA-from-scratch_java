@@ -1,0 +1,370 @@
+public class Condtionals {
+    public static void main(String[] args) {
+        /*
+            Syntax of if statements:
+            if (boolean expression T or F) {
+                // body
+            } else {
+                // do this
+            }
+        */
+
+        // int salary = 25400;
+//        if (salary > 10000) {
+//            salary = salary + 2000;
+//        } else {
+//            salary = salary + 1000;
+//        }
+
+        // multiple if-else
+
+//        if (salary > 10000) {
+//            salary += 2000; // salary = salary + 2000
+//        } else if (salary > 20000) {
+//            salary += 3000;
+//        } else {
+//            salary += 1000;
+//        }
+//
+//        System.out.println(salary);
+
+        int a = 10;
+        // int b = 40;
+
+        if (a != 35) {
+            System.out.println("Hello World");
+        }
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Loops {
+    public static void main(String[] args) {
+
+        /*
+            Syntax of for loops:
+
+            for (initialisation; condition; increment/decrement) {
+                // body
+            }
+        */
+
+        // Q: Print numbers from 1 to 5
+//        for (int num = 1; num <= 5; num += 2) {
+//            System.out.println(num);
+//        }
+
+        try (// print numbers from 1 to n
+        Scanner in = new Scanner(System.in)) {
+        }
+
+//        for (int num = 1; num <= n; num++) {
+////            System.out.print(num + " ");
+//            System.out.println("Hello World");
+//        }
+
+        // while loops
+        /*
+            Syntax:
+            while (condition) {
+                // body
+            }
+         */
+
+//        for (int num = 1; num <= 5; num += 2) {
+//            System.out.println(num);
+//        }
+
+        int num  = 1;
+        while (num <= 5) {
+//            System.out.println(num);
+            num += 1;
+        }
+
+        // do while
+        /*
+
+            do {
+                // body
+            } while (condition);
+
+         */
+        int n = 1;
+        do {
+            System.out.println("Hello World");
+        } while (n != 1);
+
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Largest {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        int a = in.nextInt();
+        int b = in.nextInt();
+        int c = in.nextInt();
+
+        // Q: Find the largest of the 3 numbers
+//        int max = a;
+//        if (b > max) {
+//            max = b;
+//        }
+//        if (c > max) {
+//            max = c;
+//        }
+
+//        int max = 0;
+//        if (a > b) {
+//            max = a;
+//        } else {
+//            max = b;
+//        }
+//
+//        if (c > max) {
+//            max = c;
+//        }
+
+        int max = Math.max(c, Math.max(a, b));
+
+        System.out.println(max);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class CaseCheck {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        char ch = in.next().trim().charAt(0);
+
+        if (ch >= 'a' && ch <= 'z') {
+            System.out.println("Lowercase");
+        } else {
+            System.out.println("Uppercase");
+        }
+
+        // String word = "hello";
+        // System.out.println(word.charAt(0));
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Fibo {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int a = 0;
+        int b = 1;
+        int count = 2;
+
+        while (count <= n) {
+            int temp = b;
+            b = b + a;
+            a = temp;
+            count++;
+        }
+
+        System.out.println(b);
+    }
+}
+-----------------------------------------------------------------
+public class CountNums {
+    public static void main(String[] args) {
+        int n = 455354555;
+
+        int count = 0;
+        while (n > 0) {
+            int rem = n % 10;
+            if (rem == 5) {
+                count++;
+            }
+            n = n / 10; // n /= 10
+        }
+
+        System.out.println(count);
+    }
+}
+-----------------------------------------------------------------
+public class Reverse {
+    public static void main(String[] args) {
+        int num = 123456;
+
+        int ans = 0;
+
+        while (num > 0) {
+            int rem = num % 10;
+            num /= 10;
+
+            ans = ans * 10 + rem;
+        }
+
+        System.out.println(ans);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // Take input from user till user does not press X or x
+        int ans = 0;
+        while (true) {
+            // take the operator as input
+            System.out.print("Enter the operator: ");
+            char op = in.next().trim().charAt(0);
+
+            if (op == '+' || op == '-' || op == '*' || op == '/' || op == '%') {
+                // input two numbers
+                System.out.print("Enter two numbers: ");
+                int num1 = in.nextInt();
+                int num2 = in.nextInt();
+
+                if (op == '+') {
+                    ans = num1 + num2;
+                }
+                if (op == '-') {
+                    ans = num1 - num2;
+                }
+                if (op == '*') {
+                    ans = num1 * num2;
+                }
+                if (op == '/') {
+                    if (num2 != 0) {
+                        ans = num1 / num2;
+                    }
+                }
+                if (op == '%') {
+                    ans = num1 % num2;
+                }
+            } else if (op == 'x' || op == 'X') {
+                break;
+            } else {
+                System.out.println("Invalid operation!!");
+            }
+            System.out.println(ans);
+        }
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class SwitchCase {
+    public static void main(String[] args) {
+        Scanner in  = new Scanner(System.in);
+        String fruit = in.next();
+
+        // if (fruit.equals("mango")){
+        //     System.out.println("King of Fruit");
+        // }
+
+        // else if (fruit.equals("apple")){
+        //     System.out.println("a sweet red fruit");
+        // }
+
+        // typical syntax
+        // switch (fruit) {
+        //     case "Mango":
+        //         System.out.println("King of fruits");
+        //         break;
+        //     case "Apple":
+        //         System.out.println("A sweet red fruit");
+        //         break;
+        //     default:
+        //         System.out.println("Not a fruit");
+        // }
+
+        // enhanced switch
+        switch (fruit) {
+            case "Mango" -> System.out.println("King of fruits");
+            case "Apple" -> System.out.println("A sweet red fruit");
+            default -> System.out.println("Not a fruit");
+        }
+
+        int day = in.nextInt();
+//        switch (day) {
+//            case 1 -> System.out.println("Monday");
+//            case 2 -> System.out.println("Tuesday");
+//            case 3 -> System.out.println("Wednesday");
+//            case 4 -> System.out.println("Thursday");
+//            case 5 -> System.out.println("Friday");
+//            case 6 -> System.out.println("Saturday");
+//            case 7 -> System.out.println("Sunday");
+//        }
+
+//        switch (day) {
+//            case 1:
+//            case 2:
+//            case 3:
+//            case 4:
+//            case 5:
+//                System.out.println("Weekday");
+//                break;
+//            case 6:
+//            case 7:
+//                System.out.println("Weekend");
+//                break;
+//        }
+
+        switch (day) {
+            case 1, 2, 3, 4, 5 -> System.out.println("Weekday");
+            case 6, 7 -> System.out.println("Weekend");
+        }
+    }
+}
+-----------------------------------------------------------------
+import java.util.Scanner;
+
+public class NestedSwitchCase {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int empID = in.nextInt();
+        String department = in.next();
+
+        switch (empID) {
+            case 1:
+                System.out.println("Kunal Kushwaha");
+                break;
+            case 2:
+                System.out.println("Rahul Rana");
+                break;
+            case 3:
+                System.out.println("Emp Number 3");
+                switch (department) {
+                    case "IT":
+                        System.out.println("IT Department");
+                        break;
+                    case "Management":
+                        System.out.println("Management Department");
+                        break;
+                    default:
+                        System.out.println("No department entered");
+                }
+                break;
+            default:
+                System.out.println("Enter correct EmpID");
+        }
+
+        // better way to write
+        switch (empID) {
+            case 1 -> System.out.println("Kunal Kushwaha");
+            case 2 -> System.out.println("Rahul Rana");
+            case 3 -> {
+                System.out.println("Emp Number 3");
+                switch (department) {
+                    case "IT" -> System.out.println("IT Department");
+                    case "Management" -> System.out.println("Management Department");
+                    default -> System.out.println("No department entered");
+                }
+            }
+            default -> System.out.println("Enter correct EmpID");
+        }
+    }
+}
+
+-----------------------------------------------------------------

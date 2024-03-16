@@ -1,0 +1,295 @@
+public class ArraysDef {
+    public static void main(String[] args) {
+        // Q: store a roll number
+        int a = 19;
+
+        // Q: store a person's name
+        String name = "Kunal Kushwaha";
+
+        // Q: store 5 roll numbers
+        int rno1 = 23;
+        int rno2 = 55;
+        int rno3 = 18;
+
+        // syntax
+        // datatype[] variable_name = new datatype[size];
+        // store 5 roll numbers:
+//        int[] rnos = new int[5];
+//        // or directly
+//        int[] rnos2 = {23, 12, 45, 32, 15};
+
+        int[] ros; // declaration of array. ros is getting defined in the stack
+        ros = new int[5]; // initialisation: actually here object is being created in the memory (heap)
+
+//        System.out.println(ros[1]);
+
+        String[] arr = new String[4];
+        System.out.println(arr[0]);
+
+//        for (String element : arr) {
+//            System.out.println(element);
+//        }
+
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class InputJava {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
+        // array of primitives
+        int[] arr = new int[5];
+        arr[0] = 23;
+        arr[1] = 45;
+        arr[2] = 233;
+        arr[3] = 543;
+        arr[4] = 3;
+        // [23, 45, 233, 543, 3]
+        System.out.println(arr[3]);
+
+        // input using for loops
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = in.nextInt();
+        }
+//
+//        System.out.println(Arrays.toString(arr));
+
+//        for (int i = 0; i < arr.length; i++) {
+//            System.out.print(arr[i] + " ");
+//        }
+
+//        for(int num : arr) { // for every element in array, print the element
+//            System.out.print(num + " "); //  here num represents element of the array
+//        }
+
+//        System.out.println(arr[5]); // index out of bound error
+
+        // array of objects
+        String[] str = new String[4];
+        for (int i = 0; i < str.length; i++) {
+            str[i] = in.next();
+        }
+
+        System.out.println(Arrays.toString(str));
+
+        // modify
+        str[1] = "kunal";
+
+        System.out.println(Arrays.toString(str));
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class MultiDimension {
+    public static void main(String[] args) {
+        /*
+            1 2 3
+            4 5 6
+            7 8 9
+        */
+        Scanner in = new Scanner(System.in);
+//        int[][] arr = new int[3][];
+
+//        int[][] arr = {
+//                {1, 2, 3}, // 0th index
+//                {4, 5}, // 1st index
+//                {6, 7, 8, 9} // 2nd index -> arr[2] = {6, 7, 8, 9}
+//        };
+
+        int[][] arr = new int[3][3];
+        System.out.println(arr.length); // no of rows
+        // input
+
+        for (int row = 0; row < arr.length; row++) {
+            // for each col in every row
+            for (int col = 0; col < arr[row].length; col++) {
+                arr[row][col] = in.nextInt();
+            }
+        }
+
+        // output
+//        for (int row = 0; row < arr.length; row++) {
+//            // for each col in every row
+//            for (int col = 0; col < arr[row].length; col++) {
+//                System.out.print(arr[row][col] + " ");
+//            }
+//            System.out.println();
+//        }
+
+        // output
+//        for (int row = 0; row < arr.length; row++) {
+//            System.out.println(Arrays.toString(arr[row]));
+//        }
+
+        // for(int[] a : arr) {
+        //     System.out.println(Arrays.toString(a));
+        // }
+
+            int[][] arr1 = {
+                    {1, 2, 3, 4},
+                    {5, 6},
+                    {7, 8, 9}
+            };
+    
+            for (int row = 0; row < arr.length; row++) {
+                for (int col = 0; col < arr1[row].length; col++) {
+                    System.out.print(arr1[row][col] + " ");
+                }
+                System.out.println();
+            }
+        }
+    }
+-----------------------------------------------------------------
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class ArrayListExample {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        // Syntax
+        ArrayList<Integer> list = new ArrayList<>(5); // here () is a constructor
+// even if you specify the size of the array you can add as many elements as you want.
+//        list.add(67);
+//        list.add(234);
+//        list.add(654);
+//        list.add(43);
+//        list.add(654);
+//        list.add(8765);
+
+//        System.out.println(list.contains(765432));
+//        System.out.println(list);
+//  you can change the zeroth element to 99
+//        list.set(0, 99);
+//  you can also remove the index 2 element which is 654 here
+//        list.remove(2);
+//  you don't have to use Arrays.toString method since ArrayList has its own toString method so you can print it directly
+//        System.out.println(list);
+
+        // input
+        for (int i = 0; i < 5; i++) {
+            list.add(in.nextInt());
+        }
+
+        // get item at any index
+        for (int i = 0; i < 5; i++) {
+            System.out.println(list.get(i)); // pass index here, list[index] syntax will not work here
+        }
+
+        System.out.println(list);
+
+
+
+    }
+}
+-----------------------------------------------------------------
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class MultiAL {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        ArrayList<ArrayList<Integer>> list = new ArrayList<>();
+
+        // initialisation
+        for (int i = 0; i < 3; i++) {
+            list.add(new ArrayList<>());
+        }
+
+        // add elements
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                list.get(i).add(in.nextInt());
+            }
+        }
+
+        System.out.println(list);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class Swap2Index {
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 23, 9, 18, 56};
+//        swap(arr, 0, 4);
+        reverse(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    static void reverse(int[] arr) {
+        int start = 0;
+        int end = arr.length-1;
+
+        while (start < end) {
+            // swap
+            swap(arr, start, end);
+            start++;
+            end--;
+        }
+    }
+    static void swap(int[] arr, int index1, int index2) {
+        int temp = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = temp;
+    }
+}
+-----------------------------------------------------------------
+public class Max {
+    public static void main(String[] args) {
+        int[] arr = {1, 3, 2, 9, 18};
+        System.out.println(maxRange(arr, 1, 3));
+    }
+
+    // work on edge cases here, like array being null
+    static int maxRange(int[] arr, int start, int end) {
+
+        if (start > end) {
+            return -1;
+        }
+
+        if (arr == null) {
+            return -1;
+        }
+
+        int maxVal = arr[start];
+        for (int i = start; i <= end; i++) {
+            if (arr[i] > maxVal) {
+                maxVal = arr[i];
+            }
+        }
+        return maxVal;
+    }
+
+    static int max(int[] arr) {
+        if (arr.length == 0) {
+            return -1;
+        }
+        int maxVal = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > maxVal) {
+                maxVal = arr[i];
+            }
+        }
+        return maxVal;
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class PassinginFunctions {
+    public static void main(String[] args) {
+        int[] nums = {3, 4, 5, 12};
+        System.out.println(Arrays.toString(nums));
+        change(nums);
+        System.out.println(Arrays.toString(nums));
+    }
+    static void change(int[] arr) {
+        arr[0] = 99;
+    }
+}
+-----------------------------------------------------------------
