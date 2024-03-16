@@ -101,7 +101,177 @@ public class SearchInString {
     }
 }
 -----------------------------------------------------------------
+public class SearchInRange {
+    public static void main(String[] args) {
+        int[] arr = {18, 12, -7, 3, 14, 28};
+        int target = 3;
+        System.out.println(linearSearch(arr, target, 1, 4));
+    }
+
+    static int linearSearch(int[] arr, int target, int start, int end) {
+        if (arr.length == 0) {
+            return -1;
+        }
+
+        // run a for loop
+        for (int index = start; index <= end; index++) {
+            // check for element at every index if it is = target
+            int element = arr[index];
+            if (element == target) {
+                return index;
+            }
+        }
+        // this line will execute if none of the return statements above have executed
+        // hence the target not found
+        return -1;
+    }
+}
 -----------------------------------------------------------------
+public class FindMin {
+    public static void main(String[] args) {
+        int[] arr = {18, 12, 7, 3, 14, 28};
+        System.out.println(min(arr));
+    }
+
+    // assume arr.length != 0
+    // return the minimum value in the array
+    static int min(int[] arr) {
+        int ans = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < ans) {
+                ans = arr[i];
+            }
+        }
+        return ans;
+    }
+
+}
 -----------------------------------------------------------------
+import java.util.Arrays;
+
+public class Search2DArray {
+     public static void main(String[] args) {
+        int[][] arr = {
+                {23, 4, 1},
+                {18, 12, 3, 9},
+                {78, 99, 34, 56},
+                {18, 12}
+        };
+        int target = 56;
+        int[] ans = search(arr,target); // format of return value {row, col}
+        System.out.println(Arrays.toString(ans));
+
+        System.out.println(max(arr));
+
+        System.out.println(Integer.MIN_VALUE);
+    }
+
+    static int[] search(int[][] arr, int target) {
+        for (int row = 0; row < arr.length; row++) {
+            for (int col = 0; col < arr[row].length; col++) {
+                if (arr[row][col] == target) {
+                    return new int[]{row, col};
+                }
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    static int max(int[][] arr) {
+        int max = Integer.MIN_VALUE;
+        for (int[] ints : arr) { //for (int row = 0; row < arr.length; row++)
+            for (int element : ints) { // for (int col = 0; col < arr[row].length; col++)
+                if (element > max) {
+                    max = element;
+                }
+            }
+        }
+        return max;
+    }
+}
 -----------------------------------------------------------------
+// https://leetcode.com/problems/find-numbers-with-even-number-of-digits/
+public class EvenDigits {
+    public static void main(String[] args) {
+        int[] nums = {12,345,2,6,7896};
+//        System.out.println(findNumbers(nums));
+
+        System.out.println(digits2(-345678));
+    }
+    static int findNumbers(int[] nums) {
+        int count = 0;
+        for(int num : nums) {
+            if (even(num)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // function to check whether a number contains even digits or not
+    static boolean even(int num) {
+        int numberOfDigits = digits(num);
+        /*
+        if (numberOfDigits % 2 == 0) {
+            return true;
+        }
+        return false;
+         */
+        return numberOfDigits % 2 == 0;
+    }
+
+    static int digits2(int num) {
+        if (num < 0) {
+            num = num * -1;
+        }
+        return (int)(Math.log10(num)) + 1;
+    }
+
+    // count number of digits in a number
+    static int digits(int num) {
+
+        if (num < 0) {
+            num = num * -1;
+        }
+
+        if (num == 0) {
+            return 1;
+        }
+
+        int count = 0;
+        while (num > 0) {
+            count++;
+            num = num / 10; // num /= 10
+        }
+
+        return count;
+    }
+
+
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/richest-customer-wealth/
+public class MaxWealth {
+    public static void main(String[] args) {
+
+    }
+    public int maximumWealth(int[][] accounts) {
+        // person = rol
+        // account = col
+        int ans = Integer.MIN_VALUE;
+        for (int[] ints : accounts) {
+            // when you start a new row, take a new sum for that row
+            int sum = 0;
+            for (int anInt : ints) {
+                sum += anInt;
+            }
+            // now we have sum of accounts of person
+            // check with overall ans
+            if (sum > ans) {
+                ans = sum;
+            }
+        }
+        return ans;
+    }
+}
 -----------------------------------------------------------------
