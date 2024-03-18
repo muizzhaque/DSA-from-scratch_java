@@ -4,7 +4,7 @@ public class ArraysDef {
         int a = 19;
 
         // Q: store a person's name
-        String name = "Kunal Kushwaha";
+        String name = "Muizz Ul Haque";
 
         // Q: store 5 roll numbers
         int rno1 = 23;
@@ -32,6 +32,99 @@ public class ArraysDef {
 
     }
 }
+-----------------------------------------------------------------
+//  lucky-numbers-in-a-matrix
+//  https://leetcode.com/problems/lucky-numbers-in-a-matrix/
+class Solution {
+    public List<Integer> luckyNumbers (int[][] matrix) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for( int i = 0; i < matrix.length; i++){
+            int min = Integer.MAX_VALUE;
+            int col = 0;
+            for( int j = 0; j < matrix[i].length; j++){
+                if(matrix[i][j]<min){
+                    min = matrix[i][j];
+                    col = j;
+                }
+            }
+            boolean ans = true;
+            for( int j = 0; j < matrix.length; j++){
+                if(matrix[j][col]>min){
+                    ans = false;
+                }
+            }
+            if(ans){
+                list.add(min);
+            }
+        }
+        return list;
+    }
+}
+-----------------------------------------------------------------
+//  maximum-subarray
+//  https://leetcode.com/problems/maximum-subarray/
+class Solution {
+    public int maxSubArray(int[] nums) {
+      int maxSum = nums[0];
+        int currentSum = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;  
+    }
+}
+-----------------------------------------------------------------
+//  maximum-population-year
+//  https://leetcode.com/problems/maximum-population-year/
+class Solution {
+    public int maximumPopulation(int[][] logs) {
+        
+        int [] arr = new int[101];
+        
+        for(int[] l: logs){
+            arr[l[0]-1950] += 1;
+            arr[l[1]-1950] -= 1;
+        }
+        
+        int max = 0;
+        int year = 0;
+        int sum = 0;
+        for(int j=0; j<arr.length; j++){
+            sum = sum + arr[j];
+            if(sum>max){
+                max = sum;
+                year = 1950+j;
+            }
+        }
+        return year;
+    }
+}
+-----------------------------------------------------------------
+//  add-to-array-form-of-Integer
+//  https://leetcode.com/problems/add-to-array-form-of-integer/
+    class Solution {
+        public List<Integer> addToArrayForm(int[] num, int k){
+        List<Integer> num1 = new ArrayList<>();
+        int i=num.length-1;
+    
+        while(i>=0 || k>0){
+            if(i>=0){
+                num1.add((num[i]+k)%10);
+                k=(num[i]+k)/10;
+                i--;
+            }
+            else{
+                num1.add(k%10);
+                k=k/10;
+            }
+        }    
+        Collections.reverse(num1);
+        return num1;
+        }
+    }
 -----------------------------------------------------------------
 import java.util.Arrays;
 import java.util.Scanner;
@@ -76,7 +169,7 @@ public class InputJava {
         System.out.println(Arrays.toString(str));
 
         // modify
-        str[1] = "kunal";
+        str[1] = "muizz";
 
         System.out.println(Arrays.toString(str));
     }
@@ -144,6 +237,53 @@ public class MultiDimension {
             }
         }
     }
+-----------------------------------------------------------------
+find the transpose of a matrix
+    public int[][] transpose(int[][] matrix) {
+        int m = matrix.length;
+         int n = matrix[0].length;
+         int[][] ans = new int[n][m];
+         for (int i = 0; i < m; i++){
+             for(int j = 0; j < n; j++){
+                 ans[j][i] = matrix[i][j];
+            }
+         }
+         return ans;
+     }
+-----------------------------------------------------------------
+//  Two Sum
+//  https://leetcode.com/problems/two-sum/
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        for(int i=1;i<nums.length;i++){
+            for(int j=i;j<nums.length;j++){
+                if(nums[j-i]+nums[j]==target){
+                    return new int[]{j-i,j};
+                }
+            }
+        }
+        return new int[]{};
+    }
+}
+-----------------------------------------------------------------
+// minimum-cost-to-move-chips-to-the-same-position
+//  https://leetcode.com/problems/minimum-cost-to-move-chips-to-the-same-position/
+class Solution {
+    public int minCostToMoveChips(int[] position) {
+        int countOdd = 0;
+        int countEven = 0;
+
+        for (int i = 0; i < position.length; i++) {
+            if (position[i] % 2 == 0) {
+                countEven++;
+            } else {
+                countOdd++;
+            }
+        }
+
+        return Math.min(countEven, countOdd);
+    }
+}
 -----------------------------------------------------------------
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -290,6 +430,200 @@ public class PassinginFunctions {
     }
     static void change(int[] arr) {
         arr[0] = 99;
+    }
+}
+-----------------------------------------------------------------
+public class PanagramSentence {
+    public static void main(String[] args) {
+        String sentence = "thequickbrownfoxjumpsoverthelazydog";
+        String sentence2 = "leetcode";
+        System.out.println(checkIfPangram(sentence));
+    }
+    static boolean checkIfPangram(String sentence) {
+        if (sentence.length() < 26) return false;
+        boolean[] seen = new boolean[26]; // Use an array to track seen letters (a-z)
+
+        for (char c : sentence.toCharArray()) {
+            int index = Character.toLowerCase(c) - 'a'; // Convert to lowercase and get index (0-25)
+            if (index >= 0 && index < 26) {
+                seen[index] = true; // Mark the corresponding letter as seen
+            }
+        }
+
+        // Check if all characters are marked true
+        for (boolean b : seen) {
+            if (!b) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+-----------------------------------------------------------------
+// spiral question1
+//  https://leetcode.com/problems/spiral-matrix/
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        ArrayList<Integer> ans=new ArrayList<>();
+            int row=0 , rowls=matrix.length-1;
+            int col=0 , colls=matrix[0].length-1;
+            while(row<=rowls && col<=colls){
+                for(int i=col; i<=colls; i++){
+                    ans.add(matrix[row][i]);
+                }
+                row++;
+                for(int i=row; i<=rowls; i++){
+                    ans.add(matrix[i][colls]);
+                }
+                colls--;
+                if(rowls>=row){
+                    for(int i=colls; i>=col; i--){
+                        ans.add(matrix[rowls][i]);
+                    }
+                    
+                }
+                rowls--;
+                if(col<=colls){
+                    for(int i=rowls; i>=row; i--){
+                        ans.add(matrix[i][col]);
+
+                    }
+                    
+                }
+                col++;
+            }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+// spiral question 2
+//  https://leetcode.com/problems/spiral-matrix-ii/
+class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] ans = new int[n][n];
+        int row=0; 
+        int rowls=ans.length-1;
+        int col=0;
+        int colls=ans[0].length-1;
+        int num = 1;
+        while(row<=rowls && col<=colls){
+            for(int i=col; i<=colls; i++){
+                    ans[row][i] = num;
+                    num++;
+                }
+                row++;
+            for(int i=row; i<=rowls; i++){
+                    ans[i][colls] = num;
+                    num++;
+                }
+                colls--;
+            if(rowls>=row){
+                    for(int i=colls; i>=col; i--){
+                        ans[rowls][i] = num;
+                        num++;
+                    }
+                    
+                }
+                rowls--;
+            if(col<=colls){
+                    for(int i=rowls; i>=row; i--){
+                        ans[i][col] = num;
+                        num++;
+
+                    }
+                    
+                }
+            col++;
+            }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+//  https://leetcode.com/problems/set-matrix-zeroes/
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        ArrayList<Integer> list=new ArrayList<>(10);
+        int index =0;
+        for (int i = 0; i<matrix.length; i++){
+            int zeros = 0;
+            for (int j=0; j<matrix[i].length; j++){
+                if(matrix[i][j] == 0){
+                    list.add(index,j);
+                    index++;
+                    zeros++;
+                }
+            }
+            if(zeros>0){
+                for (int j=0; j<matrix[i].length; j++){
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        for(int i=0;i<matrix.length; i++){
+            index = 0;
+            while(index<list.size()){
+                matrix[i][list.get(index)] = 0;
+                index++;
+            }
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/product-of-array-except-self/
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int arr[] = new int[n];
+        int right = 1, left = 1;
+        for(int i = 0; i < n; i++) {
+            arr[i] = left;
+            left = left * nums[i];
+        }
+        for(int i = n-1; i >= 0; i--) {
+            arr[i] *= right;
+            right = right * nums[i];
+        }
+        return arr;
+    }
+}
+-----------------------------------------------------------------
+//  https://leetcode.com/problems/rotate-array/
+class Solution {
+    public void rotate(int[] nums, int k) {
+        if(k==nums.length){
+            return;
+        }
+        if(k>nums.length){
+            k = k%nums.length;
+        }
+        reverse(nums,0,nums.length-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,nums.length-1);  
+    }
+    private void reverse(int[] nums,int l,int h){
+        while(l<=h){
+        int temp = nums[h];
+        nums[h] = nums[l];
+        nums[l] = temp;
+        l++;
+        h--;
+    }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/house-robber/
+class Solution {
+    public int rob(int[] nums) {
+        int rob = 0;
+        int norob = 0;
+        for (int i = 0; i < nums.length; i ++) {
+            int newRob = norob + nums[i];
+            int newNoRob = Math.max(norob, rob);
+            rob = newRob;
+            norob = newNoRob;
+        }
+        return Math.max(rob, norob);
     }
 }
 -----------------------------------------------------------------
