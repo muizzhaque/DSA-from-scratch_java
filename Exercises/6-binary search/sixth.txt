@@ -1,0 +1,1801 @@
+-----------------------------------------------------------------
+public class BinarySearch {
+    public static void main(String[] args) {
+        int[] arr = {-18, -12, -4, 0, 2, 3, 4, 15, 16, 18, 22, 45, 89};
+        int target = 22;
+        int ans = binarySearch(arr, target);
+        System.out.println(ans);
+    }
+
+    // return the index
+    // return -1 if it does not exist
+    static int binarySearch(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                // ans found
+                return mid;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+public class OrderAgnosticBS {
+    public static void main(String[] args) {
+        //        int[] arr = {-18, -12, -4, 0, 2, 3, 4, 15, 16, 18, 22, 45, 89};
+                int[] arr = {99, 80, 75, 22, 11, 10, 5, 2, -3};
+                int target = 22;
+                int ans = orderAgnosticBS(arr, target);
+                System.out.println(ans);
+            }
+        
+            static int orderAgnosticBS(int[] arr, int target) {
+                int start = 0;
+                int end = arr.length - 1;
+        
+                // find whether the array is sorted in ascending or descending
+                boolean isAsc = arr[start] < arr[end];
+        
+                while(start <= end) {
+                    // find the middle element
+        //            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+                    int mid = start + (end - start) / 2;
+        
+                    if (arr[mid] == target) {
+                        return mid;
+                    }
+        
+                    if (isAsc) {
+                        if (target < arr[mid]) {
+                            end = mid - 1;
+                        } else {
+                            start = mid + 1;
+                        }
+                    } else {
+                        if (target > arr[mid]) {
+                            end = mid - 1;
+                        } else {
+                            start = mid + 1;
+                        }
+                    }
+                }
+                return -1;
+            }
+}
+-----------------------------------------------------------------
+public class Ceiling {
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 5, 9, 14, 16, 18};
+        int target = 15;
+        int ans = ceiling(arr, target);
+        System.out.println(ans);
+    }
+
+    // return the index of smallest no >= target which is ceiling
+    static int ceiling(int[] arr, int target) {
+
+        // but what if the target is greater than the greatest number in the array
+        if (target > arr[arr.length - 1]) {
+            return -1;
+        }
+        int start = 0;
+        int end = arr.length - 1;
+
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                // ans found
+                return mid;
+            }
+        }
+        return start;
+    }
+}
+-----------------------------------------------------------------
+public class Floor {
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 5, 9, 14, 16, 18};
+        int target = 1;
+        int ans = floor(arr, target);
+        System.out.println(ans);
+    }
+
+    // return the index: greatest number <= target which is floor
+    static int floor(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                // ans found
+                return mid;
+            }
+        }
+        return end;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/find-smallest-letter-greater-than-target/
+public class SmallestLetter {
+    public static void main(String[] args) {
+
+    }
+
+    public char nextGreatestLetter(char[] letters, char target) {
+
+        int start = 0;
+        int end = letters.length - 1;
+
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < letters[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return letters[start % letters.length];
+    }
+}
+-----------------------------------------------------------------
+public class FirstAndLastPosition {
+    public static void main(String[] args) {
+
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+
+        int[] ans = {-1, -1};
+        // check for first occurrence if target first
+        ans[0] = search(nums, target, true);
+        if (ans[0] != -1) {
+            ans[1] = search(nums, target, false);
+        }
+        return ans;
+    }
+
+    // this function just returns the index value of target
+    int search(int[] nums, int target, boolean findStartIndex) {
+        int ans = -1;
+        int start = 0;
+        int end = nums.length - 1;
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < nums[mid]) {
+                end = mid - 1;
+            } else if (target > nums[mid]) {
+                start = mid + 1;
+            } else {
+                // potential ans found
+                ans = mid;
+                if (findStartIndex) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+        }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+public class InfiniteArray {
+    public static void main(String[] args) {
+        int[] arr = {3, 5, 7, 9, 10, 90,
+                100, 130, 140, 160, 170};
+        int target = 10;
+        System.out.println(ans(arr, target));
+    }
+    static int ans(int[] arr, int target) {
+        // first find the range
+        // first start with a box of size 2
+        int start = 0;
+        int end = 1;
+
+        // condition for the target to lie in the range
+        while (target > arr[end]) {
+            int temp = end + 1; // this is my new start
+            // double the box value
+            // end = previous end + sizeofbox*2
+            end = end + (end - start + 1) * 2;
+            start = temp;
+        }
+        return binarySearch(arr, target, start, end);
+
+    }
+    static int binarySearch(int[] arr, int target, int start, int end) {
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                // ans found
+                return mid;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+public class Mountain {
+    public static void main(String[] args) {
+
+    }
+    // https://leetcode.com/problems/peak-index-in-a-mountain-array/
+    // https://leetcode.com/problems/find-peak-element/
+    public int peakIndexInMountainArray(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (arr[mid] > arr[mid+1]) {
+                // you are in dec part of array
+                // this may be the ans, but look at left
+                // this is why end != mid - 1
+                end = mid;
+            } else {
+                // you are in asc part of array
+                start = mid + 1; // because we know that mid+1 element > mid element
+            }
+        }
+        // in the end, start == end and pointing to the largest number because of the 2 checks above
+        // start and end are always trying to find max element in the above 2 checks
+        // hence, when they are pointing to just one element, that is the max one because that is what the checks say
+        // more elaboration: at every point of time for start and end, they have the best possible answer till that time
+        // and if we are saying that only one item is remaining, hence cuz of above line that is the best possible ans
+        return start; // or return end as both are =
+    }
+}
+-----------------------------------------------------------------
+public class SearchInMountain {
+    public static void main(String[] args) {
+
+    }
+    // https://leetcode.com/problems/find-in-mountain-array/
+    int search(int[] arr, int target) {
+        int peak = peakIndexInMountainArray(arr);
+        int firstTry = orderAgnosticBS(arr, target, 0, peak);
+        if (firstTry != -1) {
+            return firstTry;
+        }
+        // try to search in second half
+        return orderAgnosticBS(arr, target, peak+1, arr.length - 1);
+    }
+
+    public int peakIndexInMountainArray(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (arr[mid] > arr[mid+1]) {
+                // you are in dec part of array
+                // this may be the ans, but look at left
+                // this is why end != mid - 1
+                end = mid;
+            } else {
+                // you are in asc part of array
+                start = mid + 1; // because we know that mid+1 element > mid element
+            }
+        }
+        // in the end, start == end and pointing to the largest number because of the 2 checks above
+        // start and end are always trying to find max element in the above 2 checks
+        // hence, when they are pointing to just one element, that is the max one because that is what the checks say
+        // more elaboration: at every point of time for start and end, they have the best possible answer till that time
+        // and if we are saying that only one item is remaining, hence cuz of above line that is the best possible ans
+        return start; // or return end as both are =
+    }
+
+    static int orderAgnosticBS(int[] arr, int target, int start, int end) {
+        // find whether the array is sorted in ascending or descending
+        boolean isAsc = arr[start] < arr[end];
+
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (arr[mid] == target) {
+                return mid;
+            }
+
+            if (isAsc) {
+                if (target < arr[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else {
+                if (target > arr[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/search-in-rotated-sorted-array/submissions/
+// Rotated Binary Search
+public class RBS {
+    public static void main(String[] args) {
+        int[] arr = {1,2,3,4,5,5,6};
+        System.out.println(findPivotWithDuplicates(arr));
+    }
+
+    static int search(int[] nums, int target) {
+        int pivot = findPivot(nums);
+
+        // if you did not find a pivot, it means the array is not rotated
+        if (pivot == -1) {
+            // just do normal binary search
+            return binarySearch(nums, target, 0 , nums.length - 1);
+        }
+
+        // if pivot is found, you have found 2 asc sorted arrays
+        if (nums[pivot] == target) {
+            return pivot;
+        }
+
+        if (target >= nums[0]) {
+            return binarySearch(nums, target, 0, pivot - 1);
+        }
+
+        return binarySearch(nums, target, pivot + 1, nums.length - 1);
+    }
+
+    static int binarySearch(int[] arr, int target, int start, int end) {
+        while(start <= end) {
+            // find the middle element
+//            int mid = (start + end) / 2; // might be possible that (start + end) exceeds the range of int in java
+            int mid = start + (end - start) / 2;
+
+            if (target < arr[mid]) {
+                end = mid - 1;
+            } else if (target > arr[mid]) {
+                start = mid + 1;
+            } else {
+                // ans found
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    // this will not work in duplicate values
+    static int findPivot(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // 4 cases over here
+            if (mid < end && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            if (mid > start && arr[mid] < arr[mid - 1]) {
+                return mid-1;
+            }
+            if (arr[mid] <= arr[start]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    static int findPivotWithDuplicates(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // 4 cases over here
+            if (mid < end && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            if (mid > start && arr[mid] < arr[mid - 1]) {
+                return mid-1;
+            }
+
+            // if elements at middle, start, end are equal then just skip the duplicates
+            if (arr[mid] == arr[start] && arr[mid] == arr[end]) {
+                // skip the duplicates
+                // NOTE: what if these elements at start and end were the pivot??
+                // check if start is pivot
+                if (start < end && arr[start] > arr[start + 1]) {
+                    return start;
+                }
+                start++;
+
+                // check whether end is pivot
+                if (end > start && arr[end] < arr[end - 1]) {
+                    return end - 1;
+                }
+                end--;
+            }
+            else if(arr[start] < arr[mid] || (arr[start] == arr[mid] && arr[mid] > arr[end])) {
+                // left side is sorted, so pivot should be in right
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+}
+-----------------------------------------------------------------
+public class RotationCount {
+    public static void main(String[] args) {
+        int[] arr = {4,5,6,7,0,1,2};
+        System.out.println(countRotations(arr));
+    }
+
+    private static int countRotations(int[] arr) {
+        int pivot = findPivot(arr);
+        return pivot + 1;
+    }
+
+    // use this for non duplicates
+    static int findPivot(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // 4 cases over here
+            if (mid < end && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            if (mid > start && arr[mid] < arr[mid - 1]) {
+                return mid-1;
+            }
+            if (arr[mid] <= arr[start]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    // use this when arr contains duplicates
+    static int findPivotWithDuplicates(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // 4 cases over here
+            if (mid < end && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            if (mid > start && arr[mid] < arr[mid - 1]) {
+                return mid-1;
+            }
+
+            // if elements at middle, start, end are equal then just skip the duplicates
+            if (arr[mid] == arr[start] && arr[mid] == arr[end]) {
+                // skip the duplicates
+                // NOTE: what if these elements at start and end were the pivot??
+                // check if start is pivot
+                if (arr[start] > arr[start + 1]) {
+                    return start;
+                }
+                start++;
+
+                // check whether end is pivot
+                if (arr[end] < arr[end - 1]) {
+                    return end - 1;
+                }
+                end--;
+            }
+            // left side is sorted, so pivot should be in right
+            else if(arr[start] < arr[mid] || (arr[start] == arr[mid] && arr[mid] > arr[end])) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/split-array-largest-sum/
+public class SplitArray {
+    public static void main(String[] args) {
+        int[] nums = {5,6,7,8,9,1,2,3,4};
+        int m  = 8;
+        int ans = splitArrayMax(nums, m);
+        System.out.println(ans);
+    }
+
+    static int splitArrayMin(int[] nums, int m) {
+        int start = 0;
+        int end = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            start = Math.max(start, nums[i]); // in the end of the loop this will contain the max item of the array
+            end += nums[i];
+        }
+
+        // binary search
+        while (start < end) {
+            // try for the middle as potential ans
+            int mid = start + (end - start) / 2;
+
+            // calculate how many pieces you can divide this in with this max sum
+            int sum = 0;
+            int pieces = 1;
+            for(int num : nums) {
+                if (sum + num > mid) {
+                    // you cannot add this in this subarray, make new one
+                    // say you add this num in new subarray, then sum = num
+                    sum = num;
+                    pieces++;
+                } else {
+                    sum += num;
+                }
+            }
+
+            if (pieces > m) {
+                start = mid + 1;
+            } else {
+                end = mid;
+            }
+
+        }
+        return end; // here start == end
+    }
+    static int splitArrayMax(int[] nums, int m) {
+        m++;
+        int start = Integer.MAX_VALUE;
+        int end = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            start = Math.min(start, nums[i]); // in the end of the loop this will contain the min item of the array
+            end += nums[i];
+        }
+
+        // binary search
+        while (start+1 < end) {
+            // try for the middle as potential ans
+            int mid = start + (end - start) / 2;
+
+            // calculate how many pieces you can divide this in with this max sum
+            int sum = 0;
+            int pieces = 1;
+            for(int num : nums) {
+                if (sum + num > mid) {
+                    // you cannot add this in this subarray, make new one
+                    // say you add this num in new subarray, then sum = num
+                    sum = num;
+                    pieces++;
+                } else {
+                    sum += num;
+                }
+            }
+            if (pieces < m) {
+                end = mid - 1;
+            } else {
+                start = mid;
+            }
+        }
+        int sum = 0; 
+        for (int num : nums){
+            if (sum + num < start) { // here start == end
+                sum += num;
+            }
+        }
+        return sum; 
+    }
+}   
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class RowColMatrix {
+    public static void main(String[] args) {
+        int[][] arr = {
+                {10, 20, 30, 40},
+                {15, 25, 35, 45},
+                {28, 29, 37, 49},
+                {33, 34, 38, 50}
+        };
+
+        System.out.println(Arrays.toString(search(arr, 49)));
+    }
+
+    static int[] search(int[][] matrix, int target) {
+        int r = 0;
+        int c = matrix[0].length - 1;
+
+        while (r < matrix.length && c >= 0) {
+            if (matrix[r][c] == target) {
+                return new int[]{r, c};
+            }
+            if (matrix[r][c] < target) {
+                r++;
+            } else {
+                c--;
+            }
+        }
+        return new int[]{-1, -1};
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class SortedMatrix {
+    public static void main(String[] args) {
+        int[][] arr = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+        System.out.println(Arrays.toString(search(arr, 9)));
+    }
+
+    // search in the row provided between the cols provided
+    static int[] binarySearch(int[][] matrix, int row, int cStart, int cEnd, int target) {
+        while (cStart <= cEnd) {
+            int mid = cStart + (cEnd - cStart) / 2;
+            if (matrix[row][mid] == target) {
+                return new int[]{row, mid};
+            }
+            if (matrix[row][mid] < target) {
+                cStart = mid + 1;
+            } else {
+                cEnd = mid - 1;
+            }
+        }
+        return new int[]{-1, -1};
+    }
+
+    static int[] search(int[][] matrix, int target) {
+        int rows = matrix.length;
+        int cols = matrix[0].length; // be cautious, matrix may be empty
+        if (cols == 0){
+            return new int[] {-1,-1};
+        }
+        if (rows == 1) {
+            return binarySearch(matrix,0, 0, cols-1, target);
+        }
+
+        int rStart = 0;
+        int rEnd = rows - 1;
+        int cMid = cols / 2;
+
+        // run the loop till 2 rows are remaining
+        while (rStart < (rEnd - 1)) { // while this is true it will have more than 2 rows
+            int mid = rStart + (rEnd - rStart) / 2;
+            if (matrix[mid][cMid] == target) {
+                return new int[]{mid, cMid};
+            }
+            if (matrix[mid][cMid] < target) {
+                rStart = mid;
+            } else {
+                rEnd = mid;
+            }
+        }
+
+        // now we have two rows
+        // check whether the target is in the col of 2 rows
+        if (matrix[rStart][cMid] == target) {
+            return new int[]{rStart, cMid};
+        }
+        if (matrix[rStart + 1][cMid] == target) {
+            return new int[]{rStart + 1, cMid};
+        }
+
+        // search in 1st half
+        if (target <= matrix[rStart][cMid - 1]) {
+            return binarySearch(matrix, rStart, 0, cMid-1, target);
+        }
+        // search in 2nd half
+        if (target >= matrix[rStart][cMid + 1] && target <= matrix[rStart][cols - 1]) {
+            return binarySearch(matrix, rStart, cMid + 1, cols - 1, target);
+        }
+        // search in 3rd half
+        if (target <= matrix[rStart + 1][cMid - 1]) {
+            return binarySearch(matrix, rStart + 1, 0, cMid-1, target);
+        } else {
+            return binarySearch(matrix, rStart + 1, cMid + 1, cols - 1, target);
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/sqrtx/
+class Solution {
+    public int mySqrt(int x) {
+          long start = 1;
+        long end = x;
+        long ans = 0;
+
+        while(start <= end){
+            long mid = start + (end - start)/2;
+
+            if(mid*mid == x){
+                ans = (int)mid;
+                break;
+            }else if(mid*mid < x){
+                start = mid+1;
+                ans = mid;
+            }else{
+                end = mid-1;
+            }
+        }
+        return (int)ans;
+    }
+}
+
+-----------------------------------------------------------------
+//  https://leetcode.com/problems/guess-number-higher-or-lower/
+//  You call a pre-defined API int guess(int num), which returns three possible results:
+
+/** 
+ * Forward declaration of guess API.
+ * @param  num   your guess
+ * @return 	     -1 if num is higher than the picked number
+ *			      1 if num is lower than the picked number
+ *               otherwise return 0
+ * int guess(int num);
+ */
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
+        int s = 1;
+        int e = n;
+        while(s<=e){
+            int m = s + (e-s)/2;
+            if(guess(m)==0) return m;
+            else if(guess(m)==1)
+            s = m+1;
+            else
+            e=m-1;
+
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        	int l = 0, r = nums.length - 1;
+	
+	while (nums[l] + nums[r] != target) {
+		if (nums[l] + nums[r] < target) l++;
+		else r--;
+	}
+	return new int[] {l+1, r+1};
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/valid-perfect-square/
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if (num <= 1) {
+            return true;
+        }
+        long start = 1;
+        long end = num;
+
+        while (start <= end) {
+            long mid = start + (end - start) / 2;
+            long square = mid * mid;
+
+            if (square == num) {
+                return true;
+            } else if (square < num) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+
+        return false;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/arranging-coins/
+class Solution {
+    public int arrangeCoins(int n) {
+        long left = 0; // we use "long" because we may get an integer overflow
+		long right = n;
+		while(left <= right){
+			long pivot = left + (right - left) / 2;
+			long coinsUsed = pivot * (pivot + 1)/2; // n(n+1)/2 formula for n numbers sum
+			if(coinsUsed == n){
+				return (int)pivot;
+			}
+			if(n < coinsUsed){
+				right = pivot-1;
+			}
+			else{
+				left = pivot + 1;
+			}
+		}
+		return (int)right; // cast as an "int" because it was initiliazed as a "long"
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/
+class Solution {
+    public int countNegatives(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int r = 0;
+        int c = n - 1;
+        int ans = 0;
+        while(r<m&&c>=0){
+            if(grid[r][c]<0){
+                ans = ans + m-r;
+                c--;
+            }
+            else if(grid[r][c]>=0){
+                r++;
+            }
+        }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/check-if-n-and-its-double-exist/
+class Solution {
+    public boolean checkIfExist(int[] arr) {
+        Arrays.sort(arr);
+        int count = 0;
+        for(int i = 0; i<arr.length; i++){
+            if(arr[i]!=0){
+            if(binarySearch(arr, arr[i]*2)){
+                return true;
+            }
+            }
+            else{
+                count = count + 1;
+            }
+        }
+        return count>=2;
+    }
+    public boolean binarySearch(int[] arr, int target){
+        int end = arr.length-1;
+        int start = 0;
+        while(start<=end){
+            int mid = start + (end - start)/2;
+            if(arr[mid]==target){
+                return true;
+            }
+            else if(arr[mid]<target){
+                start = mid+1;
+            }
+            else{
+                end = mid-1;
+            }
+        }return false;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/special-array-with-x-elements-greater-than-or-equal-x/
+class Solution {
+    public int countPossibility(int []nums,int x){
+        int cnt=0;
+        for(int n:nums) if(n>=x) cnt++;
+        return cnt;
+    }
+    public int specialArray(int[] nums) {
+        int maxi=Integer.MIN_VALUE,start=1,mid=0;
+        for(int x:nums) maxi=Math.max(maxi,x);
+        int end = maxi;
+        while(start<=end){
+            mid = (start+end)/2;
+            int check = countPossibility(nums,mid);
+            if(check==mid) return mid;
+            if(mid<check) start=mid+1;
+            else end=mid-1;
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+//  https://leetcode.com/problems/kth-missing-positive-number/
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int n = arr.length;
+      int low=0; int high = n-1;
+      while(low<=high){
+          int mid = (low+high)/2;
+          int missing = arr[mid] - (mid+1);
+
+          if(missing<k){
+              low=mid+1;
+          } else{
+              high= mid-1;
+          }
+      }
+      return high+1+k; // here high is the point where original k value is to be shown which is why we add the missing no. to 1 since index is zero and then sum it with k
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/fair-candy-swap/
+class Solution {
+    public int[] fairCandySwap(int[] aliceSizes, int[] bobSizes) {
+        int aliceTotal = 0;
+        int bobTotal = 0;
+        for (int aa : aliceSizes) {
+		    aliceTotal += aa;
+	    }
+	    for (int bb : bobSizes) {
+		    bobTotal += bb;
+	    }
+	// Now iterate aliceSize array and then try to find out target so that we can do
+	// binary search.
+
+        for (int i = 0; i < aliceSizes.length; i++) {
+            // here we will use some mathmatics to find mid value;
+            /*
+            * see as previouse example I explained very well. aliceTotal - aliceSizes[i] +
+            * bobSizes[j] = bobTotal - bobSizes[j]+aliceSizes[i] aliceTotal = bobTotal +
+            * aliceSizes[i] + aliceSizes[i] - bobSizes[j]-bobSizes[j] aliceTotal = bobTotal
+            * + 2 * aliceSizes[i] - 2* bobSizes[j];
+            * 
+            * 2 bobSizes[j] = bobTotal - aliceTotal + 2 * aliceSizes[i]; bobSizes[j] =
+            * (bobTotal - aliceTotal + 2 * aliceSizes[i])/2
+            */
+
+            /*
+            * Here in this case we will take bobsize array as target to do binar search.
+            * Hence we need to first sort bobsArray
+            */
+            int target = (bobTotal - aliceTotal + 2 * aliceSizes[i]) / 2;
+            if (binarySearch(bobSizes, target)) {
+                return new int[] { aliceSizes[i], target };
+            }
+        }
+        return new int[0];
+    }
+
+    public static boolean binarySearch(int[] arr, int target) {
+        int start = 0;
+        int end = arr.length - 1;
+        int mid = start + (end - start) / 2;
+        while (start <= end) {
+            if (target > arr[mid])
+                start = mid + 1;
+            if (target < arr[mid])
+                end = mid - 1;
+            else
+                return true;
+        }
+        return false;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/intersection-of-two-arrays/
+class Solution {
+
+    public int[] intersection(int[] nums1, int[] nums2){
+
+        // sort both the arrays
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+
+        // initialize an array with the size of minimum of both arrays and store the common elements
+        int[] intersection = new int[nums1.length>nums2.length? nums1.length : nums2.length]; // this is a ternary operator
+        int count=-1;
+        for(int i=0; i<nums2.length; i++){
+            if(binarySearch(nums1, nums2[i])){
+                intersection[++count]=nums2[i];
+            }
+        }
+
+        // if there are no common elements return an empty array
+        if(count < 0){ // count has the last index of common elements present in the arrays
+            int[] ans = new int[]{};
+            return ans;
+        }
+
+        // removing the duplicate from the intersection and store in an array called dupli
+        int[] dupli = new int[count+1];
+        int counter=0; int check=intersection[0];
+        dupli[0]=check;
+        for(int i=1; i<=count; i++){
+            if(intersection[i]!=check){
+                dupli[++counter]=intersection[i];
+                check=intersection[i];
+            }
+        }
+
+        // counter has the number of unique elements present after removing duplicates
+
+        // we trim the zeroes from the resulting array of unique numbers
+        int[] ans = new int[counter+1];
+        for(int i=0; i<=counter; i++){
+            ans[i]=dupli[i];
+        }
+        return ans;
+    }
+
+    // simple binary search
+    public boolean binarySearch(int arr[], int target){
+        int start=0; int end =arr.length-1;
+        while(start<=end){
+            int mid = start+(end-start)/2;
+            if(arr[mid]==target){
+                return true;
+            }
+            else if(arr[mid]>target){
+                end = mid-1;
+            }
+            else{
+                start = mid+1;
+            }
+        }
+        return false;
+    } // return Arrays.copyOf(ret, i); // it create a copy of ret arr with range which is i here
+    //  public static int[] copyOfRange(int[] original_array, int from_index, int to_index) 
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/intersection-of-two-arrays-ii/ - need to check once more
+class Solution {
+    /*
+nums1 = [1,2,2,1], nums2 = [2,2]
+
+1,1,2,2
+2,2
+
+nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+
+4,4,8,9,9
+4,5,9
+
+
+--
+
+main idea:
+
+using binary search, search for the elements of the smallest array (nums1) in the largest array (nums2)
+
+sort the largest array o that binary search is feasible
+sort the smallest array so that we can seach sequentially
+
+if element is found,
+	keep searching to the left until we find the first occurrence of the element
+
+	add element to the result
+
+when element is found, keep track of the last index where element was found so that next binary search ignores previous used indexes
+	ie. nums1 = 1,1   nums2 = 1,2,2 - output should be [1] - once we found first 1 at index 0 and next search is done as of index 1
+
+*/
+public int[] intersect(int[] nums1, int[] nums2) {
+	if(nums2.length < nums1.length){
+		return intersect(nums2, nums1);
+	}
+
+	Arrays.sort(nums1);
+	Arrays.sort(nums2);
+
+	List<Integer> result = new ArrayList<>();
+	int leftIndex = 0;
+	for(int num: nums1){
+		int index = binarySearch(nums2, num, leftIndex);
+
+		if(index != -1){
+			result.add(num);
+			leftIndex = index + 1;
+		}
+	}
+
+	return result.stream().mapToInt(Integer::intValue).toArray();
+}
+
+private int binarySearch(int[] nums, int target, int left){
+	int right = nums.length - 1;
+	int index = -1;
+
+	while(left <= right){
+		int middle = left + (right - left) / 2;
+
+		if(nums[middle] == target){
+			index = middle;
+
+			right = middle - 1;
+		} else if(nums[middle] > target){
+			right = middle - 1;
+		} else {
+			left = middle + 1;
+		}
+	}
+
+	return index;
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/single-element-in-a-sorted-array/
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+       if(nums.length==1) return nums[0];
+        if(nums[0]!=nums[1]) return nums[0];
+        if(nums[nums.length-1]!=nums[nums.length-2]) return nums[nums.length-1];
+        int low = 1;int high = nums.length-2;
+        while(low<=high){
+            int mid = low + (high-low)/2;
+            if(nums[mid]!=nums[mid-1] && nums[mid]!=nums[mid+1]) return nums[mid];
+            if((mid%2==0 && nums[mid]==nums[mid+1]) || (mid%2!=0 && nums[mid]==nums[mid-1])){
+                low=mid+1;
+            } else {
+                high = mid-1;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int s=0, e=nums.length-1;
+        while(s<=e){
+            int mid= s+(e-s)/2;
+            if(nums[mid]==target){
+                return true;
+            }
+
+             if (nums[s] == nums[mid]) {
+                s++;
+                continue;
+            }
+
+            if(nums[s]<nums[mid]){
+                if(nums[s]<= target && target<nums[mid]){
+                    e=mid-1;
+                }else{
+                    s=mid+1;
+                }
+            }else{
+                if(nums[mid]<target && target<= nums[e]){
+                    s=mid+1;
+                }else{
+                    e=mid-1;
+                }
+            }
+        }
+     return false;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-peak-element/
+class Solution {
+    public int findPeakElement(int[] nums) {
+        if(nums.length == 1){
+            return 0;
+        }
+        int n = nums.length;
+       if(nums[0]>nums[1]){
+        return 0;
+       }
+       if(nums[n-1]>nums[n-2]){
+        return n-1;
+       }
+       // check in the remaining array
+       int s = 1;
+       int e = n-2;
+       while(s<=e){
+        int m = s + (e - s)/2;
+        if(nums[m]>nums[m-1] && nums[m]>nums[m+1]){
+            return m;
+        }
+        else if(nums[m]<nums[m+1]){
+            s = m + 1;
+        }
+        else if(nums[m]<nums[m-1]){
+            e = m - 1;
+        }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-right-interval/
+class Solution {
+    public int[] findRightInterval(int[][] intervals) {
+        int n = intervals.length;
+        int start[][]=new int[n][2];
+        for(int i=0;i<n;i++){
+            start[i][0] = intervals[i][0];
+            start[i][1] = i;
+        }
+        //   ->  This part defines a custom comparator function using a lambda expression (introduced in Java 8).
+        //  A lambda expression provides a concise way to define anonymous functions.
+        //  The comparator function takes two elements (a and b) from the array and determines the sorting order based on their comparison.
+        Arrays.sort(start, (a,b) -> (a[0] - b[0])); // The sorting algorithm (typically quicksort) arranges the elements such that a[0] - b[0] is less than zero whenever a comes before b in the sorted array. This ensures that sub-arrays are sorted based on their first element's value.
+        int ans[] = new int[n];
+        for(int i=0;i<n;i++) {
+            int target = intervals[i][1];
+            int l = 0, r = n-1;
+            while(l<=r) {
+                int mid = (l+r)/2;
+                if(start[mid][0] >= target) r = mid - 1;
+                else if(start[mid][0] < target) l = mid + 1;   
+            }
+            if(l<n) ans[i] = start[l][1];
+            else ans[i] = -1;
+        }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/reach-a-number/
+class Solution {
+    public int reachNumber(int target) {
+        
+		//convert negative target to positive
+        if(target<0){
+            target*=-1;
+        }
+        // you can also try Math.abs(target)
+        int start = 1;
+        int end = target; 
+        int numMoves = 0;
+        long finalPosition = 0;
+        
+        while(start<=end){
+            int mid = start+(end-start)/2;
+			
+			// here we consider n = mid then n*(n+1)/2 becomes mid*(mid+1)/2
+            long sum = (long)mid*(mid+1)/2;
+            if(sum>=target){
+			//if difference is even direct binary search
+                finalPosition = sum;
+                numMoves = mid;
+                end = mid-1;
+            }
+            else{
+                start = mid+1;
+              }
+          } 
+        int difference = (int)(finalPosition - target);
+                //if difference is odd
+                if(difference%2!=0){
+					//if n+1 is odd
+                    if((numMoves+1)%2!=0){
+                        numMoves+=1;
+                    }
+                    else{
+					//if n+1 is even, then n+2 is odd
+                        numMoves+=2; // take example of 5 where sum is 6 and numMoves is 3 in that case the numMoves will be incremented by 2 and will give 5 : 1+2+3+4+5 = 15 here you can make 1&4 or 2&3 or 5 negative to get the target ans
+                    }  
+                }
+     return numMoves;           
+    }        
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/maximum-value-at-a-given-index-in-a-bounded-array/
+https://www.youtube.com/watch?v=MjpAAE3-hYg - youtube link
+class Solution {
+    public int maxValue(int n, int index, int maxSum) {
+        //Binary Search code
+        if(n == 1) return maxSum;
+        long r = n - index - 1;// spaces in the right
+        long l = index;// spaces in the left
+        long lo = 1;// lowest
+        long hi = maxSum;// highest
+        long res = 0;// our ans
+        while(lo<=hi){
+            long mid = lo + (hi - lo)/2;
+            long sum = mid;
+            long rs = 0;// left sum
+            long ls = 0;// right sum
+            long m = mid-1;
+            if(r<=m){
+                rs= m*(m+1)/2 - (m-r)*(m-r+1)/2;
+            }
+            else{
+                rs= m*(m+1)/2 + 1*(r-m);
+            }
+            if(l<=m){
+                ls = m*(m+1)/2 - (m-l)*(m-l+1)/2;
+            }
+            else{
+                ls = m*(m+1)/2 + 1*(l-m);
+            }
+            sum+=ls+rs; // sum of all the elements in the array
+            if(sum<=maxSum){
+                res = mid;
+                lo = mid+1;
+            }
+            else{
+                hi = mid-1;
+            }
+
+        }
+        return (int)res;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/koko-eating-bananas/
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int low=1;
+        int high=Integer.MIN_VALUE;
+        for(int i=0;i<piles.length;i++){
+            high=Math.max(high,piles[i]);
+        }
+        while(low<high){
+            int mid=low+(high-low)/2;
+            if(canfinish(mid,piles,h)){
+                high=mid;
+            }
+            else
+                low=mid+1;
+        }
+        return low;
+    }
+    public boolean canfinish(int maxpiles,int[] piles,int h){
+        int hours=0;
+        for(int i:piles){
+            int time=i/maxpiles;
+            hours+=time;
+            if(i%maxpiles!=0) hours++;
+        }
+        if(hours<=h)
+            return true;
+        return false;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int left = 0, right = 0;
+        
+        // Find the minimum and maximum capacity required for the ship
+        for (int w : weights) {
+            left = Math.max(left, w); // minimum capacity should be able to handle the heaviest package
+            right += w; // maximum capacity should be able to handle all packages
+        }
+        
+        // Use binary search to find the least weight capacity required for the ship
+        while (left < right) {
+            int mid = (left + right) / 2;
+            int need = 1, cur = 0;
+            
+            // Count the number of days required to ship all packages with current mid capacity
+            for (int w : weights) {
+                if (cur + w > mid) { // current capacity can't handle the current package
+                    need++; // increment the number of days required
+                    cur = 0; // reset the current capacity
+                }
+                cur += w; // add the current package to the current capacity
+            }
+            
+            // If the number of days required is greater than the given number of days, increase the weight capacity
+            if (need > days) {
+                left = mid + 1;
+            } 
+            // If the number of days required is less than or equal to the given number of days, decrease the weight capacity
+            else {
+                right = mid;
+            }
+        }
+        
+        // Return the least weight capacity required to ship all packages within the given number of days
+        return left;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/minimum-absolute-sum-difference/
+class Solution {
+    public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+        if(nums1 == nums2){
+            return 0;
+        }
+        int mod=(int)1e9+7; // 10^9 + 7
+        int len=nums1.length;
+        int diff[]=new int[len];
+        long sum=0,ans=0;
+        for(int i=0;i<len;i++){
+            diff[i]=Math.abs(nums1[i]-nums2[i]);
+            sum+=diff[i];
+        }
+        ans=sum;
+        Arrays.sort(nums1);
+        for(int i=0;i<len;i++){
+            sum-=diff[i];
+            int val=bestMatch(nums1,nums2[i]);
+            sum+=val;
+            if(sum<ans){
+             ans=sum;
+            }
+            sum-=val;
+            sum+=diff[i];
+        }
+        return (int)(ans%mod);
+    }
+    public int bestMatch(int nums[],int target){
+        int lo=0,hi=nums.length-1,small=-1,big=-1,ans=Integer.MAX_VALUE;
+        while(lo<=hi){
+            int mid=lo+(hi-lo)/2;
+            if(nums[mid]==target) return 0;
+            else if(nums[mid]<target){
+             lo=mid+1;
+             small=mid;
+            }
+            else{
+                hi=mid-1;
+                big=mid;
+            }
+        }
+        if(small!=-1){
+            ans=Math.abs(target-nums[small]);
+        }
+        if(big!=-1){
+            ans=Math.min(ans,Math.abs(target-nums[big]));
+        }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-a-peak-element-ii/
+class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int low = 0;
+        int high = m-1;
+        while (low<=high) {
+            int mid = (low+high)/2;
+            int row = find_max_in_col(mat,n,mid);
+            int left;
+            int right;
+            if (mid-1>=0) {
+                left = mat[row][mid-1];
+            }
+            else {
+                left = -1;
+            }
+            if (m>mid+1) {
+                right = mat[row][mid+1];
+            }
+            else {
+                right = -1;
+            }
+            if (left<mat[row][mid] && mat[row][mid]>right) {
+                return new int[] {row,mid};
+            }
+            else if(left>mat[row][mid]) {
+                high = mid-1;
+            }
+            else {
+                low = mid+1;
+            }
+        }
+        return new int[] {-1,-1};
+    }
+    public int find_max_in_col(int mat[][], int n, int col) {
+        int idx = 0;
+        int value = 0;
+        for (int i=0; i<n; i++) {
+            if (mat[i][col]>value) {
+                value = mat[i][col];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/search-a-2d-matrix/
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int r = 0;
+        int col = n-1;
+        while(r<m&&col>=0){
+            if(matrix[r][col]<target){
+                r++;
+            }
+            else if(matrix[r][col]>target){
+                col--;
+            }
+            else{
+                return true;
+            }
+
+        }
+        return false;
+    }
+}
+-----------------------------------------------------------------
+class Solution {
+    public int findMin(int[] nums) {
+        int n = nums.length;
+        if (nums[0]<nums[n-1]){
+            return nums[0];
+        }
+        int ans = findPivotWithDuplicates(nums);
+        return nums[ans+1];
+    }
+    public int findPivotWithDuplicates(int[] arr) {
+        int start = 0;
+        int end = arr.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            // 4 cases over here
+            if (mid < end && arr[mid] > arr[mid + 1]) {
+                return mid;
+            }
+            if (mid > start && arr[mid] < arr[mid - 1]) {
+                return mid-1;
+            }
+
+            // if elements at middle, start, end are equal then just skip the duplicates
+            if (arr[mid] == arr[start] && arr[mid] == arr[end]) {
+                // skip the duplicates
+                // NOTE: what if these elements at start and end were the pivot??
+                // check if start is pivot
+                if (start < end && arr[start] > arr[start + 1]) {
+                    return start;
+                }
+                start++;
+
+                // check whether end is pivot
+                if (end > start && arr[end] < arr[end - 1]) {
+                    return end - 1;
+                }
+                end--;
+            }
+            else if(arr[start] < arr[mid] || (arr[start] == arr[mid] && arr[mid] > arr[end])) {
+                // left side is sorted, so pivot should be in right
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-in-mountain-array/
+/**
+ * // This is MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * interface MountainArray {
+ *     public int get(int index) {}
+ *     public int length() {}
+ * }
+ */
+ 
+class Solution {
+    public int findInMountainArray(int target, MountainArray mountainArr) {
+        int peakIndex = peakIndexInMountainArray(mountainArr);
+        int isPresent = binarySearchAsc(mountainArr,0,peakIndex,target);
+        if(isPresent!=-1){
+            return isPresent;
+        }
+        else{
+            isPresent = binarySearchDes(mountainArr,peakIndex,mountainArr.length()-1,target);
+            if(isPresent!=-1){
+                return isPresent;
+            }
+            else{
+                return -1;
+            }
+        }
+    }
+    static int peakIndexInMountainArray(MountainArray arr) {
+        int start = 0;
+        int end = arr.length() - 1;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (arr.get(mid) > arr.get(mid+1)) {
+                // you are in dec part of array
+                // this may be the ans, but look at left
+                // this is why end != mid - 1
+                end = mid;
+            } else {
+                // you are in asc part of array
+                start = mid + 1; // because we know that mid+1 element > mid element
+            }
+        }
+        // in the end, start == end and pointing to the largest number because of the 2 checks above
+        // start and end are always trying to find max element in the above 2 checks
+        // hence, when they are pointing to just one element, that is the max one because that is what the checks say
+        // more elaboration: at every point of time for start and end, they have the best possible answer till that time
+        // and if we are saying that only one item is remaining, hence cuz of above line that is the best possible ans
+        return start; // or return end as both are =
+    }
+    static int binarySearchAsc(MountainArray arr,int s, int e, int target){
+        while(s<=e){
+            int m = s+(e-s)/2;
+            if(arr.get(m)==target){
+                return m;
+            }
+            if(arr.get(m)<target){
+                s = m + 1;
+            }else{
+                e = m-1;
+            }
+        }
+        return -1;
+    }
+    static int binarySearchDes(MountainArray arr,int s, int e, int target){
+        while(s<=e){
+            int m = s+(e-s)/2;
+            if(arr.get(m)==target){
+                return m;
+            }
+            if(arr.get(m)>target){
+                s = m + 1;
+            }else{
+                e = m - 1;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/median-of-two-sorted-arrays/
+https://www.youtube.com/watch?v=F9c7LpRZWVQ - youtube link
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        if(n1 > n2) return findMedianSortedArrays(nums2,nums1);
+        int low = 0;
+        int high = n1;
+        int lefthalf = (n1+n2+1)/2;
+        int n = n1+n2;
+
+        while(low<=high){
+            int mid1 = (low+high)/2;
+            int mid2 = lefthalf - mid1;
+            int l1 = (mid1 > 0) ? nums1[mid1 - 1] : Integer.MIN_VALUE;
+            int l2 = (mid2 > 0) ? nums2[mid2 - 1] : Integer.MIN_VALUE;
+            int r1 = (mid1 < n1) ? nums1[mid1] : Integer.MAX_VALUE;
+            int r2 = (mid2 < n2) ? nums2[mid2] : Integer.MAX_VALUE;
+
+            if(l1 <= r2 && l2 <= r1){
+                if(n % 2 == 1) return Math.max(l1,l2);
+                else return ((double)(Math.max(l1,l2) + Math.min(r1,r2))) / 2.0;
+            }else if(l1>r2){
+                high = mid1 - 1;
+            }else{
+                low = mid1 + 1;
+            } 
+        }
+        return 0;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/split-array-largest-sum/
+https://www.geeksforgeeks.org/allocate-minimum-number-pages/
+https://www.youtube.com/watch?v=W9QJ8HaRvJQ&list=PL9gnSGHSqcnr_DxHsP7AW9ftq0AtAyYqJ&index=21 - youtubelink  
+class Solution {
+    public int splitArray(int[] nums, int m) {
+        int start = 0;
+        int end = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            start = Math.max(start, nums[i]); // in the end of the loop this will contain the max item of the array
+            end += nums[i];
+        }
+
+        // binary search
+        while (start < end) {
+            // try for the middle as potential ans
+            int mid = start + (end - start) / 2;
+
+            // calculate how many pieces you can divide this in with this max sum
+            int sum = 0;
+            int pieces = 1;
+            for(int num : nums) {
+                if (sum + num > mid) {
+                    // you cannot add this in this subarray, make new one
+                    // say you add this num in new subarray, then sum = num
+                    sum = num;
+                    pieces++;
+                } else {
+                    sum += num;
+                }
+            }
+
+            if (pieces > m) {
+                start = mid + 1;
+            } else {
+                end = mid;
+            }
+
+        }
+        return end; // here start == end
+    }
+}
+-----------------------------------------------------------------
+https://curiouschild.github.io/leetcode/2019/06/21/divide-chocolate.html - also contains solution for reference
+public class SplitArray {
+    public static void main(String[] args) {
+
+    }
+    public int splitArray(int[] nums, int m) {
+        m++;
+        int start = Integer.MAX_VALUE;
+        int end = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            start = Math.min(start, nums[i]); // in the end of the loop this will contain the min item of the array
+            end += nums[i];
+        }
+
+        // binary search
+        while (start+1 < end) {
+            // try for the middle as potential ans
+            int mid = start + (end - start) / 2;
+
+            // calculate how many pieces you can divide this in with this max sum
+            int sum = 0;
+            int pieces = 1;
+            for(int num : nums) {
+                if (sum + num > mid) {
+                    // you cannot add this in this subarray, make new one
+                    // say you add this num in new subarray, then sum = num
+                    sum = num;
+                    pieces++;
+                } else {
+                    sum += num;
+                }
+            }
+            if (pieces < m) {
+                end = mid - 1;
+            } else {
+                start = mid;
+            }
+        }
+        int sum = 0; 
+        for (int num : nums){
+            if (sum + num < start) { // here start == end
+                sum += num;
+            }
+        }
+        return sum; 
+    }
+}   
+-----------------------------------------------------------------

@@ -1,0 +1,1293 @@
+note search /solutions/ for such silutions and refer them..
+-----------------------------------------------------------------
+public class Comparison {
+    public static void main(String[] args) {
+        String a = "Muizz";
+        String b = "Muizz";
+        String c = a;
+//        System.out.println(c == a);
+        // ==
+//        System.out.println(a == b);
+
+        String name1 = new String("Muizz");
+        String name2 = new String("Muizz");
+
+        System.out.println(name1 == name2);
+
+        System.out.println(name1.equals(name2));
+
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class Output {
+    public static void main(String[] args) {
+        System.out.println(56);
+//        Integer num = new Integer(56);
+//        System.out.println(num.toString());
+//        System.out.println(num);
+//        System.out.println("Muizz");
+        System.out.println(Arrays.toString(new int[]{2, 3, 4, 5}));
+////
+//        String name = null;
+//        System.out.println(name);
+    }
+}
+-----------------------------------------------------------------
+public class PrettyPrinting {
+    public static void main(String[] args) {
+        float a = 453.1274f;
+//        System.out.printf("Formatted number is %.2f", a);
+
+//        System.out.printf("Pie: %.3f", Math.PI);
+
+        System.out.printf("Hello my name is %s and I am %s", "Muizz", "Cool");
+    }
+}
+-----------------------------------------------------------------
+import java.util.ArrayList;
+
+public class Operators {
+    public static void main(String[] args) {
+        System.out.println('a' + 'b');
+        System.out.println("a" + "b");
+        System.out.println((char)('a' + 3));
+
+        System.out.println("a" + 1);
+        // this is same as after a few steps: "a" + "1"
+        // integer will be converted to Integer that will call toString()
+
+        System.out.println("Kunal" + new ArrayList<>());
+        System.out.println("Kunal" + new Integer(56));
+        String ans = new Integer(56) + "" + new ArrayList<>();  // checks notes for understanding why there is an "" string in between.
+        System.out.println(ans);
+
+        System.out.println("a" + 'b');
+    }
+}
+-----------------------------------------------------------------
+public class SB {
+    public static void main(String[] args) {
+        String series = "";
+        for (int i = 0; i < 26; i++) {
+            char ch = (char)('a' + i);
+            series = series + ch; // series += ch
+        }
+
+        System.out.println(series);
+    // the performance of the above is not good as string is immutable and every time a new char is added a new object is being created and in the end we have many objects that has re reference variables pointing to.
+    // here we usw a data structure called StringBuilder which allows us to modify the original string without creating a new object for every modification.
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 26; i++) {
+            char ch = (char)('a' + i);
+            builder.append(ch);
+        }
+
+        System.out.println(builder.toString());
+
+        builder.reverse();
+
+        System.out.println(builder);
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class Methods {
+    public static void main(String[] args) {
+        String name = "Muizz Ul Haque Hello World";
+        System.out.println(Arrays.toString(name.toCharArray()));
+        System.out.println(name.toLowerCase());
+        System.out.println(name);
+        System.out.println(name.indexOf('a'));
+        System.out.println("     Muizz   ".strip());
+        System.out.println(Arrays.toString(name.split(" ")));
+    }
+}
+-----------------------------------------------------------------
+public class IsPalin {
+    public static void main(String[] args) {
+        String str = "abcba";
+        System.out.println(isPalindrome(str));
+    }
+
+    static boolean isPalindrome(String str) {
+        if (str == null || str.length() == 0) {
+            return true;
+        }
+        str = str.toLowerCase();
+        for (int i = 0; i <= str.length() / 2; i++) {
+            char start = str.charAt(i);
+            char end = str.charAt(str.length() - 1 - i);
+
+            if (start != end) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/shuffle-string/
+class Solution {
+    public String restoreString(String s, int[] indices) {
+        int count = 0; 
+        char[] array = new char[indices.length];
+        for(int i = 0 ; i < indices.length ; i++){
+            array[indices[i]] = s.charAt(i);
+        }
+        return new String(array);
+        
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/goal-parser-interpretation/
+class Solution {
+    public String interpret(String command) {
+        if(command.contains("(al)")){
+            command = command.replace("(al)", "al");
+        }
+        if(command.contains("()")){
+            command = command.replace("()","o");
+        }
+        return command;
+    }
+}
+-----------------------------------------------------------------
+class Solution {
+    public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+        int count = 0;
+
+        for (List<String> item : items) {
+            int index = 0; // Index of the attribute to compare (type, color, or name)
+
+            // Determine the index based on ruleKey
+            if (ruleKey.equals("type")) {
+                index = 0;
+            } else if (ruleKey.equals("color")) {
+                index = 1;
+            } else if (ruleKey.equals("name")) {
+                index = 2;
+            }
+
+            // Check if the corresponding attribute matches the rule value
+            if (item.get(index).equals(ruleValue)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/count-items-matching-a-rule/
+class Solution {
+    public int countMatches(List<List<String>> items, String ruleKey, String ruleValue) {
+        int count = 0;
+
+        for (List<String> item : items) {
+            int index = 0; // Index of the attribute to compare (type, color, or name)
+
+            // Determine the index based on ruleKey
+            if (ruleKey.equals("type")) {
+                index = 0;
+            } else if (ruleKey.equals("color")) {
+                index = 1;
+            } else if (ruleKey.equals("name")) {
+                index = 2;
+            }
+
+            // Check if the corresponding attribute matches the rule value
+            if (item.get(index).equals(ruleValue)) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+}
+-----------------------------------------------------------------
+class Solution {
+    public static String sortSentence(String s) {
+	String[] str = s.split(" ");                // Since the String contains only whitespaces, it's safe to split the String at them
+	String[] res = new String[str.length];      // This String array will hold the rearranged words
+	StringBuilder sb = new StringBuilder();     // Instead of using '+' operator to concat repeatedly, I have created a StringBuilder object which is more efficient
+	int i = 0;                          
+	for (String elem : str) {
+		i = (int) (elem.charAt(elem.length() - 1) - '0');  // This  will extract the digit present at the end of each String and store it in i (i = index of the word in res[])
+		res[i - 1] = elem.substring(0, elem.length() - 1); // This gives the substring of each String except for the digit in the end and stores the word at an appropriate index (i - 1) in res[]
+	}
+	//append the words from res[] to StringBuilder object to form a sentence
+	for (i = 0; i < res.length - 1; i++)
+		sb.append(res[i]).append(" ");
+	sb.append(res[i]);
+	return sb.toString();
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent/
+class Solution {
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+        StringBuilder sb1 = new StringBuilder();
+        for (String s : word1) {
+            sb1.append(s);
+        }
+
+        StringBuilder sb2 = new StringBuilder();
+        for (String s : word2) {
+            sb2.append(s);
+        }
+
+        return sb1.toString().equals(sb2.toString());
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/to-lower-case/
+class Solution {
+    public String toLowerCase(String s) {
+        return s.toLowerCase();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/determine-if-string-halves-are-alike/
+class Solution {
+    public boolean halvesAreAlike(String s) {
+        String a=s.substring(0,s.length()/2).toLowerCase();
+        String b=s.substring(s.length()/2,s.length()).toLowerCase();
+        if(vowels(a)==vowels(b)) {
+            return true;
+        }
+        return false;
+    }
+
+    static int vowels(String word) {
+        int count=0;
+        for (int i=0;i<word.length();i++) {
+            char ch=word.charAt(i);
+            if (ch=='a' || ch=='e' || ch=='i' ||ch=='o' || ch=='u') {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/decrypt-string-from-alphabet-to-integer-mapping/
+class Solution {
+    public String freqAlphabets(String s) {
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i = s.length()-1; i >= 0; i--) {
+            int number;
+            if(s.charAt(i) == '#') { // If it is a two-digit number
+                number = (s.charAt(i-2) - '0') * 10 + (s.charAt(i-1) - '0');
+                i-=2;
+            } else { // If it is a single-digit number 
+                number = s.charAt(i) - '0';
+            }
+            // Convert the numeric value to its alphabetic representation
+            sb.append((char) (number + 96));
+        }
+
+        return sb.reverse().toString();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/robot-return-to-origin/
+class Solution {
+    public boolean judgeCircle(String moves) {
+        int x = 0, y = 0;
+        for (char move : moves.toCharArray()) {
+            if (move == 'U')
+                y++;
+            else if (move == 'D')
+                y--;
+            else if (move == 'R')
+                x++;
+            else if (move == 'L')
+                x--;
+        }
+        return x == 0 && y == 0;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/reverse-words-in-a-string-iii/
+class Solution {
+    public String reverseWords(String s) {
+        char[] tochar = s.toCharArray();
+        int start = 0;
+        int end = -1;
+        for(int i = 0; i < tochar.length; i++) {
+            if(tochar[i] == ' ') {
+                reverse(tochar, start, end);
+                start = i + 1;
+                end = start - 1;
+            }
+            else {
+                end++;
+            }
+        }
+        reverse(tochar, start, end);
+        return new String(tochar);
+    }
+    public static void reverse(char[] input, int start, int end) {
+        while(start < end) {
+            char temp = input[start];
+            input[start] = input[end];
+            input[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/excel-sheet-column-title/
+class Solution {
+    public String convertToTitle(int c) {
+        StringBuilder sol = new StringBuilder();
+        while (c > 0) {
+            int temp = (c - 1) % 26; 
+            sol.append((char) ('A' + temp));
+            c = (c - 1) / 26;
+        }
+        return sol.reverse().toString(); 
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/
+class Solution {
+    public int strStr(String haystack, String needle) {
+        for(int i = 0, j = needle.length(); j<=haystack.length(); i++,j++){ // advanced func where you can have more than one var and remember to have a condition to break the loop and atlaest one is required
+            if(haystack.substring(i,j).equals(needle)){
+                return i;
+            }
+        }
+        return -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/long-pressed-name/
+class Solution {
+    public boolean isLongPressedName(String name, String typed) {
+        int i = 0;
+        int m = name.length(), n = typed.length();
+        
+        for (int j = 0; j < n; j++){
+            if (i < m && name.charAt(i) == typed.charAt(j)){
+                i++;
+            }
+            else if (j == 0 || typed.charAt(j) != typed.charAt(j-1)){
+                return false;
+            }
+        }
+        return i == m;
+
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/valid-palindrome-ii/
+class Solution {
+    public boolean validPalindrome(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+        
+        while(i <= j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }
+            else return isPalindrome(s, i + 1, j) || isPalindrome(s, i, j - 1);
+        }
+        return true;
+    }
+    public boolean isPalindrome(String s, int i, int j){
+        while(i <= j){
+            if(s.charAt(i) == s.charAt(j)){
+                i++;
+                j--;
+            }
+            else return false;
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/valid-palindrome/
+class Solution {
+    public boolean isPalindrome(String s) {
+        String str=s.replaceAll("[^a-zA-Z0-9]","").toLowerCase();// regex expression
+        StringBuilder sb=new StringBuilder(str);
+        sb.reverse();
+        String ans=sb.toString();
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)!=ans.charAt(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+class Solution {
+    
+    public boolean isAlpha(char ch){
+        if(ch >= 'a' && ch <= 'z'){
+            return true;
+        }
+        else if(ch >= 'A' && ch <= 'Z'){
+            return true;
+        }
+        else if(ch >= '0' && ch <= '9'){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean isPalindrome(String s) {
+        int i = 0;
+        int j = s.length()-1;
+        while(i < j){
+            char c1 = s.charAt(i);
+            char c2 = s.charAt(j);
+            if(!isAlpha(c1)){
+                i++;
+            }else if(!isAlpha(c2)){
+                j--;
+            }else{
+                //compare
+                
+                if(c1 >= 'A' && c1 <= 'Z'){
+                    c1 = (char)(c1 - 'A' + 'a');
+                }
+                if(c2 >= 'A' && c2 <= 'Z'){
+                    c2 =  (char)(c2 - 'A' + 'a');
+                }
+                
+                if(c1 != c2){
+                    return false;
+                }
+                i++;
+                j--;
+            }
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/check-if-binary-string-has-at-most-one-segment-of-ones/
+class Solution {
+    public boolean checkOnesSegment(String s) {
+        char[] ch = s.toCharArray();
+        for(int i=0; i<s.length()-1; i++){ 
+            if(ch[i+1] == '1' && ch[i] == '0'){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+class Solution {
+    public String reversePrefix(String word, char ch) {
+        int idx=word.indexOf(ch);
+        if(idx==-1) return word;
+        StringBuilder str = new StringBuilder(word.substring(0,idx+1));
+        return str.reverse().toString() + word.substring(idx+1); // note if you don't specify the end index it will go till the end
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/roman-to-integer/
+class Solution {
+    public int romanToInt(String s) {
+        int total = 0;
+        char previous = '-';
+        char currentSymbol = '-'; 
+        for (int i = s.length()-1; i >= 0; i--){
+            previous = currentSymbol;
+            currentSymbol = s.charAt(i);
+            switch (currentSymbol){
+                case 'I':
+                    if (previous == 'V' || previous == 'X'){
+                        total -= 1;
+                    }else{
+                        total += 1;
+                    }
+                    break;
+                case 'V':
+                    total += 5;
+                    break;
+                case 'X':
+                    if (previous=='L' || previous=='C'){
+                        total -= 10;
+                    }else{
+                        total += 10;
+                    }
+                    break;
+                case 'L':
+                    total += 50;
+                    break;
+                case 'C':
+                    if (previous=='D' || previous=='M'){
+                        total -= 100;
+                    }else{
+                        total += 100;
+                    }
+                    break;
+                case 'D':
+                    total += 500;
+                    break;
+                case 'M':
+                    total += 1000;
+                    break;
+            }
+        }
+        return total;    
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/merge-strings-alternately/
+class Solution {
+    public String mergeAlternately(String word1, String word2) {
+        StringBuilder sb = new StringBuilder();
+        int length = Math.min(word1.length(),word2.length());
+        for (int i=0;i<length;i++){
+            sb.append(word1.charAt(i));
+            sb.append(word2.charAt(i));
+        }
+        if (word1.length()>length){
+            sb.append(word1.substring(length,word1.length()));
+        }
+        else if (word2.length()>length){
+            sb.append(word2.substring(length,word2.length()));
+        }
+        return sb.toString();
+    }
+}
+-----------------------------------------------------------------
+imp
+https://leetcode.com/problems/maximum-repeating-substring/
+class Solution {
+    public int maxRepeating(String sequence, String word) {
+        StringBuilder str = new StringBuilder();
+        int count = 0;
+        str.append(word);
+        while(sequence.contains(str) == true) {
+            count++;
+            str.append(word);
+        }
+        return count;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/longest-common-prefix/
+class Solution {
+    public String longestCommonPrefix(String[] v) {
+        StringBuilder ans = new StringBuilder();
+        Arrays.sort(v);
+        String first = v[0];
+        String last = v[v.length-1];
+        for (int i=0; i<Math.min(first.length(), last.length()); i++) {
+            if (first.charAt(i) != last.charAt(i)) {
+                return ans.toString();
+            }
+            ans.append(first.charAt(i));
+        }
+        return ans.toString();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/repeated-string-match/
+class Solution {
+    public int repeatedStringMatch(String a, String b) {
+        boolean[] map = new boolean[26];
+        for(int i = 0; i < a.length(); i++){
+            map[a.charAt(i)-'a'] = true; 
+        }
+        for(int i = 0; i < b.length(); i++){
+            if(map[b.charAt(i)-'a'] == false){
+                return -1; 
+            }
+        }
+        int count = 1; 
+        StringBuilder sb = new StringBuilder(a); 
+        while(sb.length() < b.length()){
+            sb.append(a); 
+            count++; 
+        }
+        if(sb.indexOf(b)>=0){
+            return count; 
+        }
+        sb.append(a); 
+        count++; 
+        if(sb.indexOf(b)>=0){
+            return count; 
+        }
+        return -1; 
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/jump-game-vii/
+solved using dp
+class Solution {
+    public boolean canReach(String s, int minJump, int maxJump) {
+        int n = s.length();
+        int checkStartPosition = 0;
+        int checkFinalPosition = 0;
+
+        boolean[] canVisit = new boolean[n];
+        canVisit[0] = true;
+
+        for (int i = 0; i < n; i++) {
+            if (canVisit[i] == true) {
+                checkStartPosition = Math.max(minJump + i, checkFinalPosition + 1);     //start from position which is not yet checked to avoid duplicate checks
+                checkFinalPosition = Math.min(maxJump + i, n - 1);
+
+                for (int j = checkStartPosition; j <= checkFinalPosition; j++) {
+                    if (s.charAt(j) == '0') 
+                        canVisit[j] = true;
+                }
+            }
+        }
+        return canVisit[n - 1];
+    }
+}
+
+-----------------------------------------------------------------
+https://leetcode.com/problems/split-two-strings-to-make-palindrome/solutions/3131713/java-solutions-explained/
+class Solution {
+    public boolean checkPalindromeFormation(String a, String b) {
+        // either way of split should give us a palindrome
+        return cut(a, b) || cut(b, a);
+    }
+
+    // method to match letters from both ends
+    private boolean cut(String a, String b) {
+        int i = 0, j = a.length() - 1;
+        // converge from both ends till we have same letters
+        while (i < j && a.charAt(i) == b.charAt(j)) {
+            i++; j--;
+        }
+
+        // the case when we surpassed the mid point from both ends
+        if (i >= j) return true;
+        // the case when there is still a substring left in between
+        // or say we didn't reach the mid point
+        // we will check if that substring is a palindrome or not
+        return isPalindrome(a, i, j) || isPalindrome(b, i, j);
+    }
+
+    // method to check if a string is palindrome
+    private boolean isPalindrome(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i++) != s.charAt(j--)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/number-of-ways-to-split-a-string/
+// TC: O(n)
+// SC: O(n)
+class Solution {
+    static int mod = (int)1e9+7;
+    public int numWays(String s) {
+        int n = s.length(), sum=0;
+        char[] arr = s.toCharArray();
+        for(char ch:arr){
+            sum+=ch-'0';
+        }
+        if(sum%3!=0){
+            return 0;
+        }
+        sum=sum/3;
+
+        if(sum==0){
+            return (int)((((long)(n-2)*(n-1))/2)%mod);
+        }
+
+        int si=0, c1=0, c2=0;
+        for(char ch:arr){
+            si+=ch-'0';
+            if(si==sum)
+                c1++;
+            if(si==2*sum)
+                c2++;
+        }
+        return (int)(((long)c1*c2)%mod); // this uses permutations and combinations to check the ways 
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/next-greater-element-iii/
+class Solution {
+    public int nextGreaterElement(int n) {
+        //Converting integer to an array of digits
+        String s = Integer.toString(n);
+        int arr[] = new int[s.length()];
+        for(int i=0;i<s.length();i++){
+            arr[i] = s.charAt(i) - '0';
+        }
+        
+        //Finding the first decreasing element(i-1) from behind
+        int i = arr.length - 1;
+        while(i > 0 && arr[i-1] >= arr[i]){
+            i--;
+        }
+        //If no element is decreasing and the array is all increasing from behind then return -1 as no solution possible
+        if(i-1 < 0) return -1;
+        
+        //Finding the next bigger element(j) than (i-1) from behind
+        int j = arr.length-1;
+        while(j > (i-1) && arr[j] <= arr[i-1]){
+            j--;
+        }
+        
+        //Swap the elements
+        swap(arr, i-1, j);
+        //Reverse the array from i to end
+        reverse(arr, i);
+        
+        //Convert the array to an integer but make sure to check that if does not exceed the 32 bit integer as mentioned in the question
+        int ans = 0;
+        for(i=0;i<arr.length;i++){
+            if(ans > Integer.MAX_VALUE / 10 || (ans == Integer.MAX_VALUE / 10 && arr[i] > 7))
+                return -1;
+            if(ans < Integer.MIN_VALUE / 10 || (ans == Integer.MIN_VALUE / 10 && arr[i] < -8))
+                return -1;
+            ans = ans * 10 + arr[i];
+        }
+        //If the same integer is formed then return -1
+        return ans == n ? -1 : ans;
+    }
+    
+    //Helper function to reverse
+    private void reverse(int[] arr, int i){
+        int j = arr.length - 1;
+        while(i < j){
+            swap(arr, i, j);
+            i++;
+            j--;
+        }
+    }
+    
+    //Helper function to swap the elements
+    private void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/sentence-similarity-iii/
+class Solution {
+    public boolean areSentencesSimilar(String sentence1, String sentence2) {
+        String[] s1 = sentence1.split(" ");
+        String[] s2 = sentence2.split(" ");
+        int i = 0, j = 0;
+        while (i < s1.length && j < s2.length){
+            if (!s1[i].equals(s2[j])) break;
+            i++;
+            j++;
+        }
+            if (i == s1.length || j == s2.length) return true;
+        int len1 = s1.length - 1, len2 = s2.length - 1;
+        while(len1 >= i && len2 >= j){
+            if(!s1[len1].equals(s2[len2])) return false;
+            len1--;
+            len2--;
+        }
+        return len1 < i || len2 < j;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/basic-calculator-ii/
+class Solution {
+    public int calculate(String s) {
+        int num = 0;
+        char operator = '+';
+        int last = 0, sum = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (Character.isDigit(c)) {
+                num = num * 10 + (c - '0');
+            }
+
+            if (isOperator(c) || i == s.length() - 1) {
+                if (operator == '+') {
+                    sum += last;
+                    last = num;
+                }
+                else if (operator == '-') {
+                    sum += last;
+                    last = -num;
+                }
+                else if (operator == '*') last *= num;
+                else if (operator == '/') last /= num;
+
+                num = 0;
+                operator = c;
+            }
+        }
+
+        return sum += last;
+    }
+
+    private boolean isOperator(char c) {
+        return c == '+' || c == '-' || c == '*' || c == '/';
+    }
+}
+
+// TC: O(n), SC: O(1)
+
+-----------------------------------------------------------------
+https://leetcode.com/problems/multiply-strings/
+class Solution {
+    public String multiply(String num1, String num2) {
+        // Calculate the lengths of the input strings
+        int n1 = num1.length(), n2 = num2.length();
+        
+        // Array to store the products of digits
+        int[] products = new int[n1 + n2];
+
+        // Multiply each digit of num1 with each digit of num2
+        for (int i = n1 - 1; i >= 0; i--) {
+            for (int j = n2 - 1; j >= 0; j--) {
+                int d1 = num1.charAt(i) - '0';
+                int d2 = num2.charAt(j) - '0';
+                // Add the product to the corresponding position in the products array
+                products[i + j + 1] += d1 * d2;
+            }
+        }
+
+        // Process carries and finalize the products
+        int carry = 0;
+        for (int i = products.length - 1; i >= 0; i--) {
+            int temp = (products[i] + carry) % 10;
+            carry = (products[i] + carry) / 10;
+            products[i] = temp;
+        }
+
+        // Build the result string
+        StringBuilder sb = new StringBuilder();
+        for (int num : products) {
+            sb.append(num);
+        }
+
+        // Remove leading zeros from the result
+        while (sb.length() != 0 && sb.charAt(0) == '0') {
+            sb.deleteCharAt(0);
+        }
+
+        // Return "0" if the result is empty, otherwise return the result string
+        return sb.length() == 0 ? "0" : sb.toString();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/swap-adjacent-in-lr-string/solutions/2144775/java-easy-understanding-with-explanation/
+class Solution {
+    public boolean canTransform(String start, String end) {
+	// First, remove all 'X', and compare if they equal.
+	StringBuffer s = new StringBuffer();
+	StringBuffer e = new StringBuffer();
+	for (char c : start.toCharArray()) {
+		if (c != 'X') {
+			s.append(c);
+		}
+	}
+	for (char c : end.toCharArray()) {
+		if (c != 'X') {
+			e.append(c);
+		}
+	}
+	if (!s.toString().equals(e.toString()))
+		return false;
+	// check R
+	// form i to start.length(), 
+	// if R found in start count++, 
+	// if R found in end count--, 
+	// if count comes to negative, that means 'R' is in more left position in end, so 'R' can't move from start to end.
+	int count = 0;
+	for (int i = 0; i < start.length(); i++) {
+		if (start.charAt(i) == 'R') {
+			count++;
+		}
+		else if (end.charAt(i) == 'R') {
+			count--;
+		}
+		if (count < 0) {
+			return false;
+		}
+	}
+	// check L
+	// same with checking 'R', only difference is: 
+	// to ensure every 'L' comes first in end.
+	count = 0;
+	for (int i = 0; i < start.length(); i++) {
+		if (end.charAt(i) == 'L') {
+			count++;
+		}
+		else if (start.charAt(i) == 'L') {
+			count--;
+		}
+		if (count < 0) {
+			return false;
+		}
+	}
+	return true;
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/minimum-length-of-string-after-deleting-similar-ends/
+class Solution {
+    public int minimumLength(String s) 
+    {
+        int i=0,j=s.length()-1;
+        while(i<j)
+        {
+            if(s.charAt(i)!=s.charAt(j))
+            break;
+            char ch=s.charAt(i);
+            while(i<=j&&s.charAt(i)==ch)i++;
+            while(i<=j&&s.charAt(j)==ch)j--;
+            
+        }
+        return j-i+1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/number-of-substrings-with-only-1s/
+class Solution {
+    public int numSub(String s) {
+        int mod=(int)1e9+7; // 10^9 + 7
+        int ans = 0;
+        int start = 0;
+        int add = 0;
+        for( int i = 0; i< s.length(); i++){
+            if(s.charAt(i)=='1'){
+                add++;
+            }
+            else{
+                ans += ((add)*(add+1))/2;
+                add = 0;
+            }
+        }
+        if(add>0){
+            ans += ((add)*(add+1))/2;
+        }
+        return (int)(ans%mod);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/count-number-of-homogenous-substrings/
+class Solution {
+    public int countHomogenous(String s) {
+        int sum=0;
+        int i=0;
+        int mod=1000000007;
+        int n=s.length();
+        while(i<n){
+            char ch1=s.charAt(i);
+            int j=i+1;
+            int cnt=1;
+            while(j<n&&s.charAt(j)==ch1){
+                j++;
+                cnt++;
+            }
+           int res =(int)(((long)(cnt)*(cnt+1)/2)%mod);
+            sum=(sum+res)%mod;
+            i=j;
+        }
+        return sum;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/shifting-letters/
+class Solution {
+    public String shiftingLetters(String s, int[] shifts) {
+        StringBuilder ans = new StringBuilder(s);
+        long shift=0;
+        for (int i = s.length()-1; i >=0 ; i--){
+            ans.setCharAt(i, (char)((s.charAt(i) - 'a' + (shift+shifts[i]) % 26) % 26 + 'a'));
+            shift+=shifts[i];
+        }
+        return ans.toString();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/minimum-time-difference/
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        String s;
+       int n=timePoints.size();
+        int[] x=new int[n];
+        for(int i=0;i<n;i++){
+      s=timePoints.get(i);
+           int p=((s.charAt(0)-'0')*10+(s.charAt(1)-'0'))*60;
+            int q=(s.charAt(3)-'0')*10+(s.charAt(4)-'0');
+            x[i]=p+q;
+            }
+       Arrays.sort(x);
+        int c=x[n-1]-x[0];
+        if(c>720)
+            c=1440-c;
+        for(int i=0;i<n-1;i++){
+            int b=x[i+1]-x[i];
+            if(b>720)
+
+            b=1440-b;
+            if(b<c)
+                c=b;
+               }
+        return c;
+    }
+}
+-----------------------------------------------------------------
+imp - int len = (int) (Math.pow(2, n) - 1); // 2 ^ n - 1
+https://leetcode.com/problems/get-equal-substrings-within-budget/
+class Solution {
+    public int equalSubstring(String s, String t, int maxCost) {
+        int n = s.length();
+        int m = t.length();
+        int arr[] = new int[n];
+
+        for(int i=0; i<n; i++){
+            arr[i] = Math.abs(s.charAt(i)-t.charAt(i));
+        }
+        int i = 0,j=0;
+        int sum = 0;
+        int max = 0;
+        while(j<n){
+             sum += arr[j];
+             if(sum>maxCost){
+                 sum -= arr[i];
+                 i++;
+             }
+             max = Math.max(max, j-i+1);
+             j++;
+        }
+
+        return max;
+
+    }
+}
+
+-----------------------------------------------------------------
+https://leetcode.com/problems/print-words-vertically/
+class Solution {
+    public List<String> printVertically(String s) {
+        List<String> list = new ArrayList();
+        String [] words = s.split(" ");
+        int maxLen = maxLength(words);
+
+        for (int i = 0; i < maxLen; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (String word : words) {
+                if (i >= word.length()) sb.append(" ");
+                else sb.append(word.charAt(i));
+            }
+            list.add(trimRight(sb.toString()));
+        }
+        return list;
+    }
+    public int maxLength(String[] arr) {
+        int maximum = 0;
+        for (String s : arr) maximum = Math.max(maximum, s.length());
+        return maximum;
+    }
+    public String trimRight(String s) {
+        int i = s.length() - 1;
+        while (i >= 0 && s.charAt(i) == ' ') i--;
+        return s.substring(0, i + 1);
+    }
+}
+-----------------------------------------------------------------
+imp - https://leetcode.com/problems/valid-number/solutions/4502681/java-simple-solution-with-100-runtime-efficiency-valid-number-checker/
+class Solution {
+    public boolean isNumber(String s) {
+        s = s.trim();
+        boolean digitSeen = false;
+        boolean dotSeen = false;
+        boolean eSeen = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (Character.isDigit(c)) {
+                digitSeen = true;
+            } else if (c == '+' || c == '-') {
+                if (i > 0 && s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') {
+                    return false;
+                }
+            } else if (c == '.') {
+                if (dotSeen || eSeen) {
+                    return false;
+                }
+                dotSeen = true;
+            } else if (c == 'e' || c == 'E') {
+                if (eSeen || !digitSeen) {
+                    return false;
+                }
+                eSeen = true;
+                digitSeen = false;
+            } else {
+                return false;
+            }
+        }
+
+        return digitSeen;
+    }
+}
+-----------------------------------------------------------------
+imp
+https://leetcode.com/problems/check-if-string-is-transformable-with-substring-sort-operations/
+class Solution {
+    public boolean isTransformable(String s, String t) {
+        int[][] sr = new int[10][10];
+        int[][] tr = new int[10][10];
+        int[] sc = new int[10];
+        int[] tc = new int[10];
+        boolean equal = true;
+        for (int i = 0; i < s.length(); i++) {
+            int ss = s.charAt(i) - '0';
+            int tt = t.charAt(i) - '0';
+            if (equal) {
+                switch (Integer.compare(tt,ss)) {  #This method returns the value zero if (x==y), 
+                                                    if (x < y) then it returns a value less than zero 
+                                                    and if (x > y) then it returns a value greater than zero.
+                    case 1: return false; // cannot produce t > s
+                    case -1: equal = false;
+                }
+            }
+            // running frequencies of digits in s & t
+            sc[ss]++;
+            tc[tt]++;
+            // running inversions in s & t
+            for (int j = 9; j > ss; j--) sr[ss][j] += sc[j];
+            for (int j = 9; j > tt; j--) tr[tt][j] += tc[j];
+        }
+        for (int i = 0; i < 9; i++) {
+            if (sc[i] != tc[i]) return false; // cannot modify digit count
+            for (int j = i+1; j <= 9; j++) {
+                if (tr[i][j] > sr[i][j]) return false;  // cannot add inversions
+            }
+        }
+        return true;
+        
+    }
+}
+-----------------------------------------------------------------
+imp
+https://leetcode.com/problems/maximum-number-of-removable-characters/
+class Solution {
+    // This is to check if p is subsequence of s. Time complexity will be O(s.length());
+    public boolean isSubsequence(char[] s, char[] p){
+        int i = 0, j = 0;
+        while(i < s.length && j < p.length){
+            if(s[i] == p[j]){
+                i++;
+                j++;
+            }
+            else i++;
+        }
+
+        // If our j pointer reaches the end of P string or P char[] then P is a subsequence of S so return TRUE otherwise return FALSE.
+        return j == p.length;
+    }
+
+    public int maximumRemovals(String s, String p, int[] removable) {
+        char[] sChar = s.toCharArray();
+        char[] pChar = p.toCharArray();
+        int l = 0;
+        int r = removable.length - 1;
+
+        while(l <= r){
+            int mid = l + (r-l)/2;
+
+            // Let's check till the mid point of removable array and find whether after removing all those indices from s, p remains a subsequence of s or not? I used '* to indicate that I removed those indices.'
+            for(int i = l; i <= mid; i++) sChar[removable[i]] = '*';
+
+            // If it is a subsequence then this might be possible that the value of K is more but we are only checking till mid so we need to move right, hence l = mid+1;
+            if(isSubsequence(sChar, pChar)){
+                l = mid+1;
+            }
+
+            // If we remove the indices till mid point but our K is less i.e, we can't remove mid+1(we start our iteration considering 0 indexed) numbers of elements then it might be possible that our K is less than mid+1. so we need to move left. Since we have already checked till mid now we need to set our r = mid-1.
+            else{
+                for(int i = l; i <= mid; i++) sChar[removable[i]] = s.charAt(removable[i]);
+                r = mid - 1;
+            }
+        }
+
+        // Since we have programmed based on 0 indexed our r might go to -1 or our r value will stay at the end index of removable array so to find out toal number of K we need to do r+1;
+        return r+1;
+
+        // Time complexity for this method will be Time complexity for (isSubsequence() * BinarySearch(removable)) so total TIme complexity will be O(s.length*log(removable.length));
+    }
+}
+-----------------------------------------------------------------
+
+class Solution {
+
+public String lastSubstring(String s) {
+int maxIndex = s.length() - 1;
+
+for(int currIndex = s.length() - 1 ; currIndex >= 0 ; currIndex--){
+    if(s.charAt(currIndex) > s.charAt(maxIndex))
+        maxIndex = currIndex;
+        
+    else if(s.charAt(currIndex) == s.charAt(maxIndex)){
+        int i = currIndex + 1;
+        int j = maxIndex + 1;
+        
+        
+        while(i < maxIndex && j < s.length() && s.charAt(i) == s.charAt(j)){
+            i++;
+            j++;
+        }
+        
+        if(i == maxIndex || j == s.length() || s.charAt(i) > s.charAt(j))
+            maxIndex = currIndex;
+    }
+}
+
+return s.substring(maxIndex);
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/orderly-queue/
+class Solution {
+    public String orderlyQueue(String s, int k) {
+        if(k>1){
+            char tempArray[] = s.toCharArray();
+            Arrays.sort(tempArray);
+            return new String(tempArray);
+        } else {
+            String ans  = s;
+            for(int i=0;i< s.length(); i++){
+                s = s.substring(1) + s.substring(0,1);
+                if(ans.compareTo(s) >0){
+                    ans = s;
+                }
+            }
+            return ans;
+        }
+    }
+}
+-----------------------------------------------------------------
+There are many format specifiers we can use. Here are some common ones: important
+
+%c - Character
+%d - Decimal number (base 10)
+%e - Exponential floating-point number
+%f - Floating-point number
+%i - Integer (base 10)
+%o - Octal number (base 8)
+%s - String
+%u - Unsigned decimal (integer) number
+%x - Hexadecimal number (base 16)
+%t - Date/time
+%n - Newline
+-----------------------------------------------------------------

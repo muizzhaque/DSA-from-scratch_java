@@ -798,15 +798,131 @@ public class MatrixRotation {
 https://leetcode.com/problems/house-robber/
 class Solution {
     public int rob(int[] nums) {
-        int rob = 0;
-        int norob = 0;
-        for (int i = 0; i < nums.length; i ++) {
-            int newRob = norob + nums[i];
-            int newNoRob = Math.max(norob, rob);
-            rob = newRob;
-            norob = newNoRob;
+        int prevMax = 0;
+        int currMax = 0;
+        for (int x : nums) {
+            int newMax = Math.max(currMax, prevMax + x);
+            prevMax = currMax;
+            currMax = newMax;
         }
-        return Math.max(rob, norob);
+        return currMax;
     }
 }
+-----------------------------------------------------------------
+https://leetcode.com/problems/house-robber/
+solved using dp: link - https://www.youtube.com/watch?v=VXqUQYGMnQg
+class Solution {
+    public int rob(int[] nums) {
+        // If only 1 element, just return it
+    if (nums.length < 2)
+      return nums[0];
+
+    // Create array to store the maximum loot at each index
+    int[] dp = new int[nums.length];
+
+    // Memoize maximum loots at first 2 indexes
+    dp[0] = nums[0];
+    dp[1] = Math.max(nums[0], nums[1]);
+
+    // Use them to fill complete array
+    for (int i = 2; i < nums.length; i++) {
+
+      // Core logic
+      dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+    }
+
+    return dp[nums.length - 1];
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/first-missing-positive/
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        for (int i=0;i<nums.length;i++) {
+            while (nums[i]>0 && nums[i]<=nums.length && nums[nums[i]-1] != nums[i]) {
+                int t = nums[nums[i]-1];
+                nums[nums[i]-1] = nums[i];
+                nums[i] = t;
+            }
+        }
+
+        for (int i=0;i<nums.length;i++) {
+            if (nums[i] != i+1) {
+                return i+1;
+            }
+        }
+        return nums.length+1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/max-value-of-equation/
+public class examp {
+    public static void main(String[] args) {
+        // [-19,-12],[-13,-18],[-12,18],[-11,-8],[-8,2],[-7,12],[-5,16],[-3,9],[1,-7],[5,-4],[6,-20],[10,4],[16,4],[19,-9],[20,19]
+        int[][] points = {
+            {-17,5},
+            {-10,-8},
+            {-5,-13},
+            {-2,7},
+            {8,-14}
+        };
+        int k = 4;
+        int ans = findMaxValueOfEquation(points,k);
+        System.out.println(ans);
+    }
+    static int findMaxValueOfEquation(int[][] points, int k) {
+        int [] cor = new int[points.length];
+        int eq = 0;
+        int l = 0;
+        int min = Integer.MIN_VALUE;
+        for( int i=0; i<points.length-1; i++){
+            int max = Integer.MIN_VALUE;
+            int j=i+1;
+            while(j<points.length){
+                if(Math.abs(points[j][0]-points[i][0])<=k){
+                    eq = points[i][1]+points[j][1]+Math.abs(points[i][0]-points[j][0]);
+                    max = Math.max(max,eq);
+                    cor[i] = max;
+                    if(j == points.length-1){
+                        l++;
+                    }
+                }
+                j++;
+            }
+        }for( int i=0; i<l; i++){
+            min = Math.max(min,cor[i]);
+        }
+        return min;
+    }
+}
+//  https://leetcode.com/problems/max-value-of-equation/solutions/2167138/array-fast-6ms-easy-simple-clean-code/
+// class Solution {
+//     public int findMaxValueOfEquation(int[][] points, int k) {
+//         int max = Integer.MIN_VALUE; //assign the lowest number
+//         int res = 0;
+//         int mod = 0;
+//         int flag = 1;
+//         for(int i = 0;i<points.length-1;i++) //iteration over the points
+//         {
+//             if(flag<i+1)
+//                 flag = i+1;
+//             for(int j = flag;j<points.length;j++) 
+// 			//iteration over the points again so that we can deliver the variables in the equation
+//             {
+//                 mod = points[i][0]-points[j][0]; 
+//                 if(mod<0)
+//                     mod = -mod;
+//                 if(mod>k)
+//                     break;
+//                 res = points[i][1]+points[j][1]+mod; //final equation 
+//                 if(max<res)
+//                 {
+//                     max = res; //updation of max
+//                     flag = j;
+//                 }
+//             }
+//         }
+//         return max;
+//     }
+// }
 -----------------------------------------------------------------

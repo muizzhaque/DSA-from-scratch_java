@@ -1,0 +1,322 @@
+import java.util.Arrays;
+
+public class BubSor {
+    public static void main(String[] args) {
+        int[] arr = {3,1,5,4,2};
+        bubble(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void bubble(int[] arr) {
+        boolean swapped;
+        // run the steps n-1 times
+        for (int i = 0; i < arr.length; i++) {
+            swapped = false;
+            // for each step, max item will come at the last respective index
+            for (int j = 1; j < arr.length - i; j++) {
+                // swap if the item is smaller than the previous item
+                if (arr[j] < arr[j-1]) {
+                    // swap
+                    int temp = arr[j];
+                    arr[j] = arr[j-1];
+                    arr[j-1] = temp;
+                    swapped = true;
+                }
+            }
+            // if you did not swap for a particular value of i, it means the array is sorted hence stop the program
+            if (!swapped) { // !false = true
+                break;
+            }
+        }
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+class SelSor{
+    public static void main(String[] args) {
+        int[] arr = {5,9,23,-3,4,7};
+        selection(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void selection(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            // find the max item in the remaining array and swap with correct index
+            int last = arr.length - i - 1;
+            int maxIndex = getMaxIndex(arr, 0, last);
+            swap(arr, maxIndex, last);
+        }
+    }
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+
+    static int getMaxIndex(int[] arr, int start, int end) {
+        int max = start;
+        for (int i = start; i <= end; i++) {
+            if (arr[max] < arr[i]) {
+                max = i;
+            }
+        }
+        return max;
+    }
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class InsSor {
+    public static void main(String[] args) {
+        int[] arr = {5,9,23,-3,4,7};
+        insertion(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void insertion(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i+1; j > 0; j--) {
+                if (arr[j] < arr[j-1]) {
+                    swap(arr, j, j-1);
+                } else {
+                    break;// here we know that all the remaining ele in LHS are also less than j and there is no point to check
+                }
+            }
+        }
+    }
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+
+}
+-----------------------------------------------------------------
+import java.util.Arrays;
+
+public class CycSor {
+    public static void main(String[] args) {
+        int[] arr = {5,4,3,2,1};
+        cyclicSort(arr);
+        System.out.println(Arrays.toString(arr));
+    }
+    static void cyclicSort(int[] arr){
+        int i = 0;
+        while (i < arr.length) {
+            int correct_index = arr[i] - 1;
+            if (arr[i] != arr[correct_index]) {
+                swap(arr, i , correct_index);
+            } else {
+                i++;
+            }
+        }
+    }
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/missing-number/
+// Amazon Question
+public class MissNum {
+    public static void main(String[] args) {
+        int[] arr = {4, 0, 2, 1};
+        System.out.println(missingNumber(arr));
+    }
+    public static int missingNumber(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+            int correct = arr[i];
+            if (arr[i] < arr.length && arr[i] != arr[correct]) {
+                swap(arr, i , correct);
+            } else {
+                i++;
+            }
+        }
+
+        // search for first missing number
+        for (int index = 0; index < arr.length; index++) {
+            if (arr[index] != index) {
+                return index;
+            }
+        }
+
+        // case 2
+        return arr.length;
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+// Asked in Google
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DispNum {
+    public List<Integer> findDisappearedNumbers(int[] nums) {
+        int i = 0;
+        while (i < nums.length) {
+            int correct = nums[i] - 1;
+            if (nums[i] != nums[correct]) {
+                swap(nums, i , correct);
+            } else {
+                i++;
+            }
+        }
+
+        // just find missing numbers
+        List<Integer> ans = new ArrayList<>();
+        for (int index = 0; index < nums.length; index++) {
+            if (nums[index] != index+1) {
+                ans.add(index + 1);
+            }
+        }
+
+        return ans;
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/find-the-duplicate-number/
+public class FindDup {
+    public int findDuplicate(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+
+            if (arr[i] != i + 1) {
+                int correct = arr[i] - 1;
+                if (arr[i] != arr[correct]) {
+                    swap(arr, i , correct);
+                } else {
+                    return arr[i];
+                }
+            } else {
+                i++;
+            }
+        }
+        return -1;
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/find-all-duplicates-in-an-array/
+
+import java.util.List;
+import java.util.ArrayList;
+public class FindDupAll {
+    public List<Integer> findDuplicates(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+            int correct = arr[i] - 1;
+            if (arr[i] != arr[correct]) {
+                swap(arr, i , correct);
+            } else {
+                i++;
+            }
+        }
+
+        List<Integer> ans = new ArrayList<>();
+        for (int index = 0; index < arr.length; index++) {
+            if (arr[index] != index+1) {
+                ans.add(arr[index]);
+            }
+        }
+
+        return ans;
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/set-mismatch/
+public class SetMis {
+    public int[] findErrorNums(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+            int correct = arr[i] - 1;
+            if (arr[i] != arr[correct]) {
+                swap(arr, i , correct);
+            } else {
+                i++;
+            }
+        }
+
+        // search for first missing number
+        for (int index = 0; index < arr.length; index++) {
+            if (arr[index] != index + 1) {
+                return new int[] {arr[index], index+1};
+            }
+        }
+        return new int[] {-1, -1};
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+// https://leetcode.com/problems/first-missing-positive/
+public class FirstMis {
+    public static int firstMissingPositive(int[] arr) {
+        int i = 0;
+        while (i < arr.length) {
+            int correct = arr[i] - 1;
+            if (arr[i] > 0 && arr[i] <= arr.length && arr[i] != arr[correct]) {
+                swap(arr, i , correct);
+            } else {
+                i++;
+            }
+        }
+
+        // search for first missing number
+        for (int index = 0; index < arr.length; index++) {
+            if (arr[index] != index + 1) {
+                return index + 1;
+            }
+        }
+
+        // case 2
+        return arr.length + 1;
+    }
+
+    static void swap(int[] arr, int first, int second) {
+        int temp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = temp;
+    }
+}
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+-----------------------------------------------------------------
+
+
