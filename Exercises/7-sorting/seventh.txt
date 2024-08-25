@@ -296,8 +296,6 @@ public class FirstMis {
                 return index + 1;
             }
         }
-
-        // case 2
         return arr.length + 1;
     }
 
@@ -308,15 +306,336 @@ public class FirstMis {
     }
 }
 -----------------------------------------------------------------
+https://leetcode.com/problems/maximum-product-of-three-numbers/
+class Solution {
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        int case1 = nums[0]*nums[1]*nums[nums.length-1];
+        int case2 = nums[nums.length-1]*nums[nums.length-2]*nums[nums.length-3];
+
+        int maxProduct = Integer.max(case1, case2);
+        return maxProduct;
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/third-maximum-number/
+class Solution {
+    public int thirdMax(int[] nums) {
+        long max1=Long.MIN_VALUE;
+        long max2=Long.MIN_VALUE;
+        long max3=Long.MIN_VALUE;
+        for(int num : nums){
+            if(num>max1){
+                max3 = max2;
+                max2 = max1;
+                max1 = num;
+            }else if(max1>num && num>max2){
+                max3 = max2;
+                max2 = num;
+            }else if(max2>num && num>max3){
+                max3=num;
+            }
+        }
+        return max3 != Long.MIN_VALUE ? (int) max3 : (int) max1;
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/assign-cookies/
+class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        int h = g.length; // Length of greed array
+        int m = s.length; // Length of size array
+        int l = 0, r = 0; // Pointers for greed and size arrays
+
+        Arrays.sort(g); // Sort the greed factors
+        Arrays.sort(s); // Sort the cookie sizes
+
+        // Loop through cookies and children
+        while (l < m && r < h) {  // Corrected: Check both l < m and r < h
+            if (g[r] <= s[l]) { // If the current cookie can satisfy the current child's greed
+                r++; // Move to the next child
+            }
+            l++; // Move to the next cookie
+        }
+
+        return r; // Return the number of content children
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/sort-array-by-parity-ii/
+class Solution {
+    public int[] sortArrayByParityII(int[] nums) {
+        int len = nums.length;
+        int[] result = new int[len];
+
+        int evenIndex = 0;
+        int oddIndex = 1;
+
+        for (int num : nums) {
+            if (num % 2 == 0) {
+                result[evenIndex] = num;
+                evenIndex += 2;
+            } else {
+                result[oddIndex] = num;
+                oddIndex += 2;
+            }
+        }
+        return result;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/largest-perimeter-triangle/
+class Solution {
+    public int largestPerimeter(int[] nums) {
+    Arrays.sort(nums);
+    for(int i=nums.length-1;i>1;i--){
+        int a = nums[i-2];
+        int b = nums[i-1];
+        int c = nums[i];
+			int s = a + b + c;
+        if(a+b>c)
+		{
+            return s;
+        }
+    }
+    return 0;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/height-checker/
+class Solution {
+    public int heightChecker(int[] heights) {
+        int[] expected = Arrays.copyOf(heights, heights.length);
+        Arrays.sort(expected);
+        int count = 0;
+        for (int i = 0; i<heights.length; i++){
+            if(expected[i]!=heights[i]){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/rank-transform-of-an-array/
+class Solution {
+    public int[] arrayRankTransform(int[] arr) {
+        int[] nums = new int[arr.length];
+        for(int i = 0 ; i < nums.length; i ++){
+            nums[i] = arr[i];
+        }
+        Arrays.sort(nums);
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        int j = 1;
+        for(int i = 0; i < nums.length; i++){
+            if(!map.containsKey(nums[i])){
+                map.put(nums[i],j++);
+            }
+        }
+        for(int i = 0 ; i < nums.length; i ++){
+            nums[i] = map.get(arr[i]);
+        }
+        return nums;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/minimum-absolute-difference/
+class Solution {
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+      Arrays.sort(arr);
+        List<List<Integer>> ans=new ArrayList<>();
+        List<Integer> list=new ArrayList<>();
+        int min=Integer.MAX_VALUE;
+        for(int i=1;i<arr.length;i++)
+        {
+            if((arr[i]-arr[i-1])<min)
+            {
+                min=arr[i]-arr[i-1];
+            }
+        }
+        for(int i=1;i<arr.length;i++)
+        {
+            if((arr[i]-arr[i-1])==min)
+            {
+                list.add(arr[i-1]);
+                list.add(arr[i]);
+                ans.add(new ArrayList<>(list));
+                list.clear();
+            }
+        }
+        return ans;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/largest-number/ important
+class Solution {
+    public String largestNumber(int[] nums) {
+        String[] s = new String[nums.length];         
+        for(int i=0; i<nums.length; i++)  s[i] = String.valueOf(nums[i]);
+        Arrays.sort(s, (a,b) -> (b + a).compareTo(a + b));
+        return s[0].equals("0") ? "0" : String.join("",s);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/3sum-closest/ important
+class Solution {
+    public int threeSumClosest(int[] nums, int target) {
+        final int n = nums.length;
+        Arrays.sort(nums);
+        int min = Integer.MAX_VALUE;
+        int closest = 0;
+        // Now fix the first element one by one and find the other two elements
+        for (int i = 0; i < n - 2; ++i) {
+            int low = i + 1;
+            int high = n - 1;
+            while (low < high) {
+                int sum = nums[i] + nums[low] + nums[high];
+                if (sum == target) {
+                    return sum;
+                } else if (sum < target) {
+                    ++low;
+                } else {
+                    --high;
+                }
+                int diff = Math.abs(sum - target);
+                if (diff < min) {
+                    min = diff;
+                    closest = sum;
+                }
+            }
+        }
+        return closest;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/3sum/
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+       if(nums==null || nums.length<3) return new ArrayList<>();
+       Set<List<Integer>> rt = new HashSet<>();
+       Arrays.sort(nums);
+       for(int i = 0; i < nums.length-2 ; i++){
+        // find other two elements using two sum approach
+           int left = i+1;
+           int right = nums.length-1;
+           while(left<right){
+            int sum = nums[i] + nums[left] + nums[right];
+               if(sum == 0 ){
+                   rt.add(Arrays.asList(nums[i],nums[left],nums[right]));
+                   left++;
+                   right--;
+               } 
+               else if(sum<0){
+                   left++;
+               }
+               else{
+                   right--;
+               }
+           }
+       }
+       return new ArrayList<>(rt);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/merge-intervals/
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+        List<int[]> list = new ArrayList<>();
+        int[] prev = intervals[0]; 
+        for(int i = 1; i< intervals.length; i++){
+            int[] interval = intervals[i];
+            if (interval[0] <= prev[1]) {
+                prev[1] = Math.max(prev[1], interval[1]);
+            } else {
+                list.add(prev);
+                prev = interval;
+            }
+        }
+        list.add(prev);
+        return list.toArray(new int[list.size()][]);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/group-anagrams/
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+
+        for(String word: strs){
+            char[] ch = word.toCharArray();
+            Arrays.sort(ch);
+            String sortedWord = new String(ch);
+            if(!map.containsKey(sortedWord)){
+                map.put(sortedWord, new ArrayList<>());
+            }
+
+            map.get(sortedWord).add(word);
+        }
+        return new ArrayList<>(map.values());
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/4sum/
+class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        if(nums==null || nums.length<4) return new ArrayList<>();
+        Set<List<Integer>> rt = new HashSet<>();
+        Arrays.sort(nums);
+        for(int i = 0; i<nums.length-3; i++){
+            for( int j = i+1; j< nums.length-2; j++ ){
+                int left = j+1;
+                int right = nums.length-1;
+                while(left<right){
+                    int sum = nums[i] + nums[j] + nums[left] + nums[right];
+                    if(sum==target){
+                        rt.add(Arrays.asList(nums[i],nums[j],nums[left],nums[right]));
+                        left++;
+                        right--;
+                    }
+                    else if(sum<0){
+                        left++;
+                    }
+                    else right--;
+                }
+            }
+        }
+        return new ArrayList<>(rt);
+    }
+}
 
 -----------------------------------------------------------------
------------------------------------------------------------------
------------------------------------------------------------------
------------------------------------------------------------------
-
+https://leetcode.com/problems/relative-sort-array/
+class Solution {
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        int maxi = Integer.MIN_VALUE;
+        for( int i = 0; i<arr1.length; i++){
+            maxi = Math.max(maxi, arr1[i]);
+        }
+        int[] counter = new int[maxi+1];
+        for( int i= 0; i<arr1.length; i++){
+            int ele = arr1[i];
+            counter[ele]++;
+        }
+        int j = 0;
+        for( int i = 0; i<arr2.length; i++){
+            while(counter[arr2[i]]>0){
+                arr1[j] = arr2[i];
+                counter[arr2[i]]--;
+                j++;
+            }
+        }
+        // fill the rem
+        for( int i =0; i< maxi+1; i++){
+            while(counter[i]>0){
+                arr1[j] = i;
+                j++;
+                counter[i]--;
+        }
+        }
+        return arr1;
+    }
+}
 -----------------------------------------------------------------
 
 

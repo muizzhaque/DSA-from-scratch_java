@@ -1,0 +1,320 @@
+-----------------------------------------------------------------
+public class BinarySearchSQRT {
+    public static void main(String[] args) {
+        int n = 40;
+        int p = 3;
+
+        System.out.printf("%.3f", sqrt(n, p));
+    }
+
+    // Time: O(log(n))
+    static double sqrt(int n, int p) {
+        int s = 0;
+        int e = n;
+
+        double root = 0.0;
+
+        while (s <= e) {
+            int m = s + (e - s) / 2;
+
+            if (m * m == n) {
+                return m;
+            }
+
+            if (m * m > n) {
+                e = m - 1;
+            } else {
+                s = m + 1;
+                root = m;
+            }
+        }
+        double incr = 0.1;
+        for (int i = 0; i < p; i++) {
+            while (root * root <= n) {
+                root += incr;
+            }
+            root -= incr;
+            incr /= 10;
+        }
+
+        return root;
+    }
+}
+-----------------------------------------------------------------
+public class Factors {
+    public static void main(String[] args) {
+        factors3(20);
+    }
+    // O(n)
+    static void factors1(int n) {
+        for (int i = 1; i <= n; i++) {
+            if (n % i == 0) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+    // O(sqrt(n))
+    static void factors2(int n) {
+        for (int i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                if (n/i == i) {
+                    System.out.print(i + " ");
+                }else {
+                    System.out.print(i + " " + n/i + " ");
+                }
+            }
+        }
+    }
+    // both time and space with be O(sqrt(n))
+    static void factors3(int n) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                if (n/i == i) {
+                    System.out.print(i + " ");
+                }else {
+                    System.out.print(i + " ");
+                    list.add(n/i);
+                }
+            }
+        }
+        for (int i = list.size() - 1; i >= 0; i--) {
+            System.out.print(list.get(i) + " ");
+        }
+    }
+}
+-----------------------------------------------------------------
+public class GCD_LCM {
+    public static void main(String[] args) {
+//        System.out.println(gcd(4, 9));
+        System.out.println(lcm(2, 7));
+    }
+    static int gcd(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+        return gcd(b%a, a);
+    }
+    static int lcm(int a, int b) {
+        return a * b / gcd(a, b);
+    }
+}
+-----------------------------------------------------------------
+public class NewtonSQRT {
+    public static void main(String[] args) {
+        System.out.println(sqrt(40));
+    }
+    static double sqrt(double n) {
+        double x = n;
+        double root;
+        while (true) {
+            root = 0.5 * (x + (n/x));
+            if (Math.abs(root - x) < 0.5) {
+                break;
+            }
+            x = root;
+        }
+        return root;
+    }
+}
+-----------------------------------------------------------------
+public class Prime {
+    public static void main(String[] args) {
+        int n = 20;
+        for (int i = 2; i <= n; i++) {
+            System.out.println(i + " " + isPrime(i));
+        }
+    }
+    static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        int c = 2;
+        while (c * c <= n) {
+            if (n % c == 0) {
+                return false;
+            }
+            c++;
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+public class Seive {
+    public static void main(String[] args) {
+        int n = 40;
+        boolean[] primes = new boolean[n+1];
+        sieve(n, primes);
+    }
+    // false in array means number is prime
+    static void sieve(int n, boolean[] primes) {
+        for (int i = 2; i*i <= n; i++) {
+            if (!primes[i]) {
+                for (int j = i*2; j <= n; j+=i) {
+                    primes[j] = true;
+                }
+            }
+        }
+        for (int i = 2; i <= n; i++) {
+            if (!primes[i]) {
+                System.out.print(i + " ");
+            }
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/happy-number/
+class Solution {
+    public boolean isHappy(int n) {
+        int result = n;  
+          
+        while(result != 1 && result != 4){  
+            result = happy_check(result);  
+        }   
+        if(result==1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    int happy_check(int n){
+     int rem = 0, sum = 0;  
+        while(n != 0){  
+            rem = n%10;  
+            sum = sum + (rem*rem);  
+            n = n/10;  
+        }  
+        return sum; 
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/maximum-product-of-three-numbers/
+class Solution {
+    public int maximumProduct(int[] nums) {
+        Arrays.sort(nums);
+        int case1 = nums[0]*nums[1]*nums[nums.length-1];
+        int case2 = nums[nums.length-1]*nums[nums.length-2]*nums[nums.length-3];
+
+        int maxProduct = Integer.max(case1, case2);
+        return maxProduct;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/climbing-stairs/ important
+https://leetcode.com/problems/climbing-stairs/solutions/4584184/beats-100-users-c-java-python-javascript-4-approaches-explained/
+class Solution {
+    public int climbStairs(int n) {
+        int ways = 1;
+        for (int i = 1; i <= n / 2; i++) {
+            double sum = 1;
+            for (int j = i; j < 2 * i; j++) {
+                sum *= (double)(n - j) / (j - i + 1);
+            }
+            ways += sum;
+        }
+        return ways;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/integer-to-roman/
+class Solution {
+    public String intToRoman(int num) {
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romanNumerals = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder sb = new StringBuilder();
+        int i = 0;
+        while (num > 0) {
+            if (num >= values[i]) {   
+                sb.append(romanNumerals[i]);
+                num -= values[i];
+            } else {
+                i++;
+            }
+        }
+        return sb.toString();
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/string-to-integer-atoi/   important
+class Solution {
+    public int myAtoi(String s) {
+        s = s.trim();
+        if (s.isEmpty()) {
+            return 0;
+        }
+
+        int i = 0;
+        int sign = 1;
+
+        if (s.charAt(0) == '-') {
+            sign = -1;
+            i++;
+        } else if (s.charAt(0) == '+') {
+            i++;
+        }
+
+        int result = 0;
+
+        while (i < s.length() && Character.isDigit(s.charAt(i))) {
+            int digit = s.charAt(i) - '0';
+
+            if (result > (Integer.MAX_VALUE - digit) / 10) {
+                return (sign == 1) ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            }
+
+            result = result * 10 + digit;
+            i++;
+        }
+
+        return result * sign;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/encode-and-decode-tinyurl/ important
+public class Codec {
+    Map<Integer, String> map = new HashMap<>();
+    int i=0;
+    public String encode(String longUrl) {
+        map.put(i,longUrl);
+        return "http://tinyurl.com/"+i++;
+    }
+    public String decode(String shortUrl) {
+        return map.get(Integer.parseInt(shortUrl.replace("http://tinyurl.com/", "")));
+    }
+}
+// Your Codec object will be instantiated and called as such:
+// Codec codec = new Codec();
+// codec.decode(codec.encode(url));
+-----------------------------------------------------------------
+https://leetcode.com/problems/angle-between-hands-of-a-clock/
+class Solution {
+    public double angleClock(int hour, int minutes) {
+        hour=hour%12;
+        double anglePerMinute= minutes/12.00;
+        double a = (hour*5) + anglePerMinute;
+        double b = minutes;
+        double diff=Math.abs(b-a);
+        double ans= diff*6.0;
+        return (ans > 180) ? 360-ans : ans;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/integer-break/
+class Solution {
+    public int integerBreak(int n) {
+        if(n <= 3) return n-1;
+        int a = 1;
+        while(n > 4) {
+            a *= 3;
+            n -= 3;
+        }
+        return a*n;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/number-of-digit-one/solutions/4176143/best-explanation-with-optimization-without-dp-and-recursion/
+google level question please do
+-----------------------------------------------------------------
+

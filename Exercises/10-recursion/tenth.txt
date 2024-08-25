@@ -1,17 +1,22 @@
 -----------------------------------------------------------------
-public class FiboRecur {
+public class Fibo {
     public static void main(String[] args) {
-            int ans = fibo(50);
-            System.out.println(ans);
-        }
-    
+//        for (int i = 0; i < 11; i++) {
+//            System.out.println(fiboFormula(i));
+//        }
+        System.out.println(fiboFormula(50));
+    }
+    static int fiboFormula(int n){
+         // just for demo, use long instead
+        return (int) ((Math.pow(((1+Math.sqrt(5))/2),n)-Math.pow(((1-Math.sqrt(5))/2),n))/Math.sqrt(5));
+    }
     static int fibo(int n) {
-            // base condition
-            if (n < 2) {
-                return n;
-            }
-            return fibo(n-1) + fibo(n-2);
+        // base condition
+        if (n < 2) {
+            return n;
         }
+        return fibo(n-1) + fibo(n-2);
+    }
 }
 -----------------------------------------------------------------
 public class BSRecur {
@@ -35,3 +40,2184 @@ public class BSRecur {
         return search(arr, target, m + 1, e);
     }
 }
+-----------------------------------------------------------------
+Easy questions:
+Easy questions:
+Easy questions:
+Easy questions:
+Easy questions:
+-----------------------------------------------------------------
+public class CountZeros {
+    public static void main(String[] args) {
+        System.out.println(count(30210004));
+    }
+    static int count(int n) {
+        return helper(n, 0);
+    }
+    // special pattern, how to pass a value to above calls
+    private static int helper(int n, int c) {
+        if (n == 0) {
+            return c;
+        }
+        int rem = n % 10;
+        if (rem == 0) {
+            return helper(n/10, c+1);
+        }
+        return helper(n/10, c);
+    }
+}
+-----------------------------------------------------------------
+public class DigitProduct {
+    public static void main(String[] args) {
+        int ans = prod(505);
+        System.out.println(ans);
+    }
+    
+    static int prod(int n) {
+        if (n%10 == n) {
+            return n;
+        }
+        return (n%10) * prod(n/10);
+    }
+}
+-----------------------------------------------------------------
+public class DigitSum {
+    public static void main(String[] args) {
+        int ans = sum(1342);
+        System.out.println(ans);
+    }
+
+    static int sum(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        return (n % 10) + sum(n / 10);
+    }
+}
+-----------------------------------------------------------------
+public class Fact {
+    public static void main(String[] args) {
+        int ans = fact(5);
+        System.out.println(ans);
+    }
+
+    static int fact(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+
+        return n * fact(n-1);
+    }
+}
+-----------------------------------------------------------------
+public class Nto1 {
+    public static void main(String[] args) {
+        funBoth(5);
+    }
+
+    // concept
+    static void concept(int n) {
+        if (n == 0) {
+            return;
+        }
+        System.out.println(n);
+//        concept(n--);
+        concept(--n);
+//        n-- vs --n
+    }
+
+    static void fun(int n) {
+        if (n == 0) {
+            return;
+        }
+        System.out.println(n);
+        fun(n-1);
+    }
+
+    static void funRev(int n) {
+        if (n == 0) {
+            return;
+        }
+        funRev(n-1);
+        System.out.println(n);
+    }
+
+    static void funBoth(int n) {
+        if (n == 0) {
+            return;
+        }
+        System.out.println(n);
+        funBoth(n-1);
+        System.out.println(n);
+    }
+}
+-----------------------------------------------------------------
+public class Palindrome {
+    static int rev(int n) {
+        // sometimes you might need some additional variables in the argument
+        // in that case, make another function
+        int digits = (int)(Math.log10(n)) + 1;
+        return helper(n, digits);
+    }
+
+    private static int helper(int n, int digits) {
+        if (n%10 == n) {
+            return n;
+        }
+        int rem = n % 10;
+        return rem * (int)(Math.pow(10, digits-1)) + helper(n/10, digits-1);
+    }
+
+    static boolean palin(int n) {
+        return n == rev(n);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(palin(1));
+    }
+}
+-----------------------------------------------------------------
+public class Reverse {
+    static int sum = 0;
+    static void rev1(int n) {
+        if (n == 0) {
+            return;
+        }
+        int rem = n % 10;
+        sum = sum * 10 + rem;
+        rev1(n/10);
+    }
+
+    static int rev2(int n) {
+        // sometimes you might need some additional variables in the argument
+        // in that case, make another function
+        int digits = (int)(Math.log10(n)) + 1;
+        return helper(n, digits);
+    }
+
+    private static int helper(int n, int digits) {
+        if (n%10 == n) {
+            return n;
+        }
+        int rem = n % 10;
+        return rem * (int)(Math.pow(10, digits-1)) + helper(n/10, digits-1);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(rev2(1234));
+    }
+}
+-----------------------------------------------------------------
+public class Steps {
+    public static void main(String[] args) {
+
+    }
+
+    public int numberOfSteps(int num) {
+        return helper(num, 0);
+    }
+
+    private int helper(int num, int steps) {
+        if (num == 0) {
+            return steps;
+        }
+
+        if (num % 2 == 0) {
+            return helper(num/2, steps+1);
+        }
+        return helper(num-1, steps+1);
+    }
+}
+-----------------------------------------------------------------
+public class Sum {
+    public static void main(String[] args) {
+        int ans = sum(5);
+        System.out.println(ans);
+    }
+
+    static int sum(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+
+        return n + sum(n-1);
+    }
+}
+-----------------------------------------------------------------
+array questions:
+array questions:
+array questions:
+array questions:
+array questions:
+-----------------------------------------------------------------
+public class Find {
+    public static void main(String[] args) {
+        int[] arr = {2, 3, 1, 4, 4, 5};
+//        System.out.println(find(arr, 4, 0));
+//        System.out.println(findIndex(arr, 4, 0));
+//        System.out.println(findIndexLast(arr, 4, arr.length-1));
+//        findAllIndex(arr, 4, 0);
+//        System.out.println(list);
+
+//        ArrayList<Integer> list = new ArrayList<>();
+//        ArrayList<Integer> ans = findAllIndex(arr, 4, 0, list);
+//        System.out.println(ans);
+//        System.out.println(list);
+
+        System.out.println(findAllIndex2(arr, 4, 0));
+    }
+    static boolean find(int[] arr, int target, int index) {
+        if (index == arr.length) {
+            return false;
+        }
+        return arr[index] == target || find(arr, target, index + 1);
+    }
+
+    static int findIndex(int[] arr, int target, int index) {
+        if (index == arr.length) {
+            return -1;
+        }
+        if (arr[index] == target) {
+            return index;
+        } else {
+            return findIndex(arr, target, index + 1);
+        }
+    }
+
+    static int findIndexLast(int[] arr, int target, int index) {
+        if (index == -1) {
+            return -1;
+        }
+        if (arr[index] == target) {
+            return index;
+        } else {
+            return findIndexLast(arr, target, index - 1);
+        }
+    }
+
+    static ArrayList<Integer> list = new ArrayList<>();
+    static void findAllIndex(int[] arr, int target, int index) {
+        if (index == arr.length) {
+            return;
+        }
+        if (arr[index] == target) {
+            list.add(index);
+        }
+        findAllIndex(arr, target, index + 1);
+    }
+
+    static ArrayList<Integer> findAllIndex(int[] arr, int target, int index, ArrayList<Integer> list) {
+        if (index == arr.length) {
+            return list;
+        }
+        if (arr[index] == target) {
+            list.add(index);
+        }
+        return findAllIndex(arr, target, index + 1, list);
+    }
+
+    static ArrayList<Integer> findAllIndex2(int[] arr, int target, int index) {
+
+        ArrayList<Integer> list = new ArrayList<>();
+
+        if (index == arr.length) {
+            return list;
+        }
+
+        // this will contain answer for that function call only
+        if (arr[index] == target) {
+            list.add(index);
+        }
+        ArrayList<Integer> ansFromBelowCalls = findAllIndex2(arr, target, index + 1);
+
+        list.addAll(ansFromBelowCalls);
+
+        return list;
+    }
+}
+-----------------------------------------------------------------
+public class RBS {
+    public static void main(String[] args) {
+        int[] arr = {5, 6, 7, 8, 9, 1, 2, 3};
+        System.out.println(search(arr, 4, 0, arr.length - 1));
+    }
+
+    static int search(int[] arr, int target, int s, int e) {
+        if (s > e) {
+            return -1;
+        }
+
+        int m = s + (e-s) / 2;
+        if (arr[m] == target) {
+            return m;
+        }
+
+        if (arr[s] <= arr[m]) {
+            if (target >= arr[s] && target <= arr[m]) {
+                return search(arr, target, s, m-1);
+            } else {
+                return search(arr, target, m+1, e);
+            }
+        }
+
+        if (target >= arr[m] && target <= arr[e]) {
+            return search(arr, target, m+1, e);
+        }
+
+        return search(arr, target, s, m-1);
+    }
+}
+-----------------------------------------------------------------
+public class Sorted {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 5, 16, 8};
+        System.out.println(sorted(arr, 0));
+    }
+
+    static boolean sorted(int[] arr, int index) {
+        // base condition
+        if (index == arr.length - 1) {
+            return true;
+        }
+
+        return arr[index] < arr[index + 1] && sorted(arr, index + 1);
+    }
+}
+-----------------------------------------------------------------
+patterns questions:
+patterns questions:
+patterns questions:
+patterns questions:
+patterns questions:
+-----------------------------------------------------------------
+package com.kunal.patterns;
+
+import java.util.Arrays;
+
+public class Triangle {
+    public static void main(String[] args) {
+//        triangle2(4, 0);
+        int[] arr = {1, 4, 3, 5};
+        selection(arr, arr.length, 0, 0);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    static void triangle2(int r, int c) {
+        if (r == 0) {
+            return;
+        }
+        if (c < r) {
+            triangle2(r, c+1);
+            System.out.print("*");
+        } else {
+            triangle2(r-1, 0);
+            System.out.println();
+        }
+    }
+
+    static void triangle(int r, int c) {
+        if (r == 0) {
+            return;
+        }
+        if (c < r) {
+            System.out.print("*");
+            triangle(r, c+1);
+        } else {
+            System.out.println();
+            triangle(r-1, 0);
+        }
+    }
+
+
+    static void bubble(int[] arr, int r, int c) {
+        if (r == 0) {
+            return;
+        }
+        if (c < r) {
+
+            if (arr[c] > arr[c+1]) {
+                // swap
+                int temp = arr[c];
+                arr[c] = arr[c+1];
+                arr[c+1] = temp;
+            }
+
+            bubble(arr, r, c+1);
+        } else {
+            bubble(arr, r-1, 0);
+        }
+    }
+
+    static void selection(int[] arr, int r, int c, int max) {
+        if (r == 0) {
+            return;
+        }
+        if (c < r) {
+            if (arr[c] > arr[max]) {
+                selection(arr, r, c+1, c);
+            } else {
+                selection(arr, r, c+1, max);
+            }
+        } else {
+            int temp = arr[max];
+            arr[max] = arr[r-1];
+            arr[r-1] = temp;
+            selection(arr, r-1, 0, 0);
+        }
+    }
+}
+-----------------------------------------------------------------
+sorting questions:
+sorting questions:
+sorting questions:
+sorting questions:
+sorting questions:
+-----------------------------------------------------------------
+public class MergeSort {
+    public static void main(String[] args) {
+        int[] arr = {5, 4, 3, 2, 1};
+        mergeSortInPlace(arr, 0, arr.length);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    static int[] mergeSort(int[] arr) {
+        if (arr.length == 1) {
+            return arr;
+        }
+
+        int mid = arr.length / 2;
+
+        int[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid));
+        int[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length));
+
+        return merge(left, right);
+    }
+
+    private static int[] merge(int[] first, int[] second) {
+        int[] mix = new int[first.length + second.length];
+
+        int i = 0;
+        int j = 0;
+        int k = 0;
+
+        while (i < first.length && j < second.length) {
+            if (first[i] < second[j]) {
+                mix[k] = first[i];
+                i++;
+            } else {
+                mix[k] = second[j];
+                j++;
+            }
+            k++;
+        }
+
+        // it may be possible that one of the arrays is not complete
+        // copy the remaining elements
+        while (i < first.length) {
+            mix[k] = first[i];
+            i++;
+            k++;
+        }
+
+        while (j < second.length) {
+            mix[k] = second[j];
+            j++;
+            k++;
+        }
+
+        return mix;
+    }
+
+
+
+    static void mergeSortInPlace(int[] arr, int s, int e) {
+        if (e - s == 1) {
+            return;
+        }
+
+        int mid = (s + e) / 2;
+
+        mergeSortInPlace(arr, s, mid);
+        mergeSortInPlace(arr, mid, e);
+
+        mergeInPlace(arr, s, mid, e);
+    }
+
+    private static void mergeInPlace(int[] arr, int s, int m, int e) {
+        int[] mix = new int[e - s];
+
+        int i = s;
+        int j = m;
+        int k = 0;
+
+        while (i < m && j < e) {
+            if (arr[i] < arr[j]) {
+                mix[k] = arr[i];
+                i++;
+            } else {
+                mix[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+
+        // it may be possible that one of the arrays is not complete
+        // copy the remaining elements
+        while (i < m) {
+            mix[k] = arr[i];
+            i++;
+            k++;
+        }
+
+        while (j < e) {
+            mix[k] = arr[j];
+            j++;
+            k++;
+        }
+
+        for (int l = 0; l < mix.length; l++) {
+            arr[s+l] = mix[l];
+        }
+    }
+}
+-----------------------------------------------------------------
+public class QuickSort {
+    public static void main(String[] args) {
+        int[] arr = {5, 4, 3, 2, 1};
+//        sort(arr, 0, arr.length - 1);
+//        System.out.println(Arrays.toString(arr));
+        Arrays.sort(arr);
+    }
+
+    static void sort(int[] nums, int low, int hi) {
+        if (low >= hi) {
+            return;
+        }
+
+        int s = low;
+        int e = hi;
+        int m = s + (e - s) / 2;
+        int pivot = nums[m];
+
+        while (s <= e) {
+
+            // also a reason why if its already sorted it will not swap
+            while (nums[s] < pivot) {
+                s++;
+            }
+            while (nums[e] > pivot) {
+                e--;
+            }
+
+            if (s <= e) {
+                int temp = nums[s];
+                nums[s] = nums[e];
+                nums[e] = temp;
+                s++;
+                e--;
+            }
+        }
+
+        // now my pivot is at correct index, please sort two halves now
+        sort(nums, low, e);
+        sort(nums, s, hi);
+    }
+}
+-----------------------------------------------------------------
+Strings questions:
+Strings questions:
+Strings questions:
+Strings questions:
+Strings questions:
+-----------------------------------------------------------------
+public class Ascii {
+    public static void main(String[] args) {
+        char ch = 'a';
+        System.out.println((char)(ch + 1));
+    }
+}
+-----------------------------------------------------------------
+public class Dice {
+    public static void main(String[] args) {
+        dice("", 4);
+        System.out.println(diceRet("", 4));
+    }
+
+    static void dice(String p, int target) {
+        if (target == 0) {
+            System.out.println(p);
+            return;
+        }
+
+        for (int i = 1; i <= 6 && i <= target; i++) {
+            dice(p + i, target - i);
+        }
+    }
+
+    static ArrayList<String> diceRet(String p, int target) {
+        if (target == 0) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 1; i <= 6 && i <= target; i++) {
+            list.addAll(diceRet(p + i, target - i));
+        }
+        return list;
+    }
+
+    static void diceFace(String p, int target, int face) {
+        if (target == 0) {
+            System.out.println(p);
+            return;
+        }
+
+        for (int i = 1; i <= face && i <= target; i++) {
+            diceFace(p + i, target - i, face);
+        }
+    }
+
+    static ArrayList<String> diceFaceRet(String p, int target, int face) {
+        if (target == 0) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 1; i <= face && i <= target; i++) {
+            list.addAll(diceFaceRet(p + i, target - i, face));
+        }
+        return list;
+    }
+
+}
+-----------------------------------------------------------------
+public class Permutations {
+    public static void main(String[] args) {
+//        permutations("", "abc");
+
+//        ArrayList<String> ans = permutationsList("", "abc");
+//        System.out.println(ans);
+
+        System.out.println(permutationsCount("", "abcd"));
+    }
+
+    static void permutations(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+        for (int i = 0; i <= p.length(); i++) {
+            String f = p.substring(0, i);
+            String s = p.substring(i, p.length());
+            permutations(f + ch + s, up.substring(1));
+        }
+    }
+
+    static ArrayList<String> permutationsList(String p, String up) {
+        if (up.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        char ch = up.charAt(0);
+
+        // local to this call
+        ArrayList<String> ans = new ArrayList<>();
+
+        for (int i = 0; i <= p.length(); i++) {
+            String f = p.substring(0, i);
+            String s = p.substring(i, p.length());
+            ans.addAll(permutationsList(f + ch + s, up.substring(1)));
+        }
+        return ans;
+    }
+
+    static int permutationsCount(String p, String up) {
+        if (up.isEmpty()) {
+            return 1;
+        }
+        int count = 0;
+        char ch = up.charAt(0);
+        for (int i = 0; i <= p.length(); i++) {
+            String f = p.substring(0, i);
+            String s = p.substring(i, p.length());
+            count = count + permutationsCount(f + ch + s, up.substring(1));
+        }
+        return count;
+    }
+
+}
+-----------------------------------------------------------------
+public class PhonePad {
+    public static void main(String[] args) {
+        System.out.println(padRet("", "12").size());
+        System.out.println(padCount("", "12"));
+    }
+
+    static void pad(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        int digit = up.charAt(0) - '0'; // this will convert '2' into 2
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char) ('a' + i);
+            pad(p + ch, up.substring(1));
+        }
+
+    }
+
+    static ArrayList<String> padRet(String p, String up) {
+        if (up.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        int digit = up.charAt(0) - '0'; // this will convert '2' into 2
+
+        ArrayList<String> list = new ArrayList<>();
+
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char) ('a' + i);
+            list.addAll(padRet(p + ch, up.substring(1)));
+        }
+        return list;
+    }
+
+    static int padCount(String p, String up) {
+        if (up.isEmpty()) {
+            return 1;
+        }
+        int count = 0;
+        int digit = up.charAt(0) - '0'; // this will convert '2' into 2
+        for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+            char ch = (char) ('a' + i);
+            count = count + padCount(p + ch, up.substring(1));
+        }
+        return count;
+    }
+}
+-----------------------------------------------------------------
+public class Stream {
+    public static void main(String[] args) {
+        System.out.println(skipAppNotApple("bacapplcdah"));
+    }
+
+    static void skip(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+
+        if (ch == 'a') {
+            skip(p, up.substring(1));
+        } else {
+            skip(p + ch, up.substring(1));
+        }
+    }
+
+    static String skip(String up) {
+        if (up.isEmpty()) {
+            return "";
+        }
+
+        char ch = up.charAt(0);
+
+        if (ch == 'a') {
+            return skip(up.substring(1));
+        } else {
+            return ch + skip(up.substring(1));
+        }
+    }
+
+    static String skipApple(String up) {
+        if (up.isEmpty()) {
+            return "";
+        }
+        if (up.startsWith("apple")) {
+            return skipApple(up.substring(5));
+        } else {
+            return up.charAt(0) + skipApple(up.substring(1));
+        }
+    }
+
+    static String skipAppNotApple(String up) {
+        if (up.isEmpty()) {
+            return "";
+        }
+        if (up.startsWith("app") && !up.startsWith("apple")) {
+            return skipAppNotApple(up.substring(3));
+        } else {
+            return up.charAt(0) + skipAppNotApple(up.substring(1));
+        }
+    }
+}
+-----------------------------------------------------------------
+public class SubSeq {
+    public static void main(String[] args) {
+//        subseqAscii("", "abc");
+        System.out.println(subseqAsciiRet("", "abc"));
+    }
+
+    static void subseq(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+        subseq(p + ch, up.substring(1));
+        subseq(p, up.substring(1));
+    }
+
+    static ArrayList<String> subseqRet(String p, String up) {
+        if (up.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        char ch = up.charAt(0);
+        ArrayList<String> left = subseqRet(p + ch, up.substring(1));
+        ArrayList<String> right = subseqRet(p, up.substring(1));
+
+        left.addAll(right);
+        return left;
+    }
+
+    static void subseqAscii(String p, String up) {
+        if (up.isEmpty()) {
+            System.out.println(p);
+            return;
+        }
+        char ch = up.charAt(0);
+        subseqAscii(p + ch, up.substring(1));
+        subseqAscii(p, up.substring(1));
+        subseqAscii(p + (ch+0), up.substring(1));
+    }
+
+    static ArrayList<String> subseqAsciiRet(String p, String up) {
+        if (up.isEmpty()) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        char ch = up.charAt(0);
+        ArrayList<String> first = subseqAsciiRet(p + ch, up.substring(1));
+        ArrayList<String> second = subseqAsciiRet(p, up.substring(1));
+        ArrayList<String> third = subseqAsciiRet(p + (ch+0), up.substring(1));
+
+        first.addAll(second);
+        first.addAll(third);
+        return first;
+    }
+}
+-----------------------------------------------------------------
+public class SubSet {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 2};
+        List<List<Integer>> ans = subsetDuplicate(arr);
+        for (List<Integer> list : ans) {
+            System.out.println(list);
+        }
+    }
+
+    static List<List<Integer>> subset(int[] arr) {
+        List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        for (int num : arr) {
+            int n = outer.size();
+            for (int i = 0; i < n; i++) {
+                List<Integer> internal = new ArrayList<>(outer.get(i));
+                internal.add(num);
+                outer.add(internal);
+            }
+        }
+        return outer;
+    }
+
+    static List<List<Integer>> subsetDuplicate(int[] arr) {
+        Arrays.sort(arr);
+        List<List<Integer>> outer = new ArrayList<>();
+        outer.add(new ArrayList<>());
+        int start = 0;
+        int end = 0;
+        for (int i = 0; i < arr.length; i++) {
+            start = 0;
+            // if current and previous element is same, s = e + 1
+            if (i > 0 && arr[i] == arr[i-1]) {
+                start = end + 1;
+            }
+            end = outer.size() - 1;
+            int n = outer.size();
+            for (int j = start; j < n; j++) {
+                List<Integer> internal = new ArrayList<>(outer.get(j));
+                internal.add(arr[i]);
+                outer.add(internal);
+            }
+        }
+        return outer;
+    }
+}
+-----------------------------------------------------------------
+backtracking questions:
+backtracking questions:
+backtracking questions:
+backtracking questions:
+backtracking questions:
+-----------------------------------------------------------------
+public class AllPaths {
+    public static void main(String[] args) {
+        boolean[][] board = {
+                {true, true, true},
+                {true, true, true},
+                {true, true, true}
+        };
+        int[][] path = new int[board.length][board[0].length];
+        allPathPrint("", board, 0, 0, path, 1);
+    }
+
+    static void allPath(String p, boolean[][] maze, int r, int c) {
+        if (r == maze.length - 1 && c == maze[0].length - 1) {
+            System.out.println(p);
+            return;
+        }
+
+        if (!maze[r][c]) {
+            return;
+        }
+
+        // i am considering this block in my path
+        maze[r][c] = false;
+
+        if (r < maze.length - 1) {
+            allPath(p + 'D', maze, r+1, c);
+        }
+
+        if (c < maze[0].length - 1) {
+            allPath(p + 'R', maze, r, c+1);
+        }
+
+        if (r > 0) {
+            allPath(p + 'U', maze, r-1, c);
+        }
+
+        if (c > 0) {
+            allPath(p + 'L', maze, r, c-1);
+        }
+
+        // this line is where the function will be over
+        // so before the function gets removed, also remove the changes that were made by that function
+        maze[r][c] = true;
+    }
+
+
+
+    static void allPathPrint(String p, boolean[][] maze, int r, int c, int[][] path, int step) {
+        if (r == maze.length - 1 && c == maze[0].length - 1) {
+            path[r][c] = step;
+            for(int[] arr : path) {
+                System.out.println(Arrays.toString(arr));
+            }
+            System.out.println(p);
+            System.out.println();
+            return;
+        }
+
+        if (!maze[r][c]) {
+            return;
+        }
+
+        // i am considering this block in my path
+        maze[r][c] = false;
+        path[r][c] = step;
+        if (r < maze.length - 1) {
+            allPathPrint(p + 'D', maze, r+1, c, path, step+1);
+        }
+
+        if (c < maze[0].length - 1) {
+            allPathPrint(p + 'R', maze, r, c+1, path, step+1);
+        }
+
+        if (r > 0) {
+            allPathPrint(p + 'U', maze, r-1, c, path, step+1);
+        }
+
+        if (c > 0) {
+            allPathPrint(p + 'L', maze, r, c-1, path, step+1);
+        }
+
+        // this line is where the function will be over
+        // so before the function gets removed, also remove the changes that were made by that function
+        maze[r][c] = true;
+        path[r][c] = 0;
+    }
+}
+-----------------------------------------------------------------
+public class Maze {
+    public static void main(String[] args) {
+//        System.out.println(count(3, 3));
+//        path("", 3, 3);
+//        System.out.println(pathRet("", 3, 3));
+
+//        System.out.println(pathRetDiagonal("", 3, 3));
+
+        boolean[][] board = {
+                {true, true, true},
+                {true, false, true},
+                {true, true, true}
+        };
+
+        pathRestrictions("", board, 0, 0);
+    }
+
+    static int count(int r, int c) {
+        if (r == 1 || c == 1) {
+            return 1;
+        }
+        int left = count(r-1, c);
+        int right = count(r, c-1);
+        return left + right;
+    }
+
+    static void path(String p, int r, int c) {
+        if (r == 1 && c == 1) {
+            System.out.println(p);
+            return;
+        }
+
+        if (r > 1) {
+            path(p + 'D', r-1, c);
+        }
+
+        if (c > 1) {
+            path(p + 'R', r, c-1);
+        }
+    }
+
+    static ArrayList<String> pathRet(String p, int r, int c) {
+        if (r == 1 && c == 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        if (r > 1) {
+            list.addAll(pathRet(p + 'D', r-1, c));
+        }
+
+        if (c > 1) {
+            list.addAll(pathRet(p + 'R', r, c-1));
+        }
+
+        return list;
+    }
+
+    static ArrayList<String> pathRetDiagonal(String p, int r, int c) {
+        if (r == 1 && c == 1) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        ArrayList<String> list = new ArrayList<>();
+
+        if (r > 1 && c > 1) {
+            list.addAll(pathRetDiagonal(p + 'D', r-1, c-1));
+        }
+
+        if (r > 1) {
+            list.addAll(pathRetDiagonal(p + 'V', r-1, c));
+        }
+
+        if (c > 1) {
+            list.addAll(pathRetDiagonal(p + 'H', r, c-1));
+        }
+
+        return list;
+    }
+
+    static void pathRestrictions(String p, boolean[][] maze, int r, int c) {
+        if (r == maze.length - 1 && c == maze[0].length - 1) {
+            System.out.println(p);
+            return;
+        }
+
+        if (!maze[r][c]) {
+            return;
+        }
+
+        if (r < maze.length - 1) {
+            pathRestrictions(p + 'D', maze, r+1, c);
+        }
+
+        if (c < maze[0].length - 1) {
+            pathRestrictions(p + 'R', maze, r, c+1);
+        }
+    }
+}
+-----------------------------------------------------------------
+public class NKnights {
+    public static void main(String[] args) {
+        int n = 4;
+        boolean[][] board = new boolean[n][n];
+        knight(board, 0, 0, 4);
+    }
+
+    static void knight(boolean[][] board, int row, int col, int knights) {
+        if (knights == 0) {
+            display(board);
+            System.out.println();
+            return;
+        }
+
+        if (row == board.length - 1 && col == board.length) {
+            return;
+        }
+
+        if (col == board.length) {
+            knight(board, row + 1, 0, knights);
+            return;
+        }
+
+        if (isSafe(board, row, col)) {
+            board[row][col] = true;
+            knight(board, row, col + 1, knights - 1);
+            board[row][col] = false;
+        }
+
+        knight(board, row, col + 1, knights);
+    }
+
+    private static boolean isSafe(boolean[][] board, int row, int col) {
+        if (isValid(board, row - 2, col - 1)) {
+            if (board[row - 2][col - 1]) {
+                return false;
+            }
+        }
+
+        if (isValid(board, row - 1, col - 2)) {
+            if (board[row - 1][col - 2]) {
+                return false;
+            }
+        }
+
+        if (isValid(board, row - 2, col + 1)) {
+            if (board[row - 2][col + 1]) {
+                return false;
+            }
+        }
+
+        if (isValid(board, row - 1, col + 2)) {
+            if (board[row - 1][col + 2]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // do not repeat yourself, hence created this function
+    static boolean isValid(boolean[][] board, int row, int col) {
+        if (row >= 0 && row < board.length && col >= 0 && col < board.length) {
+            return true;
+        }
+        return false;
+    }
+
+    private static void display(boolean[][] board) {
+        for(boolean[] row : board) {
+            for(boolean element : row) {
+                if (element) {
+                    System.out.print("K ");
+                } else {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+-----------------------------------------------------------------
+public class NQueens {
+    public static void main(String[] args) {
+        int n = 4;
+        boolean[][] board = new boolean[n][n];
+        System.out.println(queens(board, 0));
+    }
+
+    static int queens(boolean[][] board, int row) {
+        if (row == board.length) {
+            display(board);
+            System.out.println();
+            return 1;
+        }
+
+        int count = 0;
+
+        // placing the queen and checking for every row and col
+        for (int col = 0; col < board.length; col++) {
+            // place the queen if it is safe
+            if(isSafe(board, row, col)) {
+                board[row][col] = true;
+                count += queens(board, row + 1);
+                board[row][col] = false;
+            }
+        }
+
+        return count;
+    }
+
+    private static boolean isSafe(boolean[][] board, int row, int col) {
+        // check vertical row
+        for (int i = 0; i < row; i++) {
+            if (board[i][col]) {
+                return false;
+            }
+        }
+
+        // diagonal left
+        int maxLeft = Math.min(row, col);
+        for (int i = 1; i <= maxLeft; i++) {
+            if(board[row-i][col-i]) {
+                return false;
+            }
+        }
+
+        // diagonal right
+        int maxRight = Math.min(row, board.length - col - 1);
+        for (int i = 1; i <= maxRight; i++) {
+            if(board[row-i][col+i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static void display(boolean[][] board) {
+        for(boolean[] row : board) {
+            for(boolean element : row) {
+                if (element) {
+                    System.out.print("Q ");
+                } else {
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+-----------------------------------------------------------------
+public class SudokuSolver {
+    public static void main(String[] args) {
+        int[][] board = new int[][]{
+                {3, 0, 6, 5, 0, 8, 4, 0, 0},
+                {5, 2, 0, 0, 0, 0, 0, 0, 0},
+                {0, 8, 7, 0, 0, 0, 0, 3, 1},
+                {0, 0, 3, 0, 1, 0, 0, 8, 0},
+                {9, 0, 0, 8, 6, 3, 0, 0, 5},
+                {0, 5, 0, 0, 9, 0, 6, 0, 0},
+                {1, 3, 0, 0, 0, 0, 2, 5, 0},
+                {0, 0, 0, 0, 0, 0, 0, 7, 4},
+                {0, 0, 5, 2, 0, 6, 3, 0, 0}
+        };
+
+        if (solve(board)) {
+            display(board);
+        } else {
+            System.out.println("Cannot solve");
+        }
+
+    }
+
+    static boolean solve(int[][] board) {
+        int n = board.length;
+        int row = -1;
+        int col = -1;
+
+        boolean emptyLeft = true;
+
+        // this is how we are replacing the r,c from arguments
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 0) {
+                    row = i;
+                    col = j;
+                    emptyLeft = false;
+                    break;
+                }
+            }
+            // if you found some empty element in row, then break
+            if (emptyLeft == false) {
+                break;
+            }
+        }
+
+        if (emptyLeft == true) {
+            return true;
+            // soduko is solved
+        }
+
+        // backtrack
+        for (int number = 1; number <= 9; number++) {
+            if (isSafe(board, row, col, number)) {
+                board[row][col] = number;
+                if (solve(board)) {
+                    // found the answer
+                    return true;
+                } else {
+                    // backtrack
+                    board[row][col] = 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static void display(int[][] board) {
+        for(int[] row : board) {
+            for(int num : row) {
+                System.out.print(num + " ");
+            }
+            System.out.println();
+        }
+    }
+
+
+    static boolean isSafe(int[][] board, int row, int col, int num) {
+        // check the row
+        for (int i = 0; i < board.length; i++) {
+            // check if the number is in the row
+            if (board[row][i] == num) {
+                return false;
+            }
+        }
+
+        // check the col
+        for (int[] nums : board) {
+            // check if the number is in the col
+            if (nums[col] == num) {
+                return false;
+            }
+        }
+
+        int sqrt = (int)(Math.sqrt(board.length));
+        int rowStart = row - row % sqrt;
+        int colStart = col - col % sqrt;
+
+        for (int r = rowStart; r < rowStart + sqrt; r++) {
+            for (int c = colStart; c < colStart + sqrt; c++) {
+                if (board[r][c] == num) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/sum-triangle-from-array/
+public class SumTriangleFromArray {
+    public static void main(String[] args) {
+        int[] A = { 1, 2, 3, 4, 5 };
+        printTriangle(A);
+    }
+    static void printTriangle(int[] x){
+        if(x.length < 1){
+            return;
+        }
+
+        int[] temp = new int[x.length - 1];
+        helper(temp,x,0);
+        printTriangle(temp);
+
+        System.out.println(Arrays.toString(x));
+    }
+    static void helper(int[] temp, int[] x, int index){
+        if(index == x.length - 1){
+            return;
+        }
+        temp[index] = x[index] + x[index+1];
+        helper(temp, x, index+1);
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/recursive-programs-to-find-minimum-and-maximum-elements-of-array/
+public class FindMaxInArray {
+    public static void main(String[] args) {
+        int A[] = {1, 4, 45, 6, -50, 10, 2};
+        int n = A.length;
+        System.out.println(FindMax(A, n));
+    }
+    static int FindMax(int[] x, int n){
+        if(n == 1){
+            return x[0];
+        }
+        return Math.max(x[n-1],FindMax(x, n-1));
+        // return Math.min(x[n-1],FindMax(x, n-1));
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/first-uppercase-letter-in-a-string-iterative-and-recursive/
+public class UpperCaseChar {
+    static char first(String str, int i)
+    {
+        if(str.charAt(i)=='\0'){
+            return 0;
+        }
+        if(Character.isUpperCase(str.charAt(i))) { // or (str.charAt(i) - 'A')<26
+            return str.charAt(i);
+        }
+        try {
+            return first(str, i + 1);
+        }
+        catch(Exception e){
+            System.out.println("Exception occurs");
+        }
+        return 0;
+    }
+     
+    // Driver code
+    public static void main(String args[])
+    {
+        String str = "geeksforGeeKS";
+        char res = first(str,0);
+        if (res == 0)
+            System.out.println("No uppercase letter");
+        else
+            System.out.println (res );
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/program-for-length-of-a-string-using-recursion/
+public class GFG{
+ 
+    /* Function to calculate length */
+    private static int recLen(String str) 
+    {
+ 
+        // if we reach at the end of the string
+        if (str.equals(""))
+            return 0;
+        else
+            return recLen(str.substring(1)) + 1;
+    }
+ 
+    /* Driver program to test above function */
+    public static void main(String[] args) 
+    {
+ 
+         
+        String str ="GeeksforGeeks";
+        System.out.println(recLen(str));
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/recursive-program-prime-number/
+class GFG {
+ 
+    // Returns true if n is prime, else
+    // return false.
+    // i is current divisor to check.
+    static boolean isPrime(int n, int i)
+    {
+ 
+        // Base cases
+        if (n <= 2)
+            return (n == 2) ? true : false;
+        if (n % i == 0)
+            return false;
+        if (i * i > n)
+            return true;
+      
+        // Check for next divisor
+        return isPrime(n, i + 1);
+    }
+     
+    // Driver program to test above function 
+    public static void main(String[] args)
+    {
+ 
+        int n = 15;
+ 
+        if (isPrime(n, 2)) 
+            System.out.println("Yes");
+        else
+            System.out.println("No");
+    }
+}
+-----------------------------------------------------------------
+important
+public class InsertionSortRecursion {
+    public static void insertionSort(int[] arr, int n) {
+        if (n <= 1) return;
+
+        // Sort the first n-1 elements
+        insertionSort(arr, n - 1);
+
+        // Insert the nth element into the sorted part
+        int key = arr[n - 1];
+        int j = n - 2;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = key;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {12, 11, 13, 5, 6};
+        insertionSort(arr, arr.length);
+
+        System.out.print("Sorted array: ");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}
+
+-----------------------------------------------------------------
+important
+Question: Write a recursive function for given n and a to determine x:
+
+      n = a ^ x 
+      a = 2, 3, 4
+      (2 ^ -31) <= n <= (2 ^ 31) - 1
+
+
+public class CalculateX {
+    public static int findX(int n, int a) {
+        if (n == 1) return 0;
+        else if (n == a) return 1;
+        else if (n < a) return -1;
+        else {
+            int x = findX(n / a, a);
+            if (x == -1) return -1;
+            return 1 + x;
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/power-of-three/
+class Solution {
+    public boolean isPowerOfThree(int n) {
+        if(n<=0){
+            return false;
+        }
+        if (n==1){
+            return true;
+        }
+        if (n % 3 != 0) {
+            return false;
+        }
+        return isPowerOfThree(n/3);
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/program-check-array-sorted-not-iterative-recursive/
+class Solution {
+    static boolean arraySortedOrNot(int a[], int n)
+    {
+          // base case
+        if (n == 1 || n == 0)
+            return true;
+    
+          // check if present index and index 
+        // previous to it are in correct order
+        // and rest of the array is also sorted
+        // if true then return true else return
+        // false
+        return a[n - 1] >= a[n - 2]
+            && arraySortedOrNot(a, n - 1);
+    }
+
+    // Driver code
+    public static void main(String[] args)
+    {
+
+        int arr[] = { 20, 23, 23, 45, 78, 88 };
+        int n = arr.length;
+        
+          // Function Call
+        if (arraySortedOrNot(arr, n))
+            System.out.print("Yes");
+        else
+            System.out.print("No");
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/remove-consecutive-duplicates-string/
+static String removeConsecutiveCharacter(String P,String UP){
+        if (UP.isEmpty()){
+            return P;
+        }
+        char ch = UP.charAt(0);
+        if(P.isEmpty()){
+            P+=ch;
+        }    
+        if(P.charAt(P.length()-1)!=ch){
+            return removeConsecutiveCharacter(P+ch,UP.substring(1));
+        }
+        return removeConsecutiveCharacter(P,UP.substring(1));
+    }
+-----------------------------------------------------------------
+https://leetcode.com/problems/combination-sum/
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> list = new ArrayList<>();
+        List<Integer> templist= new ArrayList<>();
+        backtrack(list, templist, candidates, target, 0); 
+        return list;
+    }
+    public void backtrack(List<List<Integer>> list, List<Integer> templist, int[] candidates, int target, int start){
+        if(target<0){
+            return;
+        }
+        if(target == 0){
+            // To avoid this shared reference issue, you use list.add(new ArrayList<>(templist)). This creates a new ArrayList object and copies the contents of templist into it. This new ArrayList is then added to list.
+            Collections.sort(templist);
+            list.add(new ArrayList<>(templist));
+        }
+        for( int i = start; i<candidates.length; i++){
+            templist.add(candidates[i]);
+            backtrack(list,templist,candidates,target - candidates[i], i);
+            templist.remove(templist.size() - 1);
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/word-search/
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[0].length; c++) {
+                if (board[r][c] == word.charAt(0) && dfs(board, word, r, c, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean dfs(char[][] board, String word, int r, int c, int index) {
+        if (index == word.length()) {
+            return true;
+        }
+        if (r < 0 || r >= board.length || c < 0 || c >= board[0].length || board[r][c] != word.charAt(index)) {
+            return false;
+        }
+
+        char temp = board[r][c];
+        board[r][c] = '#'; // Mark the cell as visited
+
+        boolean found = dfs(board, word, r + 1, c, index + 1) ||
+                        dfs(board, word, r - 1, c, index + 1) ||
+                        dfs(board, word, r, c + 1, index + 1) ||
+                        dfs(board, word, r, c - 1, index + 1);
+
+        board[r][c] = temp; // Restore the cell value
+        return found;
+    }
+}
+
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/given-a-string-print-all-possible-palindromic-partition/
+class GFG {
+
+    //funtion to check whether partitioned string is palindrome or not
+    public boolean checkPalindrome(String s) {
+        int n = s.length();
+        int i = 0;
+        int j = n-1;
+        while(i < j) {
+            if(s.charAt(i) != s.charAt(j))
+                return false;
+
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    // Recursive funtion which takes index ind and generates all substrings starting at ind.
+    // if substring generated is palindrome it adds to current list and makes a recursive call for remaining string
+
+    public void partition(ArrayList<ArrayList<String>> res, String s, int ind, ArrayList<String> curr) {
+        // if we reach the end of string
+        // add the current list to the result
+
+        if(ind == s.length()) {
+            res.add(new ArrayList<String>(curr));
+            return;
+        }
+
+        // Store the current substring
+        String temp = "";
+
+        for(int i = ind; i < s.length(); i++) {
+            temp += s.charAt(i);
+
+            // check if string temp is palindrome or not
+            if(checkPalindrome(temp)){
+
+                // adds the string to current list
+                curr.add(temp);
+
+                // Recursive call for the remaining string
+                partition(res, s, i+1, curr);
+
+                // Remove the string from the current list - (backtracking)
+                curr.remove(curr.size()-1);
+            }
+        }
+        
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/k-th-symbol-in-grammar/
+class Solution {
+    public int kthGrammar(int n, int k) {
+        if(n==1){
+            return 0;                                   //base condition
+        }
+        if(k%2 == 1) return kthGrammar(n-1,k/2 + 1);    //odd place means return above corresponding num
+        return kthGrammar(n-1,k/2 ) ^ 1 ;            //even place means return above corresponding num's negation     
+    }
+}
+// As the Contraint of N is between 1 to 30 this question can be easily Solved using Recursion So lets try to Find the pattern
+// n=1 -->0 // 0 is replaced with 01 as given in the question
+// n=2 -->01 // now 0 is replaced with 01 and 1 is replaced with 10
+// n=3 -->0110 // again same thing is repeated
+// n=4 -->01101001
+// At n=4 we clearly see that the 1st half of the value is same as n-1 value
+// Now lets observe the 2nd half of the value it looks like the complement value of the first half ie 0 is converted to 1 and 1 is converted 0
+-----------------------------------------------------------------
+https://leetcode.com/problems/powx-n/
+class Solution {
+    public double myPow(double x, int n) {
+        double ans = 1;
+        if(n>0){
+            double pow = backtrack(x, n, ans);
+            return pow;
+        }
+        else{
+            double pow = backtrack(x, Math.abs(n), ans);
+            return 1/pow;
+        }
+    }
+    public double backtrack(double x, int n, double ans){
+        if(n==0){
+            return ans;
+        }
+        return backtrack(x, n-1, ans*x);
+    }
+}
+//iterative method
+public double myPow(double x, int n) {
+        double ans = 1.0;
+        long absN = Math.abs((long) n); // Convert to long to handle Integer.MIN_VALUE
+
+        while (absN > 0) {
+            if (absN % 2 == 1) {
+                ans *= x;
+            }
+            x *= x;
+            absN /= 2;
+        }
+
+        return n < 0 ? 1 / ans : ans;
+    }
+-----------------------------------------------------------------
+
+class Solution {
+    public static ArrayList<Integer> increasingNumbers(int n) {
+        // code here
+        List<String> numbers = new ArrayList<>();
+        generateNumbers(n, "", numbers);
+        return numbers;
+    }
+     public static void generateNumbers(int n, String current, List<String> numbers) {
+        if (n == 0) {
+            numbers.add(current);
+            return;
+        }
+
+        for (int i = (current.isEmpty() ? 0 : Integer.parseInt(current.substring(current.length() - 1)) + 1); i <= 9; i++) {
+            generateNumbers(n - 1, current + i, numbers);
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/count-good-numbers/
+class Solution {
+    static int mod =(int)(1e9)+7;
+    public int countGoodNumbers(long n) {
+        long a=count(5,(n+1)/2)%mod;
+        long b=count(4,(n)/2)%mod;
+        return (int)((a*b)%mod);
+    }
+
+    long count(int x,long n)
+    {
+        if(n==0) return 1;
+        long res=count(x,n/2);
+        if(n%2==0) return ((res%mod)*(res%mod));
+        else return (x*(res%mod)*(res%mod));
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/problems/handshakes
+watch - https://www.youtube.com/watch?v=ujRat6YOgRM
+class Solution{
+    static int count(int N) 
+    { 
+        // code here
+        if(N%2==1) return 0;
+        if(N==0) return 1;
+        int sum=0;
+        for(int i=0;i<N;i++)
+        {
+            sum+=(count(i)*count(N-2-i));
+        }
+        return sum;
+    }
+};
+-----------------------------------------------------------------
+https://leetcode.com/problems/perfect-squares/
+class Solution {
+    public int numSquares(int n) {
+        int res=n;
+        int num=2;
+        while(num*num<=n){
+          int x=n/(num*num);
+          int y=n%(num*num);
+            res=Math.min(res,x+numSquares(y));
+            ++num;
+        }
+        return res;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/find-the-winner-of-the-circular-game/
+solution watch - https://www.youtube.com/watch?v=8uFWG6xfkuc
+class Solution {
+    public int findTheWinner(int n, int k) {
+        return recursion(n, k) + 1;
+    }
+
+    private int recursion(int n, int k) {
+        if (n == 1) {
+            return 0;
+        }
+        return (recursion(n - 1, k) + k) % n;
+    }
+}
+
+// itterative solution
+// class Solution {
+//     public int findTheWinner(int n, int k) {
+//         int val = 0;
+//         for( int i = 2; i<=n; i++){
+//             val = (val + k)%i;
+//         }
+//         return val+1;
+//     }
+// }
+-----------------------------------------------------------------
+
+class Solution {
+    public List<Integer> diffWaysToCompute(String exp) {
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i=0;i<exp.length();i++)
+        {
+            char ch = exp.charAt(i);
+            if(ch == '-' || ch == '+' || ch == '*')
+            {
+                List<Integer> left = diffWaysToCompute(exp.substring(0,i));
+                List<Integer> right = diffWaysToCompute(exp.substring(i+1));
+                for(int m : left)
+                {
+                    for(int n : right)
+                    {
+                        if(ch == '-')
+                            list.add(m-n);
+                        else if(ch == '+')
+                            list.add(m+n);
+                        else list.add(m*n);
+                    }
+                }
+            }
+        }
+        if(list.size() == 0)
+            list.add(Integer.valueOf(exp));
+        return list;
+    }
+}
+-----------------------------------------------------------------
+https://www.hackerrank.com/challenges/the-power-sum/
+class Result {
+    public static int powerSum(int X, int N, int num) {
+// Write your code here
+        int power = (int)Math.pow(num, N);
+        if (power > X)
+            return 0;
+        else if (power == X)
+            return 1;
+        else
+            return powerSum(X, N, num + 1) + powerSum(X - power, N, num + 1);
+    }
+
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+class Solution {
+    public List<String> letterCombinations(String digits) {
+        if (digits.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return letterCombinations("", digits);
+    }
+
+    private List<String> letterCombinations(String p, String up) {
+        if (up.isEmpty()) {
+            List<String> list = new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+        int digit = (up.charAt(0) - '0')-1; // this will convert '2' into 2
+        ArrayList<String> list = new ArrayList<>();
+        if (digit == 6){
+            for (int i = (digit - 1) * 3; i < digit * 3 + 1; i++) {
+                char ch = (char) ('a' + i);
+                list.addAll(letterCombinations(p + ch, up.substring(1)));
+            }
+        }
+        else if (digit == 7){
+            for (int i = (digit - 1) * 3+1; i < digit * 3 + 1; i++) {
+                char ch = (char) ('a' + i);
+                list.addAll(letterCombinations(p + ch, up.substring(1)));
+            }
+        }
+        else if (digit == 8){
+            for (int i = (digit - 1) * 3+1; i < digit * 3 + 2; i++) {
+                char ch = (char) ('a' + i);
+                list.addAll(letterCombinations(p + ch, up.substring(1)));
+            }
+        }
+        else{
+            for (int i = (digit - 1) * 3; i < digit * 3; i++) {
+                char ch = (char) ('a' + i);
+                list.addAll(letterCombinations(p + ch, up.substring(1)));
+            }
+        }
+        return list;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/letter-tile-possibilities/
+class Solution {
+    public int numTilePossibilities(String tiles) {
+        char[] tileArray = tiles.toCharArray();
+        Arrays.sort(tileArray); // Sort the tiles to handle duplicates
+        boolean[] used = new boolean[tileArray.length];
+        return backtrack(tileArray, used);
+    }
+
+    private int backtrack(char[] tiles, boolean[] used) {
+        int count = 0;
+        for (int i = 0; i < tiles.length; i++) {
+            if (used[i] || (i > 0 && tiles[i] == tiles[i - 1] && !used[i - 1])) {
+                continue; // Skip duplicates
+            }
+            used[i] = true;
+            count += 1 + backtrack(tiles, used);
+            used[i] = false;
+        }
+        return count;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/combination-sum-ii/
+lass Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> helper = new ArrayList<>();
+        findAns(0, target, candidates, ans, helper);
+        return ans;
+    }
+    
+    private void findAns(int index, int target, int[] arr, List<List<Integer>> ans, List<Integer> helper) {
+        if (target == 0) {
+            ans.add(new ArrayList<>(helper));
+            return;
+        }
+        
+        for (int i = index; i < arr.length; i++) {
+            if (i > index && arr[i] == arr[i - 1]) {
+                continue;
+            }
+            if (arr[i] > target) {
+                break;
+            }
+            helper.add(arr[i]);
+            findAns(i + 1, target - arr[i], arr, ans, helper);
+            helper.remove(helper.size() - 1);
+        }
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/combination-sum-iii/
+class Solution {
+     public List<List<Integer>> combinationSum3(int k, int n) {
+    List<List<Integer>> ans = new ArrayList<>();
+    combination(ans, new ArrayList<Integer>(), k, 1, n);
+    return ans;
+}
+
+private void combination(List<List<Integer>> ans, List<Integer> comb, int k,  int start, int n) {
+	if (comb.size() == k && n == 0) {
+		List<Integer> li = new ArrayList<Integer>(comb);
+		ans.add(li);
+		return;
+	}
+	for (int i = start; i <= 9; i++) {
+		comb.add(i);
+		combination(ans, comb, k, i+1, n-i);
+		comb.remove(comb.size() - 1);
+	}
+}
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/path-with-maximum-gold/
+class Solution {
+    public int getMaximumGold(int[][] grid) {
+        int max= Integer.MIN_VALUE;
+        for(int i=0;i<grid.length;i++)
+        {
+            for(int j=0;j<grid[0].length;j++)
+            { 
+                //back(grid ,current_i ,current_j , sum )
+                max=Math.max(max,back(grid , i , j ,0));      
+            }
+        }
+        return max;
+    }
+       private int back(int[][] grid,int i ,int j ,int sum)
+       {
+           //base case
+           if(i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]==0 || grid[i][j]==-1 )
+               return sum;
+           //choose
+           sum+=grid[i][j];
+           int t = grid[i][j];
+           //bread crumbs
+           grid[i][j]=-1;
+           int max = Math.max( Math.max(back(grid,i+1,j,sum),back(grid,i-1,j,sum )) , Math.max( back(grid,i,j+1,sum),back(grid,i,j-1,sum)) );
+           //backtrack
+           grid[i][j]=t;
+           return Math.max(max,sum);
+       }
+    }
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/sort-a-stack-using-recursion/
+class Test {
+    // Recursive Method to insert an item x in sorted way
+    static void sortedInsert(Stack<Integer> s, int x)
+    {
+        // Base case: Either stack is empty or newly
+        // inserted item is greater than top (more than all
+        // existing)
+        if (s.isEmpty() || x > s.peek()) {
+            s.push(x);
+            return;
+        }
+        // If top is greater, remove the top item and recur
+        int temp = s.pop();
+        sortedInsert(s, x);
+        // Put back the top item removed earlier
+        s.push(temp);
+    }
+ 
+    // Method to sort stack
+    static void sortStack(Stack<Integer> s)
+    {
+        // If stack is not empty
+        if (!s.isEmpty()) {
+            // Remove the top item
+            int x = s.pop();
+            // Sort remaining stack
+            sortStack(s);
+            // Push the top item back in sorted stack
+            sortedInsert(s, x);
+        }
+    }
+    public static void main(String[] args)
+    {
+        Stack<Integer> s = new Stack<>();
+        s.push(30);
+        s.push(-5);
+        s.push(18);
+        s.push(14);
+        s.push(-3);
+        sortStack(s);
+    }
+}
+-----------------------------------------------------------------
+https://www.geeksforgeeks.org/tug-of-war/ important
+-----------------------------------------------------------------
+https://www.hackerrank.com/challenges/recursive-digit-sum/
+class Result {
+
+    /*
+     * Complete the 'superDigit' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. STRING n
+     *  2. INTEGER k
+     */
+
+    public static int superDigit(String n, int k) {
+    // Write your code here
+     // Calculate the sum of digits of n
+        long sum = 0;
+        for (char c : n.toCharArray()) {
+            sum += c - '0'; // Convert char to int
+        }
+
+        // Calculate the super digit of the sum
+        long superDigit = calculateSuperDigit(sum);
+
+        // Multiply the super digit by k
+        superDigit *= k;
+
+        // Calculate the super digit of the final result
+        return (int) calculateSuperDigit(superDigit);
+    }
+
+    private static long calculateSuperDigit(long num) {
+        if (num < 10) {
+            return num; // Base case: single-digit number
+        }
+        long sum = 0;
+        while (num > 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        return calculateSuperDigit(sum);
+    }
+}
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
