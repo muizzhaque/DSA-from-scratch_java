@@ -1,0 +1,1294 @@
+-----------------------------------------------------------------
+public class CLL {
+
+    private Node head;
+    private Node tail;
+
+    public CLL() {
+        this.head = null;
+        this.tail = null;
+    }
+
+
+    public ListNode removeElements(ListNode head, int val) {
+        while (head != null && head.val == val) head = head.next;
+        ListNode temp = head;
+        while(temp!=null && temp.next!=null){
+            if(temp.next.val==val){
+                temp.next = temp.next.next;
+            }
+            else{
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+    
+    public void insert(int val) {
+        Node node = new Node(val);
+        if (head == null) {
+            head = node;
+            tail = node;
+            return;
+        }
+
+        tail.next = node;
+        node.next = head;
+        tail = node;
+    }
+
+    public void display() {
+        Node node = head;
+        if (head != null) {
+            do {
+                System.out.print(node.val + " -> ");
+                if (node.next != null) {
+		    node = node.next;
+		}
+            } while (node != head);
+        }
+        System.out.println("HEAD");
+    }
+
+    public void delete(int val) {
+        Node node = head;
+        if (node == null) {
+            return;
+        }
+
+        if (head == tail){
+            head = null;
+            tail = null;
+            return;
+        }
+
+        if (node.val == val) {
+            head = head.next;
+            tail.next = head;
+            return;
+        }
+
+        do {
+            Node n = node.next;
+            if (n.val == val) {
+                node.next = n.next;
+                break;
+            }
+            node = node.next;
+        } while (node != head);
+
+    }
+
+    private class Node {
+        int val;
+        Node next;
+
+        public Node(int val) {
+            this.val = val;
+        }
+    }
+}
+-----------------------------------------------------------------
+public class DLL {
+
+    private Node head;
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        node.prev = null;
+        if (head != null) {
+            head.prev = node;
+        }
+        head = node;
+    }
+
+    public void display() {
+        Node node = head;
+        Node last = null;
+        while (node != null) {
+            System.out.print(node.val + " -> ");
+            last = node;
+            node = node.next;
+        }
+        System.out.println("END");
+
+        System.out.println("Print in reverse");
+        while (last != null) {
+            System.out.print(last.val + " -> ");
+            last = last.prev;
+        }
+        System.out.println("START");
+    }
+
+    public void insertLast(int val) {
+        Node node = new Node(val);
+        Node last = head;
+
+        node.next = null;
+
+        if (head == null) {
+            node.prev = null;
+            head = node;
+            return;
+        }
+
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last.next = node;
+        node.prev = last;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.val == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public void insert(int after, int val) {
+        Node p = find(after);
+
+        if (p == null) {
+            System.out.println("does not exist");
+            return;
+        }
+
+        Node node = new Node(val);
+        node.next = p.next;
+        p.next = node;
+        node.prev = p;
+        if (node.next != null) {
+            node.next.prev = node;
+        }
+    }
+
+    private class Node {
+        int val;
+        Node next;
+        Node prev;
+
+        public Node(int val) {
+            this.val = val;
+        }
+
+        public Node(int val, Node next, Node prev) {
+            this.val = val;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+}
+-----------------------------------------------------------------
+public class LL {
+
+    private Node head;
+    private Node tail;
+    private int size;
+
+    public LL() {
+        this.size = 0;
+    }
+
+    public void insertFirst(int val) {
+        Node node = new Node(val);
+        node.next = head;
+        head = node;
+
+        if (tail == null) {
+            tail = head;
+        }
+        size += 1;
+    }
+
+    public void insertLast(int val) {
+        if (tail == null) {
+            insertFirst(val);
+            return;
+        }
+        Node node = new Node(val);
+        tail.next = node;
+        tail = node;
+        size++;
+    }
+
+    public void insert(int val, int index) {
+        if (index == 0) {
+            insertFirst(val);
+            return;
+        }
+        if (index == size) {
+            insertLast(val);
+            return;
+        }
+
+        Node temp = head;
+        for (int i = 1; i < index; i++) {
+            temp = temp.next;
+        }
+
+        Node node = new Node(val, temp.next);
+        temp.next = node;
+
+        size++;
+    }
+
+    // insert using recursion
+    public void insertRec(int val, int index) {
+        head = insertRec(val, index, head);
+    }
+    private Node insertRec(int val, int index, Node node) {
+        if (index == 0) {
+            Node temp = new Node(val, node);
+            size++;
+            return temp;
+        }
+
+        node.next = insertRec(val, index-1, node.next);
+        return node;
+    }
+
+
+    public int deleteLast() {
+        if (size <= 1) {
+            return deleteFirst();
+        }
+
+        Node secondLast = get(size - 2);
+        int val = tail.value;
+        tail = secondLast;
+        tail.next = null;
+        size--;
+        return val;
+    }
+
+    public int delete(int index) {
+        if (index == 0) {
+            return deleteFirst();
+        }
+        if (index == size - 1) {
+            return deleteLast();
+        }
+
+        Node prev = get(index - 1);
+        int val = prev.next.value;
+
+        prev.next = prev.next.next;
+        size--;
+        return val;
+    }
+
+    public Node find(int value) {
+        Node node = head;
+        while (node != null) {
+            if (node.value == value) {
+                return node;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Node get(int index) {
+        Node node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node;
+    }
+
+    public int deleteFirst() {
+        int val = head.value;
+        head = head.next;
+        if (head == null) {
+            tail = null;
+        }
+        size--;
+        return val;
+    }
+
+    public void display() {
+        Node temp = head;
+        while (temp != null) {
+            System.out.print(temp.value + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("END");
+    }
+
+    private class Node {
+        private int value;
+        private Node next;
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+    }
+    // https://leetcode.com/problems/remove-duplicates-from-sorted-list
+    public void duplicates() {
+        Node node = head;
+
+        while (node.next != null) {
+            if (node.value == node.next.value) {
+                node.next = node.next.next;
+                size--;
+            } else {
+                node = node.next;
+            }
+        }
+        tail = node;
+        tail.next = null;
+    }
+
+    // https://leetcode.com/problems/merge-two-sorted-lists/submissions/
+    public static LL merge(LL first, LL second) {
+        Node f = first.head;
+        Node s = second.head;
+
+        LL ans = new LL();
+
+
+
+
+        while (f != null && s != null) {
+            if (f.value < s.value) {
+                ans.insertLast(f.value);
+                f = f.next;
+            } else {
+                ans.insertLast(s.value);
+                s = s.next;
+            }
+        }
+
+        while (f != null) {
+            ans.insertLast(f.value);
+            f = f.next;
+        }
+
+        while (s != null) {
+            ans.insertLast(s.value);
+            s = s.next;
+        }
+
+        return ans;
+    }
+
+    public void bubbleSort() {
+        bubbleSort(size - 1, 0);
+    }
+
+    private void bubbleSort(int row, int col) {
+        if (row == 0) {
+            return;
+        }
+
+        if (col < row) {
+            Node first = get(col);
+            Node second = get(col + 1);
+
+            if (first.value > second.value) {
+                // swap
+                if (first == head) {
+                    head = second;
+                    first.next = second.next;
+                    second.next = first;
+                } else if (second == tail) {
+                    Node prev = get(col - 1);
+                    prev.next = second;
+                    tail = first;
+                    first.next = null;
+                    second.next = tail;
+                } else {
+                    Node prev = get(col - 1);
+                    prev.next = second;
+                    first.next = second.next;
+                    second.next = first;
+                }
+            }
+            bubbleSort(row, col + 1);
+        } else {
+            bubbleSort(row - 1, 0);
+        }
+    }
+
+    // recursion reverse
+    private void reverse(Node node) {
+        if (node == tail) {
+            head = tail;
+            return;
+        }
+        reverse(node.next);
+        tail.next = node;
+        tail = node;
+        tail.next = null;
+    }
+
+    // in place reversal of linked list
+    // google, microsoft, apple, amazon: https://leetcode.com/problems/reverse-linked-list/
+    public void reverse() {
+        if (size < 2) {
+            return;
+        }
+
+        Node prev = null;
+        Node present = head;
+        Node next = present.next;
+
+        while (present != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+        head = prev;
+    }
+
+
+    public static void main(String[] args) {
+        LL first = new LL();
+        LL second = new LL();
+
+        first.insertLast(1);
+        first.insertLast(3);
+        first.insertLast(5);
+
+        second.insertLast(1);
+        second.insertLast(2);
+        second.insertLast(9);
+        second.insertLast(14);
+
+        LL ans = LL.merge(first, second);
+        ans.display();
+
+        LL list = new LL();
+        for (int i = 7; i > 0; i--) {
+            list.insertLast(i);
+        }
+        list.display();
+        list.bubbleSort();
+        list.display();
+
+    }
+}
+-----------------------------------------------------------------
+public class Main {
+    public static void main(String[] args) {
+        LL list = new LL();
+        list.insertFirst(3);
+        list.insertFirst(2);
+        list.insertFirst(8);
+        list.insertFirst(17);
+        list.insertLast(99);
+        list.insert(100, 3);
+        list.display();
+        System.out.println(list.deleteFirst());
+        list.display();
+        System.out.println(list.deleteLast());
+        list.display();
+        System.out.println(list.delete(2));
+        list.display();
+        list.insertRec(88, 2);
+        list.display();
+
+//        DLL list = new DLL();
+//        list.insertFirst(3);
+//        list.insertFirst(2);
+//        list.insertFirst(8);
+//        list.insertFirst(17);
+//        list.insertLast(99);
+//        list.insert(8, 65);
+//
+//        list.display();
+
+//        CLL list = new CLL();
+//        list.insert(23);
+//        list.insert(3);
+//        list.insert(19);
+//        list.insert(75);
+//        list.display();
+//        list.delete(19);
+//        list.display();
+    }
+}
+-----------------------------------------------------------------
+public class MergeSort {
+
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode mid = getMid(head);
+        ListNode left = sortList(head);
+        ListNode right = sortList(mid);
+
+        return merge(left, right);
+    }
+
+    ListNode merge(ListNode list1, ListNode list2) {
+        ListNode dummyHead = new ListNode();
+        ListNode tail = dummyHead;
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                tail.next = list1;
+                list1 = list1.next;
+                tail = tail.next;
+            } else {
+                tail.next = list2;
+                list2 = list2.next;
+                tail = tail.next;
+            }
+        }
+        tail.next = (list1 != null) ? list1 : list2;
+        return dummyHead.next;
+    }
+
+    ListNode getMid(ListNode head) {
+        ListNode midPrev = null;
+        while (head != null && head.next != null) {
+            midPrev = (midPrev == null) ? head : midPrev.next;
+            head = head.next.next;
+        }
+        ListNode mid = midPrev.next;
+        midPrev.next = null;
+        return mid;
+    }
+}
+-----------------------------------------------------------------
+public class InterviewQuestions {
+
+    // https://leetcode.com/problems/linked-list-cycle
+    // Amazon and Microsoft
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // find length of the cycle
+    public int lengthCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                // calculate the length
+                ListNode temp = slow;
+                int length = 0;
+                do {
+                    temp = temp.next;
+                    length++;
+                } while (temp != slow);
+                return length;
+            }
+        }
+        return 0;
+    }
+
+    // https://leetcode.com/problems/linked-list-cycle-ii/
+    public ListNode detectCycle(ListNode head) {
+        int length = 0;
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                length = lengthCycle(slow);
+                break;
+            }
+        }
+
+        if (length == 0) {
+            return null;
+        }
+
+        // find the start node
+        ListNode f = head;
+        ListNode s = head;
+
+        while (length > 0) {
+            s = s.next;
+            length--;
+        }
+
+        // keep moving both forward and they will meet at cycle start
+        while (f != s) {
+            f = f.next;
+            s = s.next;
+        }
+        return s;
+    }
+
+    // Google: https://leetcode.com/problems/happy-number/
+    public boolean isHappy(int n) {
+        int slow = n;
+        int fast = n;
+
+        do {
+            slow = findSquare(slow);
+            fast = findSquare(findSquare(fast));
+        } while (slow != fast);
+
+        if (slow == 1) {
+            return true;
+        }
+        return false;
+    }
+    private int findSquare(int number) {
+        int ans = 0;
+        while (number > 0) {
+            int rem = number % 10 ;
+            ans += rem * rem;
+            number /= 10;
+        }
+        return ans;
+    }
+
+
+    // https://leetcode.com/problems/middle-of-the-linked-list/submissions/
+    public ListNode middleNode(ListNode head) {
+        ListNode s = head;
+        ListNode f = head;
+
+        while (f != null && f.next != null) {
+            s = s.next;
+            f = f.next.next;
+        }
+        return s;
+    }
+
+
+
+    // https://leetcode.com/problems/reverse-linked-list/submissions/
+    // google, apple, amazon, microsoft
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode prev = null;
+        ListNode present = head;
+        ListNode next = present.next;
+
+        while (present != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+        return prev;
+    }
+
+    // Google, Microsoft, Facebook: https://leetcode.com/problems/reverse-linked-list-ii/
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (left == right) {
+            return head;
+        }
+
+        // skip the first left-1 nodes
+        ListNode current = head;
+        ListNode prev = null;
+        for (int i = 0; current != null && i < left - 1; i++) {
+            prev = current;
+            current = current.next;
+        }
+
+        ListNode last = prev;
+        ListNode newEnd = current;
+
+        // reverse between left and right
+        ListNode next = current.next;
+        for (int i = 0; current != null && i < right - left + 1; i++) {
+            current.next = prev;
+            prev = current;
+            current = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        if (last != null) {
+            last.next = prev;
+        } else {
+            head = prev;
+        }
+
+        newEnd.next = current;
+        return head;
+    }
+
+
+    // google, amazon, facebook, microsoft: https://leetcode.com/problems/reverse-nodes-in-k-group/
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (k <= 1 || head == null) {
+            return head;
+        }
+
+        ListNode current = head;
+        ListNode prev = null;
+
+		int length = getLength(head);
+		int count = length / k;
+        while (count > 0) {
+            ListNode last = prev;
+            ListNode newEnd = current;
+
+            ListNode next = current.next;
+            for (int i = 0; current != null && i < k; i++) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            if (last != null) {
+                last.next = prev;
+            } else {
+                head = prev;
+            }
+
+            newEnd.next = current;
+
+            prev = newEnd;
+			count--;
+        }
+        return head;
+    }
+
+	public int getLength(ListNode head) {
+		ListNode node = head;
+		int length = 0;
+		while (node != null) {
+			length++;
+			node = node.next;
+		}
+		return length;
+	}
+
+    // https://www.geeksforgeeks.org/reverse-alternate-k-nodes-in-a-singly-linked-list/
+    public ListNode reverseAlternateKGroup(ListNode head, int k) {
+        if (k <= 1 || head == null) {
+            return head;
+        }
+
+        // skip the first left-1 nodes
+        ListNode current = head;
+        ListNode prev = null;
+
+        while (current != null) {
+            ListNode last = prev;
+            ListNode newEnd = current;
+
+            // reverse between left and right
+            ListNode next = current.next;
+            for (int i = 0; current != null && i < k; i++) {
+                current.next = prev;
+                prev = current;
+                current = next;
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            if (last != null) {
+                last.next = prev;
+            } else {
+                head = prev;
+            }
+
+            newEnd.next = current;
+
+            // skip the k nodes
+            for (int i = 0; current != null && i < k; i++) {
+                prev = current;
+                current = current.next;
+            }
+        }
+        return head;
+    }
+
+
+    // linkedin, google, facebook, microsoft, amazon, apple
+//    https://leetcode.com/problems/palindrome-linked-list/
+    public boolean isPalindrome(ListNode head) {
+        ListNode mid = middleNode(head);
+        ListNode headSecond = reverseList(mid);
+        ListNode rereverseHead = headSecond;
+
+        // compare both the halves
+        while (head != null && headSecond != null) {
+            if (head.val != headSecond.val) {
+                break;
+            }
+            head = head.next;
+            headSecond = headSecond.next;
+        }
+        reverseList(rereverseHead);
+
+        return head == null || headSecond == null;
+    }
+
+    // https://leetcode.com/problems/reorder-list/
+// Google, Facebook
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        ListNode mid = middleNode(head);
+
+        ListNode hs = reverseList(mid);
+        ListNode hf = head;
+
+        // rearrange
+        while (hf != null && hs != null) {
+            ListNode temp = hf.next;
+            hf.next = hs;
+            hf = temp;
+
+            temp = hs.next;
+            hs.next = hf;
+            hs = temp;
+        }
+
+        // next of tail to null
+        if (hf != null) {
+            hf.next = null;
+        }
+    }
+
+    // FaceBook, Twitter, Google: https://leetcode.com/problems/rotate-list/
+    public ListNode rotateRight(ListNode head, int k) {
+        if (k <= 0 || head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode last = head;
+        int length = 1;
+        while (last.next != null) {
+            last = last.next;
+            length++;
+        }
+
+        last.next = head;
+        int rotations = k % length;
+        int skip = length - rotations;
+        ListNode newLast = head;
+        for (int i = 0; i < skip - 1; i++) {
+            newLast = newLast.next;
+        }
+        head = newLast.next;
+        newLast.next = null;
+
+        return head;
+    }
+
+}
+
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    public ListNode() {
+    }
+
+    ListNode(int x) {
+        val = x;
+        next = null;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/merge-two-sorted-lists/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummyHead = new ListNode();
+        ListNode tail = dummyHead;
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                tail.next = list1;
+                list1 = list1.next;
+                tail = tail.next;
+            } else {
+                tail.next = list2;
+                list2 = list2.next;
+                tail = tail.next;
+            }
+        }
+        tail.next = (list1 != null) ? list1 : list2;
+        return dummyHead.next;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/intersection-of-two-linked-lists/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null) return null;
+        ListNode a = headA;
+        ListNode b = headB;
+
+        while( a != b){
+        a = a == null? headB : a.next;
+        b = b == null? headA : b.next;    
+        }
+        return a;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/remove-linked-list-elements/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        while (head != null && head.val == val) head = head.next;
+        ListNode temp = head;
+        while(temp!=null && temp.next!=null){
+            if(temp.next.val==val){
+                temp.next = temp.next.next;
+            }
+            else{
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/add-two-numbers/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode hf = reverseList(l1);
+        ListNode hs = reverseList(l2);
+        int sum1 = 0;
+        int sum2 = 0;
+        while(hf!=null && hs!=null){
+            sum1 = hf.val+sum1*10;
+            hf = hf.next;
+            sum2 = hs.val+sum2*10;
+            hs = hs.next;
+        }
+        if(hf==null){
+            while(hs!=null){
+                sum2 = hs.val+sum2*10;
+                hs = hs.next;
+            }
+        }else{
+            while(hf!=null){
+                sum1 = hf.val+sum1*10;
+                hf = hf.next;
+            }
+        }
+        int ans = sum1+sum2;
+        int rem = ans%10;
+        ans = ans/10;
+        ListNode ansNode = new ListNode(rem);
+        ListNode temp = ansNode;
+        while(ans!=0){
+            rem = ans%10;
+            ans = ans/10;
+            temp.next = new ListNode(rem);
+            temp = temp.next;
+        }
+        return ansNode;
+    }
+    public ListNode reverseList(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode prev = null;
+        ListNode present = head;
+        ListNode next = present.next;
+
+        while (present != null) {
+            present.next = prev;
+            prev = present;
+            present = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+        return prev;
+    }
+}
+-----------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapNodes(ListNode head, int k) {		
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode first = head, second = head;
+        
+		// Put fast (k-1) nodes after slow
+        for(int i = 0; i < k - 1; ++i)
+            fast = fast.next;
+            
+		// Save the node for swapping
+        first = fast;
+
+		// Move until the end of the list
+        while(fast.next != null) {
+			slow = slow.next;
+            fast = fast.next;
+        }
+        
+        // Save the second node for swapping
+		// Note that the pointer second isn't necessary: we could use slow for swapping as well
+		// However, having second improves readability
+        second = slow;
+		
+		// Swap values
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+        
+        return head;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/copy-list-with-random-pointer/
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
+
+class Solution {
+    public Node copyRandomList(Node head) {
+        if (head == null) {
+            return null;
+        }
+
+        // Step 1: Create a copy of each node and insert it right next to the original node
+        Node curr = head;
+        while (curr != null) {
+            Node copy = new Node(curr.val);
+            copy.next = curr.next;
+            curr.next = copy;
+            curr = copy.next;
+        }
+
+        // Step 2: Assign random pointers for the copied nodes
+        curr = head;
+        while (curr != null) {
+            if (curr.random != null) {
+                curr.next.random = curr.random.next;
+            }
+            curr = curr.next.next;
+        }
+
+        // Step 3: Separate the copied nodes to form the new list
+        curr = head;
+        Node copyHead = head.next;
+        Node copyCurr = copyHead;
+        while (curr != null) {
+            curr.next = curr.next.next;
+            if (copyCurr.next != null) {
+                copyCurr.next = copyCurr.next.next;
+            }
+            curr = curr.next;
+            copyCurr = copyCurr.next;
+        }
+
+        return copyHead;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        ListNode pre = dummy;
+        ListNode curr = head;
+
+        while(curr != null) {
+            while(curr.next != null && curr.val == curr.next.val) {
+                curr = curr.next;
+            }
+            if(pre.next == curr) {
+                pre = pre.next;
+            } else {
+                pre.next = curr.next;
+            }
+            curr = curr.next;
+        }
+        return dummy.next;
+    }
+}
+
+-----------------------------------------------------------------
+https://leetcode.com/problems/partition-list/ - imp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode partition(ListNode head, int x) {
+        ListNode smallHead = new ListNode(0); // Dummy head for small list
+        ListNode largeHead = new ListNode(0); // Dummy head for large list
+        ListNode small = smallHead;
+        ListNode large = largeHead;
+        ListNode temp = head;
+
+        while (temp != null) {
+            if (temp.val < x) {
+                small.next = temp;
+                small = small.next;
+            } else {
+                large.next = temp;
+                large = large.next;
+            }
+            temp = temp.next;
+        }
+
+        large.next = null; // Terminate the large list
+        small.next = largeHead.next; // Connect small list with large list
+
+        return smallHead.next; // Return the head of the small list
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/swap-nodes-in-pairs/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        ListNode prev = dummy;
+
+        if(head == null || head.next == null) return head;
+
+        while (head != null && head.next != null) {
+
+            ListNode firstNode = head;
+            ListNode secondNode = head.next;
+
+            prev.next = secondNode;
+            firstNode.next = secondNode.next;
+            secondNode.next = firstNode;
+
+            prev = firstNode;
+            head = firstNode.next;
+        }
+
+        return dummy.next;
+    }
+}
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------

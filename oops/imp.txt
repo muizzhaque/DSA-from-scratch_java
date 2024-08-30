@@ -1,0 +1,65 @@
+Q. Can we declare main() method as private or protected or with no access modifier in java?
+You can define the main method in your program without private, protected or, default (none) modifier, the program gets compiled without compilation errors.
+But, at the time of execution JVM does not consider this as the entry point of the program. It searches for the main method which is public, static, with return type void, and a String array as an argument.
+
+Q. Can we declare interface members as private or protected in java8?
+If the members of the interface are private you cannot provide implementation to the methods or, cannot access the fields of it in the implementing class.
+Therefore, the members of an interface cannot be private. 
+In general, the protected members can be accessed in the same class or, the class inheriting it. But, we do not inherit an interface we will implement it.
+Therefore, the members of an interface cannot be protected. 
+
+Q. What is diamond problem in Java?
+In Java, the diamond problem is related to multiple inheritance. Sometimes it is also known as the deadly diamond problem or deadly diamond of death. 
+
+Q. Can we pass this keyword as argument in a method call?
+Yes we can
+
+Q. What is covariant return type?
+The covariant return type specifies that the return type may vary in the same direction as the subclass.
+Before Java5, it was not possible to override any method by changing the return type. But now, since Java5, it is possible to override method by changing the return type if subclass overrides any method 
+whose return type is Non-Primitive but it changes its return type to subclass type. Let's take a simple example:
+```
+class A{    
+A get(){return this;}    
+}    
+    
+class B1 extends A{    
+@Override  
+B1 get(){return this;}    
+void message(){System.out.println("welcome to covariant return type");}    
+    
+public static void main(String args[]){    
+new B1().get().message();    
+}    
+}
+```
+
+Q./java-method-overriding-2-super-keyword
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        MotorCycle mc = new MotorCycle();
+    }
+}
+class BiCycle {
+    String define_me() {
+        return "a vehicle with pedals.";
+    }
+}
+
+class MotorCycle extends BiCycle {
+    @Override
+    String define_me() {
+        return "a cycle with an engine.";
+    }
+
+    MotorCycle() {
+        System.out.println("Hello I am a motorcycle, I am " + define_me());
+        String temp = super.define_me(); // Using super to call the parent class method
+        System.out.println("My ancestor is a cycle who is " + temp);
+    }
+}
