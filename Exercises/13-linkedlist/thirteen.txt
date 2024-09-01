@@ -1287,8 +1287,328 @@ class Solution {
     }
 }
 -----------------------------------------------------------------
+https://leetcode.com/problems/design-browser-history/
+class BrowserHistory {
+    class Node{
+        String val;
+        Node next;
+        Node prev;
+
+        public Node(String val){
+            this.val = val;
+        }
+    }
+    // the node which will be used to traverse 
+        Node curr;
+
+    public BrowserHistory(String homepage) {
+        Node node = new Node(homepage);
+        node.prev = null;
+        node.next = null;
+        curr = node;
+    }
+    
+    public void visit(String url) {
+        Node node = new Node(url);
+        curr.next = node;
+        // traverse one node so we use temp for doubly linked list
+        Node temp = curr;
+        curr = curr.next;
+        curr.prev = temp;
+    }
+    
+    public String back(int steps) {
+        while(curr.prev!=null && steps-->0){
+            curr = curr.prev;
+        }
+        return curr.val;
+    }
+    
+    public String forward(int steps) {
+        while(curr.next!=null && steps-->0){
+            curr = curr.next;
+        }
+        return curr.val;
+    }
+}
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory obj = new BrowserHistory(homepage);
+ * obj.visit(url);
+ * String param_2 = obj.back(steps);
+ * String param_3 = obj.forward(steps);
+ */
 -----------------------------------------------------------------
+https://leetcode.com/problems/linked-list-random-node/ imp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+public class Solution {
+    ListNode head;
+
+    public Solution(ListNode head) {
+        this.head = head;
+    }
+    
+    public int getRandom() {
+        Random random = new Random();
+        ListNode randomNode = head;
+        int i = 1;
+        for (ListNode curr = head.next; curr != null; curr = curr.next) {
+            if (random.nextInt(i) == 0) {
+                randomNode = curr;
+            }
+            i++;
+        }
+        return randomNode.val;
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(head);
+ * int param_1 = obj.getRandom();
+ */
 -----------------------------------------------------------------
+https://leetcode.com/problems/odd-even-linked-list/ imp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode odd = head;
+        ListNode even   
+ = head.next;
+        ListNode   
+ evenHead = even; // Keep track of the even list head
+
+        while (odd.next != null && even.next != null) {
+            odd.next = even.next;
+            odd = odd.next;
+
+            even.next = odd.next;
+            even = even.next;
+        }
+
+        odd.next = evenHead;   
+ // Connect the end of odd list to even list head
+
+        return head;
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/split-linked-list-in-parts/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        ListNode[] ans=new ListNode[k];
+        ListNode temp=head;
+        int count=0;
+        while(temp!=null){
+            count++;
+            temp=temp.next;
+        }
+
+        int x=count/k;
+        int y=count%k;
+        ListNode prev=null;
+        int i=0;
+        while(head!=null){
+            ans[i++]=head;
+            count=0;
+            while(head!=null&&count<x)
+          { 
+            prev=head;
+            head=head.next;
+            count++;
+            }
+            if(y>0){
+                prev=head;
+                if(head!=null)
+                head=head.next;
+                y--;
+            }
+            if(prev!=null)
+            prev.next=null;
+        }
+       
+        return ans;
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/reverse-nodes-in-even-length-groups/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseEvenLengthGroups(ListNode head) {
+        ListNode dummy = head, cur = head, tail = null;
+        int group = 0;
+        while (cur != null) {
+            group++;
+            int len = 0;
+            while (len < group && cur != null) {
+                cur = cur.next;
+                len++;
+            }
+            ListNode prev = null;
+            cur = head;
+            if (len % 2 == 0) {
+                while (len > 0) {
+                    ListNode next = cur.next;
+                    cur.next = prev;
+                    prev = cur;
+                    cur = next;
+                    len--;
+                }
+                if (tail != null) {
+                    tail.next = prev;
+                }
+                tail = head;
+            } else {
+                while (len > 0) {
+                    prev = cur;
+                    cur = cur.next;
+                    len--;
+                }
+                if (tail != null) {
+                    tail.next = head;
+                }
+                tail = prev;
+            }
+            head = cur;
+        }
+        return dummy;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/insertion-sort-list/ - https://www.youtube.com/watch?v=MP_Of5rZ6sQ
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        ListNode dummy = new ListNode(-1), curr = head;
+        while (curr != null) {
+            ListNode temp = curr.next;
+            ListNode prev = dummy;
+            ListNode nxt = dummy.next;
+            while (nxt != null) {
+                if (nxt.val > curr.val)
+                    break;
+                prev = nxt;
+                nxt = nxt.next;
+            }
+            curr.next = nxt;
+            prev.next = curr;
+            curr = temp;
+        }
+        return dummy.next;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
+https://www.youtube.com/watch?v=7qmiEfC8R8s
+-----------------------------------------------------------------
+imp, if there is time check this solution
+https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/solutions/5418282/easiest-4-step-cpp-java-py-js-solution-normal-approach-with-explanation/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        int startIdx = 1;
+
+        ListNode curr = head.next;
+        ListNode prev = head;
+        
+        int firstCP = -1;
+        int secCP = -1;
+
+        int ans[] = new int[2];
+        int minDistance = Integer.MAX_VALUE;
+        //int maxDistance = Integer.MIN_VALUE;
+
+        ans[0] = minDistance;
+
+        while(curr.next != null) {
+            ListNode Next = curr.next;
+            if(curr.val < Next.val && curr.val < prev.val || 
+               curr.val > Next.val && curr.val > prev.val ) {
+                // minima has been founded
+                    if(firstCP == -1) {
+                        firstCP = startIdx;
+                        secCP = startIdx;
+                    } else {
+                        ans[0] = Math.min(ans[0],(startIdx - secCP));
+                        secCP = startIdx;
+                    }
+            }
+
+            prev = prev.next;
+            curr = curr.next;
+            startIdx++;
+        }
+
+        if(firstCP != -1 && ans[0] != Integer.MAX_VALUE) {
+            // first is set now second has to be set
+            ans[1] = secCP - firstCP;
+        } else {
+            //neither min nor max has been founded
+
+            ans[0] = ans[1] = -1;
+        }
+
+        return ans;
+    }
+}
 -----------------------------------------------------------------
