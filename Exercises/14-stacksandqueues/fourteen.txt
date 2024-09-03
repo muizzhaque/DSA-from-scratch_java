@@ -1,14 +1,388 @@
 -----------------------------------------------------------------
+import java.util.*;
+
+public class InBuiltExamples {
+
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(34);
+        stack.push(45);
+        stack.push(2);
+        stack.push(9);
+        stack.push(18);
+
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(3);
+        queue.add(6);
+        queue.add(5);
+        queue.add(19);
+        queue.add(1);
+
+        System.out.println(queue.remove());
+        System.out.println(queue.remove());
+
+        Deque<Integer> deque = new ArrayDeque<>();
+        deque.add(89);
+        deque.addLast(78);
+        deque.removeFirst();
+        // etc etc
+    }
+}
 -----------------------------------------------------------------
+public class CustomStack {
+    protected int[] data;
+    private static final int DEFAULT_SIZE = 10;
+
+    int ptr = -1;
+
+    public CustomStack(){
+        this(DEFAULT_SIZE);
+    }
+
+    public CustomStack(int size) {
+        this.data = new int[size];
+    }
+
+    public boolean push(int item) {
+        if (isFull()) {
+            System.out.println("Stack is full!!");
+            return false;
+        }
+        ptr++;
+        data[ptr] = item;
+        return true;
+    }
+
+    public int pop() throws StackException {
+        if (isEmpty()) {
+            throw new StackException("Cannot pop from an empty stack!!");
+        }
+//        int removed = data[ptr];
+//        ptr--;
+//        return removed;
+        return data[ptr--];
+    }
+
+    public int peek() throws StackException {
+        if (isEmpty()) {
+            throw new StackException("Cannot peek from an empty stack!!");
+        }
+        return data[ptr];
+    }
+
+    public boolean isFull() {
+        return ptr == data.length - 1; // ptr is at last index
+    }
+
+    public boolean isEmpty() {
+        return ptr == -1;
+    }
+}
 -----------------------------------------------------------------
+public class StackException extends Exception{
+
+    public StackException(String message) {
+        super(message);
+    }
+}
 -----------------------------------------------------------------
+public class StackMain {
+    public static void main(String[] args) throws StackException {
+        CustomStack stack = new DynamicStack(5);
+
+        stack.push(34);
+        stack.push(45);
+        stack.push(2);
+        stack.push(9);
+        stack.push(18);
+        stack.push(89);
+
+
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+        System.out.println(stack.pop());
+    }
+}
 -----------------------------------------------------------------
+public class DynamicStack extends CustomStack{
+
+    public DynamicStack() {
+        super(); // it will call CustomStack()
+    }
+
+    public DynamicStack(int size) {
+        super(size); // it will call CustomStack(int size)
+    }
+
+    @Override
+    public boolean push(int item) {
+        // this takes care of it being full
+        if (this.isFull()) {
+            // double the array size
+            int[] temp = new int[data.length * 2];
+
+            // copy all previous items in new data
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[i];
+            }
+
+            data = temp;
+        }
+
+        // at this point we know that array is not full
+        // insert item
+        return super.push(item);
+    }
+}
 -----------------------------------------------------------------
+public class CustomQueue {
+    private int[] data;
+
+    private static final int DEFAULT_SIZE = 10;
+
+    int end = 0;
+
+    public CustomQueue(){
+        this(DEFAULT_SIZE);
+    }
+
+    public CustomQueue(int size) {
+        this.data = new int[size];
+    }
+
+    public boolean isFull() {
+        return end == data.length; // ptr is at last index
+    }
+
+    public boolean isEmpty() {
+        return end == 0;
+    }
+
+    public boolean insert(int item) {
+        if (isFull()) {
+            return false;
+        }
+        data[end++] = item;
+        return true;
+    }
+
+    public int remove() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+
+        int removed = data[0];
+
+        // shift the elements to left
+        for (int i = 1; i < end; i++) {
+            data[i-1] = data[i];
+        }
+        end--;
+        return removed;
+    }
+
+    public int front() throws Exception{
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+        return data[0];
+    }
+
+    public void display() {
+        for (int i = 0; i < end; i++) {
+            System.out.print(data[i] + " <- ");
+        }
+        System.out.println("END");
+    }
+
+}
 -----------------------------------------------------------------
+public class CircularQueue {
+    protected int[] data;
+    private static final int DEFAULT_SIZE = 10;
+
+    protected int end = 0;
+    protected int front = 0;
+    private int size = 0;
+
+    public CircularQueue(){
+        this(DEFAULT_SIZE);
+    }
+
+    public CircularQueue(int size) {
+        this.data = new int[size];
+    }
+
+    public boolean isFull() {
+        return size == data.length; // ptr is at last index
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean insert(int item) {
+        if (isFull()) {
+            return false;
+        }
+        data[end++] = item;
+        end = end % data.length;
+        size++;
+        return true;
+    }
+
+    public int remove() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+
+        int removed = data[front++];
+        front = front % data.length;
+        size--;
+        return removed;
+    }
+
+    public int front() throws Exception{
+        if (isEmpty()) {
+            throw new Exception("Queue is empty");
+        }
+        return data[front];
+    }
+
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Empty");
+            return;
+        }
+        int i = front;
+        do {
+            System.out.print(data[i] + " -> ");
+            i++;
+            i %= data.length;
+        } while (i != end);
+        System.out.println("END");
+    }
+
+}
 -----------------------------------------------------------------
+public class DynamicQueue extends CircularQueue{
+    public DynamicQueue() {
+        super();
+    }
+
+    public DynamicQueue(int size) {
+        super(size);
+    }
+
+    @Override
+    public boolean insert(int item) {
+
+        // this takes care of it being full
+        if (this.isFull()) {
+            // double the array size
+            int[] temp = new int[data.length * 2];
+
+            // copy all previous items in new data
+            for (int i = 0; i < data.length; i++) {
+                temp[i] = data[(front + i) % data.length];
+            }
+            front = 0;
+            end = data.length;
+            data = temp;
+        }
+
+        // at this point we know that array is not full
+        // insert item
+        return super.insert(item);
+    }
+}
 -----------------------------------------------------------------
+public class QueueMain {
+    public static void main(String[] args) throws Exception {
+        CircularQueue queue = new CircularQueue(5);
+        queue.insert(3);
+        queue.insert(6);
+        queue.insert(5);
+        queue.insert(19);
+        queue.insert(1);
+
+        queue.display();
+
+        System.out.println(queue.remove());
+        queue.insert(133);
+        queue.display();
+
+        System.out.println(queue.remove());
+        queue.insert(99);
+        queue.display();
+
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/valid-parentheses/
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(char c: s.toCharArray()){
+            if(c == '(' || c == '{' || c == '['){
+                stack.push(c);
+            }
+            else {
+                if (c == ')') {
+                    if (stack.isEmpty() || stack.pop() != '(') {
+                        return false;
+                    }
+                }
+                if (c == '}') {
+                    if (stack.isEmpty() || stack.pop() != '{') {
+                        return false;
+                    }
+                }
+                if (c == ']') {
+                    if (stack.isEmpty() || stack.pop() != '[') {
+                        return false;
+                    }
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+}
 -----------------------------------------------------------------
+https://leetcode.com/problems/remove-outermost-parentheses/
+class Solution {
+    public String removeOuterParentheses(String s) {
+        StringBuilder sb = new StringBuilder();
+        Stack<Character> st = new Stack<>();
+        for(char c : s.toCharArray()){
+            if(st.isEmpty() && c == '('){
+                st.push('(');
+            }
+            else if(!st.isEmpty() && c == '('){
+                st.push(c);
+                sb.append(c);
+            }
+            else if(st.size() >1 && c == ')'){
+                st.pop();
+                sb.append(c);
+            }
+            else if(st.size() == 1 && c == ')'){
+                st.pop();
+            }
+        }
+        return sb.toString();
+    }
+}
 -----------------------------------------------------------------
 -----------------------------------------------------------------
 -----------------------------------------------------------------
