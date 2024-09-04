@@ -384,7 +384,94 @@ class Solution {
     }
 }
 -----------------------------------------------------------------
+https://leetcode.com/problems/min-stack/
+class MinStack {
+    int min = Integer.MAX_VALUE;
+    Stack<Integer> stack;
+    public MinStack() {
+        stack = new Stack<>();
+    }
+    
+    public void push(int val) {
+        if(val<=min){
+            stack.push(min);
+            min = val;
+        }
+        stack.push(val);
+    }
+    
+    public void pop() {
+        if(stack.pop() == min) min=stack.pop();
+    }
+    
+    public int top() {
+        return stack.peek();
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
 -----------------------------------------------------------------
+https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+class Solution {
+    public String removeDuplicates(String s) {
+        Stack<Character> stack = new Stack<>();
+        for(char ch : s.toCharArray()){
+            if (!stack.isEmpty()){
+                if(ch == stack.peek()){
+                    stack.pop();
+                }
+                else{
+                    stack.push(ch);
+                }
+            }else{
+                stack.push(ch);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()){
+            sb.append(stack.pop());
+        }
+        return sb.reverse().toString();
+    }
+}
+or 
+class Solution {
+    public String removeDuplicates(String s) {
+        StringBuilder stack = new StringBuilder();
+        for (char c : s.toCharArray()) {
+            if (stack.isEmpty())
+                stack.append(c);
+            else if (stack.charAt(stack.length() - 1) == c) {
+                stack.deleteCharAt(stack.length() - 1);
+            }
+            else {
+                stack.append(c);
+            }
+        }
+
+        return stack.toString();
+    }
+}
+additionally
+String original = "Hello, World!";
+        char[] charArray = original.toCharArray();
+        for (int i = 0, j = charArray.length - 1; i < j; i++, j--) {
+            char temp = charArray[i];
+            charArray[i] = charArray[j];
+            charArray[j] = temp;
+        }
+        String reversed = new String(charArray);
 -----------------------------------------------------------------
 -----------------------------------------------------------------
 -----------------------------------------------------------------
