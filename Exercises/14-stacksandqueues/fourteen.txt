@@ -33,6 +33,22 @@ public class InBuiltExamples {
         deque.addLast(78);
         deque.removeFirst();
         // etc etc
+
+        class RecentCounter {
+            Queue<Integer> q;
+            int count = 0;
+            public RecentCounter() {
+                q= new LinkedList<>();
+            }
+    
+            public int ping(int t) {
+                q.add(t);
+                while(q.peek()<t-3000){
+                    q.poll();
+                }
+                return q.size();
+            }
+        }
     }
 }
 -----------------------------------------------------------------
@@ -549,6 +565,39 @@ String original = "Hello, World!";
         }
         String reversed = new String(charArray);
 -----------------------------------------------------------------
+https://www.geeksforgeeks.org/problems/inorder-traversal-iterative/1
+class Solution
+{
+    // Return a list containing the inorder traversal of the given tree
+    ArrayList<Integer> inOrder(Node root)
+    {
+        // Code
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        Node current = root;
+
+        // Iterate until both stack is empty and current is null
+        while (!stack.isEmpty() || current != null) {
+            // Push all left nodes onto the stack
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+
+            // Pop the top node from the stack and add its value to the result list
+            current = stack.pop();
+            result.add(current.data);
+
+            // Move to the right subtree
+            current = current.right;
+        }
+        return result;
+    }
+}
 -----------------------------------------------------------------
 -----------------------------------------------------------------
 -----------------------------------------------------------------
