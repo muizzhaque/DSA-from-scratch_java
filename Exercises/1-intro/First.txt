@@ -12,6 +12,24 @@ public class First {
     }
 }
 -----------------------------------------------------------------
+class gfg {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int a[] = new int[n];
+            int i = 0;
+            for (i = 0; i < n; i++) a[i] = sc.nextInt();
+            int[] s = new Solution().calculateSpan(a, n);
+            for (i = 0; i < n; i++) {
+                System.out.print(s[i] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+-----------------------------------------------------------------
 public class Demo {
     public static void main(String[] args) {
        System.out.println(args[0]);
