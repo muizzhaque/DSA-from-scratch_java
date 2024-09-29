@@ -120,7 +120,6 @@ class BinaryTree {
         preOrder(node.right);
         System.out.print(node.value + " ");
     }
-
 }
 -----------------------------------------------------------------
 class BST {
