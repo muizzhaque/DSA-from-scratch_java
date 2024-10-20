@@ -82,7 +82,7 @@ class BinaryTree {
         prettyDisplay(node.left, level + 1);
     }
 
-    public void preOrder() {
+    public void preOrder() { // Left -> Root -> Right
         preOrder(root);
     }
 
@@ -95,29 +95,31 @@ class BinaryTree {
         preOrder(node.right);
     }
 
-    public void inOrder() {
-        preOrder(root);
+    public void inOrder() { // Root -> Left -> Right
+
+
+        inOrder(root);
     }
 
     private void inOrder(Node node) {
         if (node == null) {
         return;
         }
-        preOrder(node.left);
+        inOrder(node.left);
         System.out.print(node.value + " ");
-        preOrder(node.right);
+        inOrder(node.right);
     }
 
-    public void postOrder() {
-        preOrder(root);
+    public void postOrder() { // Left -> Right -> Root
+        postOrder(root);
     }
 
     private void postOrder(Node node) {
         if (node == null) {
         return;
         }
-        preOrder(node.left);
-        preOrder(node.right);
+        postOrder(node.left);
+        postOrder(node.right);
         System.out.print(node.value + " ");
     }
 }
@@ -1492,4 +1494,496 @@ public int transform(Set<String> forwardSet, Set<String> backwardSet, Set<String
     return result == 0 ? 0 : result + 1;
     }
 }
+-----------------------------------------------------------------
+https://leetcode.com/problems/linked-list-in-binary-tree/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSubPath(ListNode head, TreeNode root) {
+        if(root == null)    return false;
+        if(issame(head, root))  return true;
+        return isSubPath(head, root.left) || isSubPath(head, root.right);
+    }
+    private boolean issame(ListNode head, TreeNode root) {
+        if(head == null)    return true;
+        if(root == null)    return false;
+        if(head.val != root.val)    return false;
+        return issame(head.next, root.left) || issame(head.next, root.right);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/path-sum-iii/solutions/4274495/beats-100-00-of-users-with-java-easy-dfs-code-o-n-tc-with-explanation/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // Map for keeping track of (PrefixSum, timesPrefixSumSeen) during traversal
+    Map<Long, Integer> hmap;
+    int count;
+
+    public int pathSum(TreeNode root, int targetSum) {
+        hmap = new HashMap<>();
+        count = 0;
+
+        dfs(root, 0, targetSum);
+
+        return count;
+    }
+
+    private void dfs(TreeNode root, long prefixSum, int targetSum) {
+        // base case
+        if (root == null) return;
+
+        
+        prefixSum += root.val;
+        
+        // If map contains a sum equal to (prefixSum - targetSum), we need to increment count that many times
+        if (hmap.containsKey(prefixSum-targetSum)) {
+            count += hmap.get(prefixSum-targetSum);
+        } 
+        
+        // There can be cases when the prefixSum is directly equal to targetSum, we need to increment count
+        if (targetSum == prefixSum) {
+            count++;
+        }
+
+        // Update the prefixSum till current node and it's count
+        hmap.put(prefixSum, hmap.getOrDefault(prefixSum, 0) + 1);
+
+        // Recurse
+        dfs(root.left, prefixSum, targetSum);
+        dfs(root.right, prefixSum, targetSum);
+
+        // Backtrack
+        hmap.put(prefixSum, hmap.get(prefixSum) - 1);
+        
+    }
+}
+-----------------------------------------------------------------
+class Solution {
+    Map<Integer, TreeNode> parents;
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        parents = new HashMap<>();
+        dfs(root,null);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(target);
+        int dist = 0;
+        HashSet<TreeNode> visited = new HashSet<>();
+        visited.add(target);
+        while (!queue.isEmpty() && dist!=k){
+            int size = queue.size();
+            for(int i = 0;i<size;i++){
+                TreeNode removed = queue.remove();
+                if(removed.left!=null && !visited.contains(removed.left)) {
+                    queue.add(removed.left);
+                    visited.add(removed.left);
+                }
+                if(removed.right!=null && !visited.contains(removed.right)) {
+                    queue.add(removed.right);
+                    visited.add(removed.right);
+                }
+                if(parents.containsKey(removed.val) && !visited.contains(parents.get(removed.val))) {
+                    queue.add(parents.get(removed.val));
+                    visited.add(parents.get(removed.val));
+                }
+            }
+            dist++;
+        }
+        List<Integer> ans = new ArrayList<>();
+        while (!queue.isEmpty()){
+            ans.add(queue.remove().val);
+        }
+        return ans;
+    }
+
+    public void dfs(TreeNode node, TreeNode parent){
+        if(parent!=null){
+            parents.put(node.val, parent);
+        }
+        if(node.left!=null) dfs(node.left,node);
+        if(node.right!=null) dfs(node.right,node);
+    }
+}
+-----------------------------------------------------------------
+https://www.youtube.com/watch?v=myH6qdThNPY&t=497s
+class Solution {
+    Map<Integer, TreeNode> parents;
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        parents = new HashMap<>();
+        dfs(root,null);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(target);
+        int dist = 0;
+        HashSet<TreeNode> visited = new HashSet<>();
+        visited.add(target);
+        while (!queue.isEmpty() && dist!=k){
+            int size = queue.size();
+            for(int i = 0;i<size;i++){
+                TreeNode removed = queue.remove();
+                if(removed.left!=null && !visited.contains(removed.left)) {
+                    queue.add(removed.left);
+                    visited.add(removed.left);
+                }
+                if(removed.right!=null && !visited.contains(removed.right)) {
+                    queue.add(removed.right);
+                    visited.add(removed.right);
+                }
+                if(parents.containsKey(removed.val) && !visited.contains(parents.get(removed.val))) {
+                    queue.add(parents.get(removed.val));
+                    visited.add(parents.get(removed.val));
+                }
+            }
+            dist++;
+        }
+        List<Integer> ans = new ArrayList<>();
+        while (!queue.isEmpty()){
+            ans.add(queue.remove().val);
+        }
+        return ans;
+    }
+
+    public void dfs(TreeNode node, TreeNode parent){
+        if(parent!=null){
+            parents.put(node.val, parent);
+        }
+        if(node.left!=null) dfs(node.left,node);
+        if(node.right!=null) dfs(node.right,node);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/validate-binary-tree-nodes/
+class Solution {
+    public boolean validateBinaryTreeNodes(int n, int[] leftChild, int[] rightChild) {
+        
+        Deque<Integer> queue = new ArrayDeque<>();
+        
+        Set<Integer> visited = new HashSet<>();
+        int root = findRoot(n, leftChild, rightChild);
+        if (root == -1) return false;
+        
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            if (node == -1) continue;
+            
+            if (!visited.add(node)) return false;
+            
+            int left = leftChild[node];
+            int right = rightChild[node];
+            
+            queue.offer(left);
+            queue.offer(right);
+        }
+        
+        return visited.size() == n;
+    }
+    
+    private int findRoot(int n, int[] left, int[] right) {
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < n; i++) set.add(i);
+        for (int node : left) set.remove(node);
+        for (int node : right) set.remove(node);
+        
+        return set.size() == 1 ? set.iterator().next() : -1;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/longest-univalue-path/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int min = Integer.MIN_VALUE;
+    public int longestUnivaluePath(TreeNode root) {
+        if(root ==null)
+            return 0;
+        dfs(root,root.val);
+        return min;
+    }
+    public int dfs(TreeNode root, int prevVal){
+        if( root == null){
+            return 0;
+        }
+        int left=dfs(root.left,root.val);
+        int right=dfs(root.right,root.val);
+        min = Math.max(min, left+right);
+        if(root.val==prevVal){
+            return Math.max(left,right)+1;
+        }
+        return 0;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/closest-nodes-queries-in-a-binary-search-tree/ important
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<Integer> nodes = new ArrayList<>(); 
+    void traverse(TreeNode root) {
+        if (root == null) return;
+        
+        traverse(root.left);
+        nodes.add(root.val);
+        traverse(root.right);
+    }
+    
+    List<List<Integer>> closestNodes(TreeNode root, List<Integer> queries) {
+        traverse(root);                         // traverse all nodes and store them in ArrayList
+        
+        List<List<Integer>> ans = new ArrayList<>();
+        int n = nodes.size();
+        
+        for (int q : queries) {            
+            if (q == nodes.get(0) || q == nodes.get(n-1)) {           // if value is already found, no need to do BS
+            	ans.add(Arrays.asList(q, q));
+            }
+            else if (q < nodes.get(0)) {
+            	ans.add(Arrays.asList(-1, nodes.get(0)));             // if value == first element, no need to do BS
+            }
+            else if (q > nodes.get(n-1)) {
+            	ans.add(Arrays.asList(nodes.get(n-1), -1));          // if value == last element, no need to do BS
+            }
+            else {
+            	int lo = 0;
+            	int hi = n-1;
+            	boolean found = false;
+            	while (lo < hi) {
+            		int m = (lo+hi) >> 1;
+            		int mid = nodes.get(m);
+            		if (q == mid) {
+            			found = true;
+            			ans.add(Arrays.asList(q, q));
+            			break;
+            		}
+            		else if (q > mid) {
+            			lo = m + 1;
+            		}
+            		else {
+            			hi = m;
+            		}
+            	}
+            	
+				// now lo and hi are equal
+            	if (!found) {
+            		ans.add(Arrays.asList(nodes.get(lo-1), nodes.get(lo)));
+            	}
+            }
+        }
+        
+        return ans;
+    } 
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/maximum-width-of-binary-tree/
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        
+        int maxWidth = 1;
+        Queue<TreeNode> queue = new LinkedList<>();
+        Queue<Integer> indexQueue = new LinkedList<>();
+        queue.offer(root);
+        indexQueue.offer(1);
+        
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            int leftIndex = 0, rightIndex = 0;
+            
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+                int index = indexQueue.poll();
+                
+                if (i == 0) {
+                    leftIndex = index;
+                }
+                if (i == levelSize - 1) {
+                    rightIndex = index;
+                }
+                
+                if (node.left != null) {
+                    queue.offer(node.left);
+                    indexQueue.offer(index * 2);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                    indexQueue.offer(index * 2 + 1);
+                }
+            }
+            
+            maxWidth = Math.max(maxWidth, rightIndex - leftIndex + 1);
+        }
+        
+        return maxWidth;
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/kth-largest-sum-in-a-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public long kthLargestLevelSum(TreeNode root, int k) {
+        if(root == null){
+            return -1;
+        }
+        Queue<TreeNode> q= new LinkedList<>();
+        q.add(root);
+        ArrayList<Long> list = new ArrayList<>();
+
+        while(!q.isEmpty()){
+            int size=q.size();
+            long sum = 0;
+            for(int i = 0;i<size;i++){
+                TreeNode temp = q.remove();
+                sum += temp.val;
+                if(temp.left != null) {
+                    q.add(temp.left);
+                }
+                if(temp.right != null) {
+                    q.add(temp.right);
+                }
+            }
+            list.add(sum);
+        }
+        
+        if(k > list.size()){
+            return -1;
+        }
+        Collections.sort(list);
+        
+        return list.get(list.size() - k);
+    }
+}
+-----------------------------------------------------------------
+https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/
+class Solution {
+    public boolean isValidSerialization(String preorder) {
+        String[] nodes = preorder.split(",");
+    int diff = 1;
+    for (String node: nodes) {
+        if (--diff < 0) return false;
+        if (!node.equals("#")) diff += 2;
+    }
+    return diff == 0;
+    }
+}x
+-----------------------------------------------------------------
+https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    ArrayList<Long> list=new ArrayList<>();
+    public int maxProduct(TreeNode root) 
+    {
+        long total=total(root);
+        long max=0,mod=(int)(1e9 + 7);
+        for(int i=0;i<list.size();i++)
+        {
+            max=Math.max(max,(total-list.get(i))*list.get(i));
+        }
+        return (int)(max%(mod+7));
+    }
+    public long total(TreeNode node)
+    {
+        if(node==null) return 0;
+        long left=total(node.left);
+        long right=total(node.right);
+        long subsum=left+right+node.val;
+        list.add(subsum);
+        return subsum;
+    }
+}
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+-----------------------------------------------------------------
 -----------------------------------------------------------------
