@@ -1297,6 +1297,26 @@ class Solution {
     }
 }
 -----------------------------------------------------------------
+https://leetcode.com/problems/total-characters-in-string-after-transformations-i/
+class Solution {
+    public int lengthAfterTransformations(String s, int t) {
+        int MOD = (int)(10e9+7);
+        int[] freq = new int[26];
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++;
+        }
+        for (int i = 0, j = 25; i < t; i++, j = (j + 25) % 26) {
+            freq[(j + 1) % 26] = (freq[(j + 1) % 26] + freq[j]) % MOD;
+        }
+
+        int sum = 0;
+        for (int f : freq) {
+            sum = (sum + f) % MOD;
+        }
+        return sum;
+    }
+}
+-----------------------------------------------------------------
 There are many format specifiers we can use. Here are some common ones: important
 
 %c - Character
