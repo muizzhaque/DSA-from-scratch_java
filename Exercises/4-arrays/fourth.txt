@@ -1028,3 +1028,85 @@ class Solution {
     }
 }
 -----------------------------------------------------------------
+Sliding Window/ Two Pointer - important, please revise
+----------------------------
+pattern1:
+-------------------
+public class constWindow2Pointer {
+    public static void main(String[] args) {
+        int[] arr = {-1,2,3,3,4,5,-1};
+        int k = 4;
+        int l = 0; int r = k-1; int sum = 0; int maxi = Integer.MIN_VALUE;
+        for(int i = l; i <= r; i++){
+            while(r < arr.length - 1){
+                sum = sum - arr[i];
+                l++;
+                r++;
+                sum = sum+arr[i];
+                if(sum > maxi){
+                    maxi = sum;
+                }
+            }
+        }
+        System.out.println(maxi);
+    }
+}
+pattern2:
+-------------------
+public class LongestSubarray2Pointer {
+    public static void main(String[] args) {
+        int[] arr = {-1,2,3,3,4,5,-1};
+        int k = 4;
+        int l = 0; int r = 0; int sum = 0; int maxLen = 0;
+        while(r < arr.length){
+            sum = sum + arr[r];
+            while(sum>k){
+                sum = sum - arr[l];
+                l = l + 1;
+            }
+            if (sum <=k){
+                maxLen = Math.max(maxLen,r-l+1);
+            }
+            r = r+1;
+        }
+        System.out.println(maxLen);
+    }
+}
+pattern3:
+-------------------
+No of subarrays where sum = k
+ans = No. of subarrays where sum <=k - No. of subarrays where sum <=(k-1)
+we will use pattern2 for both <=k and <=(k-1)
+pattern4:
+-------------------
+shortest/minimum window where sum = K
+it is same as pattern 2 but instead of expanding it we will shrink here
+-----------------------------------------------------------------
+Kadane algo - important, please revise
+------------
+public class Kadane {
+    public static void main(String[] args) {
+        int[] arr = {-2,-3,-4,-1,-2,1,5,3};
+        int maxi = Integer.MIN_VALUE;
+        int sum = 0;
+        int start = 0;
+        int ansEnd = 0;
+        int ansStart = 0;
+        for( int i = 0; i < arr.length; i++){
+            if(sum==0){
+                start = i;
+            }
+            sum = sum + arr[i];
+            if(sum > maxi){
+                maxi = sum;
+                ansStart = start;
+                ansEnd = i;
+            }
+            if(sum<0){
+                sum = 0;
+            }
+        }
+        System.out.println(sum);
+    }
+}
+-----------------------------------------------------------------
