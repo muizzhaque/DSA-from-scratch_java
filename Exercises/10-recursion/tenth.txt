@@ -390,8 +390,6 @@ patterns questions:
 patterns questions:
 patterns questions:
 -----------------------------------------------------------------
-package com.kunal.patterns;
-
 import java.util.Arrays;
 
 public class Triangle {

@@ -1,0 +1,119 @@
+
+import java.util.*;
+
+class Main {
+
+  public static void countSort(int[] array) {
+    if(array == null || array.length <= 1) {
+      return;
+    }
+
+    int max = array[0];
+    for(int num : array) {
+      if(num > max) {
+        max = num;
+      }
+    }
+
+    int[] countArray = new int[max + 1];
+
+    for(int num : array) {
+      countArray[num]++;
+    }
+
+    int index = 0;
+    for(int i=0; i<= max; i++) {
+      while(countArray[i] > 0) {
+        array[index] = i;
+        index++;
+        countArray[i]--;
+      }
+    }
+    
+  }
+
+  public static void countSortHash(int[] arr) {
+    if(arr == null || arr.length <= 1) {
+      return;
+    }
+
+    int max = Arrays.stream(arr).max().getAsInt();
+    int min = Arrays.stream(arr).min().getAsInt();
+
+    Map<Integer, Integer> countMap = new HashMap<>();
+
+    for(int num : arr) {
+      countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+    }
+
+    int index = 0;
+    for(int i=min; i<=max; i++) {
+      int count = countMap.getOrDefault(i, 0);
+      for(int j=0; j < count; j++) {
+        arr[index] = i;
+        index++;
+      }
+    }
+
+  }
+  
+  public static void main(String[] args) {
+    int[] arr = {6, 3, 10, 9, 2, 4, 9, 7};
+    countSortHash(arr);
+    System.out.println(Arrays.toString(arr));
+  }
+}
+-----------------------------------------------------------------
+
+import java.util.*;
+
+class Main {
+
+  public static void radixSort(int[] arr) {
+    int max = Arrays.stream(arr).max().getAsInt();
+
+    // do count sort for every digit place
+    for(int exp = 1; max/exp > 0; exp *= 10) {
+      countSort(arr, exp);
+    }
+  }
+
+  private static void countSort(int[] arr, int exp) {
+    int n = arr.length;
+    int[] output = new int[n];
+    int[] count = new int[10];
+
+    Arrays.fill(count, 0);
+
+    for(int i=0; i<n; i++) {
+      count[(arr[i] / exp) % 10]++;
+    }
+
+    System.out.println("\nCount array for " + exp + " : " + Arrays.toString(count));
+
+    for(int i=1; i<10; i++) {
+      count[i] = count[i] + count[i-1];
+    }
+
+    System.out.println("Updated count array " + Arrays.toString(count));
+
+    for(int i=n-1; i>=0; i--) {
+      output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+      count[(arr[i] / exp) % 10]--;
+    }
+
+    System.out.println("Output array " + Arrays.toString(output));
+    
+    System.arraycopy(output, 0, arr, 0, n);
+    
+  }
+  
+  public static void main(String[] args) {
+    int[] arr = {29, 83, 471, 36, 91, 8};
+
+    System.out.println("Origin array: " + Arrays.toString(arr));
+    radixSort(arr);
+    System.out.println("Sorted array: " + Arrays.toString(arr));
+  }
+}
+-----------------------------------------------------------------
