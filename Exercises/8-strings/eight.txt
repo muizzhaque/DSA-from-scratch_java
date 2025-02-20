@@ -19,6 +19,37 @@ public class Comparison {
     }
 }
 -----------------------------------------------------------------
+imp 
+https://leetcode.com/problems/find-unique-binary-string/
+class Solution {
+    public String findDifferentBinaryString(String[] nums) {
+        int n=nums.length;
+        Set<Integer> set=new HashSet();
+        //Storing into SET 
+        for(String str:nums){
+            set.add(binstrToInt(str));
+        }
+        for( int i = 2*n-1; i>=0; i--){
+            if(!set.contains(i)){
+                return intToBinstr(i,n);
+            }
+        }
+        return "";
+    }
+
+    int binstrToInt(String str){
+        return Integer.parseInt(str, 2);
+    }
+
+    String intToBinstr(int i, int n){
+        String ans = Integer.toBinaryString(i);
+        // depending on the number of digits required we can always add zeros, like for eg:
+        // 5 can be written as '0101' for 4 digit long number
+        return String.format("%" + n + "s", ans).replace(' ', '0');
+        // String.format("%-" + length + "s", binaryString).replace(' ', '0'); for padding from right instead of left which is the default
+    }
+}
+-----------------------------------------------------------------
 import java.util.Arrays;
 
 public class Output {
